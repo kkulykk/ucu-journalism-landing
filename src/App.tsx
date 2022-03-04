@@ -1,24 +1,24 @@
 import React from "react";
-import logo from "./logo.svg";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import MainPage from "./pages/MainPage";
 import "./App.css";
+import AnalyticalMaterials from "./pages/AnalyticalMaterials";
+import LeaderInterviews from "./pages/LeaderInterviews";
+import WarHistory from "./pages/WarHistory";
+import WorldAboutUkraine from "./pages/WorldAboutUkraine";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/analytics" element={<AnalyticalMaterials />} />
+          <Route path="/leaders" element={<LeaderInterviews />} />
+          <Route path="/stories" element={<WarHistory />} />
+          <Route path="/world" element={<WorldAboutUkraine />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
