@@ -1,14 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
+import { ThemeProvider } from "@material-ui/core/styles";
 import Header from "../components/Header";
+import theme from "../utils/theme";
 import "./MainPage.css";
 
-const MainPage: React.FC = () => {
+const MainPage = () => {
   return (
-    <div>
-      <Header />
-      <div className="photo-of-day"></div>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div>
+        <Header />
+        <div className="photo-of-day"></div>
+      </div>
+    </ThemeProvider>
   );
 };
 
