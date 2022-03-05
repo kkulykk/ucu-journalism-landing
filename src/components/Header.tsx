@@ -1,8 +1,4 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import Checkbox from "@mui/material/Checkbox";
-import { ThemeProvider, styled } from "@mui/material/styles";
-import { orange } from "@mui/material/colors";
+import { ThemeProvider } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import theme from "../utils/theme";
 import "./Header.css";
@@ -11,10 +7,21 @@ const Header = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className="header">
-        <h2>Project Name</h2>
+        <a
+          style={{
+            color: "white",
+            textDecoration: "none",
+            fontSize: "1.3rem",
+            fontWeight: 600,
+          }}
+          href="/"
+        >
+          Victory chronicles
+        </a>
         <Button
+          disableElevation
           variant="contained"
-          color="primary"
+          color="info"
           target="_blank"
           href="https://betha.in.ua"
         >
