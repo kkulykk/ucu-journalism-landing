@@ -14,11 +14,13 @@ export const HistoryVideo = (props: Props) => {
     <Card
       sx={{
         aspectRatio: "16/9",
-        height: 250,
+        width: 550,
+        minWidth: 300,
         m: 3,
         display: "flex",
         flexDirection: "column",
         flexWrap: "nowrap",
+        textAlign: "left",
       }}
     >
       <CardMedia
@@ -34,6 +36,7 @@ export const HistoryVideo = (props: Props) => {
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
+          height: "25%",
           gap: 0,
         }}
       >
