@@ -1,14 +1,14 @@
 class AnalyticalMaterialsObj {
     title: string;
-    date: Date;
+    date: any;
     source: string;
     imageUrl: string;
     lead: string;
     text: string;
 
-    constructor(title: string, date: Date, source: string,  imageUrl: string, lead: string, text: string) {
+    constructor(title: string, date: any, source: string,  imageUrl: string, lead: string, text: string) {
         this.title = title;
-        this.date = date;
+        this.date = date.toDate().toDateString();
         this.source = source;
         this.imageUrl = imageUrl;
         this.lead = lead;
@@ -23,12 +23,12 @@ class AnalyticalMaterialsObj {
 
 class dayPhotosObj {
     imageUrl: string;
-    date: Date;
+    date: any;
     source: string;
     
-    constructor(imageUrl: string, date: Date, source: string) {
+    constructor(imageUrl: string, date: any, source: string) {
         this.imageUrl = imageUrl;
-        this.date = date;
+        this.date = date.toDate().toDateString();
         this.source = source;
     }
 
@@ -40,12 +40,12 @@ class dayPhotosObj {
 
 class leaderInterviewsObj {
     title: string;
-    date: Date;
+    date: any;
     videoUrl: string;
 
-    constructor(title: string, date: Date, videoUrl: string) {
+    constructor(title: string, date: any, videoUrl: string) {
         this.title = title;
-        this.date = date;
+        this.date = date.toDate().toDateString();
         this.videoUrl = videoUrl;
     }
 
@@ -56,12 +56,12 @@ class leaderInterviewsObj {
 
 class warHistoryObj {
     title: string;
-    date: Date;
+    date: any;
     videoUrl: string;
 
-    constructor(title: string, date: Date, videoUrl: string) {
+    constructor(title: string, date: any, videoUrl: string) {
         this.title = title;
-        this.date = date;
+        this.date = date.toDate().toDateString();
         this.videoUrl = videoUrl;
     }
 
@@ -72,15 +72,15 @@ class warHistoryObj {
 
 class worldAboutUkraineObj {
     title: string;
-    date: Date;
+    date: any;
     source: string;
     sourceUrl: string;
     imageUrl: string;
     lead: string;
 
-    constructor(title: string, date: Date, source: string, sourceUrl: string, imageUrl: string, lead: string) {
+    constructor(title: string, date: any, source: string, sourceUrl: string, imageUrl: string, lead: string) {
         this.title = title;
-        this.date = date;
+        this.date = date.toDate().toDateString();
         this.source = source;
         this.sourceUrl = sourceUrl;
         this.imageUrl = imageUrl;

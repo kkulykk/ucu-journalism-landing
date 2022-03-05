@@ -88,6 +88,7 @@ const MainPage = () => {
               link="world"
             />
           </Box>
+          
         </Box>
       </div>
     </ThemeProvider>
