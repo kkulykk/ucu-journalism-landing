@@ -6,6 +6,7 @@ import { ThemeProvider } from "@mui/material";
 import theme from "../utils/theme";
 import { HistoryVideo } from "../components/HistoryVideo";
 import Box from "@mui/material/Box";
+import SkeletonVideo from "../components/SkeletonVideo";
 
 const WarHisttory: React.FC = () => {
   return (
@@ -18,7 +19,14 @@ const WarHisttory: React.FC = () => {
         mainly post here. There is also small description of all the authors and
         so on"
       />
-      <Box sx={{ display: "flex", flexWrap: "wrap", p: "0 8%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          p: "0 8%",
+        }}
+      >
         <HistoryVideo
           title="Ukraine strongly needs your support! Ukraine strongly needs your support!"
           date="25 Feb 2022"
