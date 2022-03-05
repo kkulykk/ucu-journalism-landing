@@ -18,9 +18,9 @@ const WarHisttory: React.FC = () => {
         mainly post here. There is also small description of all the authors and
         so on"
       />
-      <Box sx={{ display: "flex", flexWrap: "nowrap" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", p: "0 8%" }}>
         <HistoryVideo
-          title="Ukraine strongly needs your support!"
+          title="Ukraine strongly needs your support! Ukraine strongly needs your support!"
           date="25 Feb 2022"
           videoUrl="https://www.youtube.com/embed/sL7Lh3x3Tfk"
         />
