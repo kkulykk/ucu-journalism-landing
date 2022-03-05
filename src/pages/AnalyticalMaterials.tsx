@@ -14,23 +14,26 @@ import Footer from "../components/Footer";
 import SectionDescription from "../components/SectionDescription";
 import SkeletonNews from "../components/SkeletonNews";
 
+// Constants
+const POSTS_NUMBER = 1
+
 const AnalyticalMaterials = () => {
-  const [analyticalMaterialObjects, setAnalyticalMaterialObjects] = useState<
-    AnalyticalMaterialsObj[]
-  >([]);
+  const [analyticalMaterialObjects, setAnalyticalMaterialObjects] = useState<AnalyticalMaterialsObj[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [postsNumber, setPostsNumber] = useState<number>(POSTS_NUMBER)
 
   const getAnalyticalMaterialPosts = async () => {
-    const postsArray: AnalyticalMaterialsObj[] = [];
+    const postObjectsArray: AnalyticalMaterialsObj[] = [];
     try {
       setIsLoading(true); // switch ON page loader
       const posts = await getFirestoreRecords(
-        CollectionNames.ANALYTICS_MATERIAL
+        CollectionNames.ANALYTICS_MATERIAL,
+        postsNumber
       );
 
       posts.forEach((doc) => {
         const docData = doc.data();
-        const singleAnalyticalMaterialPost: AnalyticalMaterialsObj =
+        const singleAnalyticalMaterialObject: AnalyticalMaterialsObj =
           new AnalyticalMaterialsObj(
             docData.title,
             docData.date,
@@ -39,10 +42,10 @@ const AnalyticalMaterials = () => {
             docData.lead,
             docData.text
           );
-        postsArray.push(singleAnalyticalMaterialPost);
+        postObjectsArray.push(singleAnalyticalMaterialObject);
       });
 
-      setAnalyticalMaterialObjects(postsArray);
+      setAnalyticalMaterialObjects(postObjectsArray);
 
       setIsLoading(false); // switch OFF page loader
     } catch (err) {
@@ -68,12 +71,13 @@ const AnalyticalMaterials = () => {
 
   useEffect(() => {
     getAnalyticalMaterialPosts();
-  }, []);
+  }, [postsNumber]);
 
   return (
     <ThemeProvider theme={theme}>
       <div>
         <Header />
+
         <SectionDescription
           title="Analytical Materials"
           desc="Here we describe the objectivs of the project and tell readers what we
@@ -91,7 +95,7 @@ const AnalyticalMaterials = () => {
           {isLoading ? SkeletonNews() : mappedArticleBoxes()}
         </Box>
       </div>
-      <Button disabled={isLoading} variant="outlined" sx={{ marginTop: 5 }}>
+      <Button disabled={isLoading} variant="outlined" sx={{ marginTop: 5 }} onClick={() => setPostsNumber(postsNumber + POSTS_NUMBER)}>
         Load more
       </Button>
       <Footer />

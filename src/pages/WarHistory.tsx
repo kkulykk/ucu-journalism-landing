@@ -1,4 +1,9 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import {
+  getFirestoreRecords,
+  CollectionNames,
+} from "../services/firebase/firestore";
+import { warHistoryObj  } from "../services/models/firestoreDocuments";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SectionDescription from "../components/SectionDescription";
@@ -6,8 +11,60 @@ import { ThemeProvider } from "@mui/material";
 import theme from "../utils/theme";
 import { HistoryVideo } from "../components/HistoryVideo";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
-const WarHisttory: React.FC = () => {
+
+
+// Constants
+const VIDEOS_NUMBER = 1
+
+const WarHisttory = () => {
+  const [warHistoryObjects, setWarHistoryObjects] = useState<warHistoryObj[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [videosNumber, setVideosNumber] = useState<number>(VIDEOS_NUMBER)
+
+  const getWarHistoryVideos = async () => {
+    const videoObjectsArray: warHistoryObj[] = [];
+    try {
+      setIsLoading(true); // switch ON page loader
+      const videos = await getFirestoreRecords(CollectionNames.WAR_HISTORY, videosNumber);
+
+      videos.forEach((doc) => {
+        const docData = doc.data()
+        const singleWarHistoryObject: warHistoryObj = new warHistoryObj(
+          docData.title,
+          docData.date,
+          docData.videoUrl
+        )
+        videoObjectsArray.push(singleWarHistoryObject)
+      })
+
+      setWarHistoryObjects(videoObjectsArray)
+
+      setIsLoading(false)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const mappedHistoryVideos = () => {
+    return warHistoryObjects.map((video, index) => {
+      return (
+        <HistoryVideo
+          key={index}
+          title={video.title}
+          date={video.date}
+          videoUrl={video.videoUrl}
+        />
+      )
+    })
+  }
+
+  useEffect(() => {
+    getWarHistoryVideos();
+  }, [videosNumber])
+
+
   return (
     <ThemeProvider theme={theme}>
       <Header />
@@ -19,22 +76,11 @@ const WarHisttory: React.FC = () => {
         so on"
       />
       <Box sx={{ display: "flex", flexWrap: "wrap", p: "0 8%" }}>
-        <HistoryVideo
-          title="Ukraine strongly needs your support! Ukraine strongly needs your support!"
-          date="25 Feb 2022"
-          videoUrl="https://www.youtube.com/embed/sL7Lh3x3Tfk"
-        />
-        <HistoryVideo
-          title="Ukraine strongly needs your support!"
-          date="25 Feb 2022"
-          videoUrl="https://www.youtube.com/embed/sL7Lh3x3Tfk"
-        />
-        <HistoryVideo
-          title="Ukraine strongly needs your support!"
-          date="25 Feb 2022"
-          videoUrl="https://www.youtube.com/embed/sL7Lh3x3Tfk"
-        />
+        {isLoading ? "Loading" : mappedHistoryVideos()}
       </Box>
+      <Button disabled={isLoading} variant="outlined" sx={{ marginTop: 5 }} onClick={() => setVideosNumber(videosNumber + VIDEOS_NUMBER)}>
+        Load more
+      </Button>
       <Footer />
     </ThemeProvider>
   );
