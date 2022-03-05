@@ -46,7 +46,6 @@ const AnalyticalMaterials = () => {
       });
 
       setAnalyticalMaterialObjects(postObjectsArray);
-
       setIsLoading(false); // switch OFF page loader
     } catch (err) {
       console.error(err);
