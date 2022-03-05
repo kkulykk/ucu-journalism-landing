@@ -1,8 +1,20 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme, ThemeProvider } from "@mui/material";
 
-const theme = createMuiTheme({
+declare module "@mui/material/styles" {
+  interface Theme {
+    status: {
+      danger: string;
+    };
+  }
+  interface ThemeOptions {
+    status?: {
+      danger?: string;
+    };
+  }
+}
+
+const theme = createTheme({
   palette: {
-    type: "light",
     primary: {
       main: "#7f1716",
     },
@@ -14,7 +26,19 @@ const theme = createMuiTheme({
     borderRadius: 5,
   },
   typography: {
-    fontFamily: '"Fira Sans"',
+    fontFamily: "Fira Sans",
+    h3: {
+      fontWeight: 600,
+      fontSize: "1.5rem",
+      marginBottom: "10",
+    },
+    body1: {
+      fontWeight: 300,
+    },
+    body2: {
+      fontWeight: 300,
+    },
   },
 });
+
 export default theme;
