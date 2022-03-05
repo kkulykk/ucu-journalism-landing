@@ -1,15 +1,76 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import {
+  getFirestoreRecords,
+  CollectionNames,
+} from "../services/firebase/firestore";
+import { worldAboutUkraineObj } from "../services/models/firestoreDocuments";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SectionDescription from "../components/SectionDescription";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { ThemeProvider } from "@mui/material";
-
 import theme from "../utils/theme";
 import WorldArticle from "../components/WorldArticle";
 
-const WorldAboutUkraine: React.FC = () => {
+// Constants
+const POSTS_NUMBER = 1
+
+const WorldAboutUkraine = () => {
+  const [worldAboutUkraineObjects, setWorldAboutUkraineObjects] = useState<worldAboutUkraineObj[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [postsNumber, setPostsNumber] = useState<number>(POSTS_NUMBER)
+
+  const getWorldAboutUkrainePosts = async () => {
+    const postObjects: worldAboutUkraineObj[] = [];
+    try {
+      setIsLoading(true);
+      const posts = await getFirestoreRecords(
+        CollectionNames.WORLD_ABOUT_UKRAINE,
+        postsNumber
+      )
+
+      posts.forEach((doc) => {
+        const docData = doc.data();
+        const signleWorldAboutUkraineObject: worldAboutUkraineObj =
+          new worldAboutUkraineObj(
+            docData.title,
+            docData.date,
+            docData.source,
+            docData.sourceUrl,
+            docData.imageUrl,
+            docData.lead
+          );
+      postObjects.push(signleWorldAboutUkraineObject);
+      });
+
+      setWorldAboutUkraineObjects(postObjects);
+      setIsLoading(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const mappedWorldArticles = (): JSX.Element[] => {
+    return worldAboutUkraineObjects.map((post, index) => {
+      return (
+        <WorldArticle
+          key={index}
+          title={post.title}
+          date={post.date}
+          source={post.source}
+          sourceUrl={post.sourceUrl}
+          imageUrl={post.imageUrl}
+          lead={post.lead}
+      />
+      )
+    })
+  }
+
+  useEffect(() => {
+    getWorldAboutUkrainePosts();
+  }, [postsNumber])
+
   return (
     <ThemeProvider theme={theme}>
       <Header />
@@ -28,14 +89,7 @@ const WorldAboutUkraine: React.FC = () => {
           width: "100%",
         }}
       >
-        <WorldArticle
-          title="News from the US"
-          date="12 FEB"
-          source="ABC"
-          lead="hello"
-          sourceUrl="https://abc.com"
-          imageUrl="https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGhvdG98ZW58MHx8MHx8&w=1000&q=80"
-        />
+        {isLoading ? "Loading..." : mappedWorldArticles()}
       </Box>
       <Button variant="outlined" sx={{ marginTop: 5 }}>
         Load more

@@ -9,7 +9,7 @@ import Footer from "../components/Footer";
 import SectionDescription from "../components/SectionDescription";
 import { ThemeProvider } from "@mui/material";
 import theme from "../utils/theme";
-import { HistoryVideo } from "../components/HistoryVideo";
+import VideoPost from "../components/VideoPost";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import SkeletonVideo from "../components/SkeletonVideo";
@@ -48,10 +48,10 @@ const WarHisttory = () => {
     }
   }
 
-  const mappedHistoryVideos = () => {
+  const mappedHistoryVideoPosts = () => {
     return warHistoryObjects.map((video, index) => {
       return (
-        <HistoryVideo
+        <VideoPost
           key={index}
           title={video.title}
           date={video.date}
@@ -77,7 +77,7 @@ const WarHisttory = () => {
         so on"
       />
       <Box sx={{ display: "flex", flexWrap: "wrap", p: "0 8%" }}>
-        {isLoading ? "Loading" : mappedHistoryVideos()}
+        {isLoading ? "Loading" : mappedHistoryVideoPosts()}
       </Box>
       <Button disabled={isLoading} variant="outlined" sx={{ marginTop: 5 }} onClick={() => setVideosNumber(videosNumber + VIDEOS_NUMBER)}>
         Load more

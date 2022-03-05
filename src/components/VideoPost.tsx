@@ -9,7 +9,7 @@ export interface Props {
   videoUrl: string;
 }
 
-export const HistoryVideo = (props: Props) => {
+const VideoPost = (props: Props) => {
   return (
     <Card
       sx={{
@@ -54,3 +54,5 @@ export const HistoryVideo = (props: Props) => {
     </Card>
   );
 };
+
+export default VideoPost;
