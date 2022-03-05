@@ -40,6 +40,10 @@ const theme = createTheme({
       fontWeight: 600,
       fontSize: "2rem",
     },
+    h4: {
+      fontWeight: 400,
+      fontSize: "1.2rem",
+    },
     h5: {
       fontWeight: 300,
       fontStyle: "italic",
