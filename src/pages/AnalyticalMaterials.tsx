@@ -47,10 +47,6 @@ const AnalyticalMaterials = () => {
     getAnalyticalMaterialPosts()
   }, [])
 
-
-
-
-
   return (
     <ThemeProvider theme={theme}>
       <div>
