@@ -16,7 +16,7 @@ const Header = () => {
           }}
           href="/"
         >
-          Victory chronicles
+          VICTORY CHRONICLES
         </a>
         <Button
           disableElevation

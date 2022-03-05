@@ -12,6 +12,7 @@ import theme from "../utils/theme";
 import { HistoryVideo } from "../components/HistoryVideo";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import SkeletonVideo from "../components/SkeletonVideo";
 
 
 
