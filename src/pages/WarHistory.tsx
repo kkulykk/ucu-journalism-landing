@@ -9,15 +9,15 @@ import Footer from "../components/Footer";
 import SectionDescription from "../components/SectionDescription";
 import { ThemeProvider } from "@mui/material";
 import theme from "../utils/theme";
-import VideoPost from "../components/VideoPost";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import VideoPost from "../components/VideoPost";
 import SkeletonVideo from "../components/SkeletonVideo";
 
 // Constants
 const VIDEOS_NUMBER = 2;
 
-const WarHisttory = () => {
+const WarHistory = () => {
   const [warHistoryObjects, setWarHistoryObjects] = useState<warHistoryObj[]>(
     []
   );
@@ -44,7 +44,6 @@ const WarHisttory = () => {
       });
 
       setWarHistoryObjects(videoObjectsArray);
-
       setIsLoading(false);
     } catch (err) {
       console.error(err);
@@ -94,4 +93,4 @@ const WarHisttory = () => {
   );
 };
 
-export default WarHisttory;
+export default WarHistory;

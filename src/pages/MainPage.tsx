@@ -105,10 +105,10 @@ const MainPage = () => {
           }}
         >
           <Typography variant="caption">
-            {dayPhotosObjects[activeStep].source}
+            {dayPhotosObjects[activeStep]?.source}
           </Typography>
           <Typography variant="caption">
-            {dayPhotosObjects[activeStep].date}
+            {dayPhotosObjects[activeStep]?.date}
           </Typography>
         </Box>
       </Box>
