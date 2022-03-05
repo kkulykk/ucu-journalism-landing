@@ -1,7 +1,6 @@
 import React from "react";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
@@ -91,7 +90,7 @@ const ArticleBox = (props: Props) => {
           maxWidth: "60vw",
           boxShadow: 3,
           borderRadius: 3,
-          margin: 5,
+          m: 2,
         }}
       >
         <CardActionArea onClick={handleOpen} sx={{ display: "flex" }}>

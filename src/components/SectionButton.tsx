@@ -14,7 +14,8 @@ const SectionButton = (props: Props) => {
   return (
     <ThemeProvider theme={theme}>
       <Button
-        variant="outlined"
+        color="info"
+        variant="contained"
         sx={{
           display: "flex",
           flexWrap: "nowrap",

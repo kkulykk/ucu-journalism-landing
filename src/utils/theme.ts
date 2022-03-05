@@ -21,6 +21,10 @@ const theme = createTheme({
     secondary: {
       main: "#607d8b",
     },
+    info: {
+      main: "#ffffff",
+      contrastText: "#7f1716",
+    },
   },
   shape: {
     borderRadius: 5,
@@ -32,6 +36,20 @@ const theme = createTheme({
       fontSize: "1.5rem",
       marginBottom: "10",
     },
+    h2: {
+      fontWeight: 600,
+      fontSize: "2rem",
+    },
+    h4: {
+      fontWeight: 400,
+      fontSize: "1.2rem",
+    },
+    h5: {
+      fontWeight: 300,
+      fontStyle: "italic",
+      fontSize: "1.2rem",
+    },
+
     body1: {
       fontWeight: 300,
     },
