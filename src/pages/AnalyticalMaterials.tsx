@@ -7,13 +7,12 @@ import { AnalyticalMaterialsObj } from "../services/models/firestoreDocuments";
 import { ThemeProvider } from "@mui/material";
 import theme from "../utils/theme";
 import Header from "../components/Header";
-import Typography from "@mui/material/Typography";
-import Skeleton from "@mui/material/Skeleton";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ArticleBox from "../components/ArticleBox";
 import Footer from "../components/Footer";
+import SectionDescription from "../components/SectionDescription";
+import SkeletonNews from "../components/SkeletonNews";
 
 const AnalyticalMaterials = () => {
   const [analyticalMaterialObjects, setAnalyticalMaterialObjects] = useState<
@@ -51,57 +50,6 @@ const AnalyticalMaterials = () => {
     }
   };
 
-  const Placeholder = () => {
-    return (
-      <Stack spacing={5}>
-        <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
-          <Skeleton variant="rectangular" width={"20vw"} height={200} />
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-around",
-            }}
-          >
-            <Box>
-              <Skeleton variant="text" height={40} width={"35vw"} />
-              <Skeleton variant="text" height={40} width={"10vw"} />
-            </Box>
-            <Skeleton variant="text" height={10} width={"15vw"} />
-            <Box>
-              <Skeleton variant="text" height={15} width={"35vw"} />
-
-              <Skeleton variant="text" height={15} width={"35vw"} />
-              <Skeleton variant="text" height={15} width={"35vw"} />
-            </Box>
-          </Box>
-        </Box>
-        <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
-          <Skeleton variant="rectangular" width={"20vw"} height={200} />
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-around",
-            }}
-          >
-            <Box>
-              <Skeleton variant="text" height={40} width={"35vw"} />
-              <Skeleton variant="text" height={40} width={"10vw"} />
-            </Box>
-            <Skeleton variant="text" height={10} width={"15vw"} />
-            <Box>
-              <Skeleton variant="text" height={15} width={"35vw"} />
-
-              <Skeleton variant="text" height={15} width={"35vw"} />
-              <Skeleton variant="text" height={15} width={"35vw"} />
-            </Box>
-          </Box>
-        </Box>
-      </Stack>
-    );
-  };
-
   const mappedArticleBoxes = (): JSX.Element[] => {
     return analyticalMaterialObjects.map((post, index) => {
       return (
@@ -126,28 +74,12 @@ const AnalyticalMaterials = () => {
     <ThemeProvider theme={theme}>
       <div>
         <Header />
-        <Box
-          height={"35vh"}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "Center",
-          }}
-        >
-          <Typography
-            variant="h2"
-            color={"primary.main"}
-            sx={{ marginBottom: "1vh" }}
-          >
-            Analytical Materials
-          </Typography>
-          <Typography variant="h5" width={"60vw"} color={"secondary.main"}>
-            Here we describe the objectivs of the project and tell readers what
-            we mainly post here. There is also small description of all the
-            authors and so on
-          </Typography>
-        </Box>
+        <SectionDescription
+          title="Analytical Materials"
+          desc="Here we describe the objectivs of the project and tell readers what we
+        mainly post here. There is also small description of all the authors and
+        so on"
+        />
         <Box
           sx={{
             display: "flex",
@@ -156,7 +88,7 @@ const AnalyticalMaterials = () => {
             flexDirection: "column",
           }}
         >
-          {isLoading ? Placeholder() : mappedArticleBoxes()}
+          {isLoading ? SkeletonNews() : mappedArticleBoxes()}
         </Box>
       </div>
       <Button disabled={isLoading} variant="outlined" sx={{ marginTop: 5 }}>
