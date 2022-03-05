@@ -3,7 +3,7 @@ import {
   getFirestoreRecords,
   CollectionNames,
 } from "../services/firebase/firestore";
-
+import CircularProgress from "@mui/material/CircularProgress";
 import { dayPhotosObj } from "../services/models/firestoreDocuments";
 import { ThemeProvider } from "@mui/material";
 import Header from "../components/Header";
@@ -119,8 +119,16 @@ const MainPage = () => {
     <ThemeProvider theme={theme}>
       <div>
         <Header />
-        <Box sx={{ maxWidth: "100vw", height: "60vh" }}>
-          {isLoading ? "loading" : Slider()}
+        <Box
+          sx={{
+            maxWidth: "100vw",
+            height: "60vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {isLoading ? <CircularProgress /> : Slider()}
         </Box>
         <Box
           sx={{

@@ -16,7 +16,7 @@ const SkeletonVideo = () => {
         variant="rectangular"
         sx={{
           aspectRatio: "16/9",
-          width: 550,
+          width: 450,
           minWidth: 300,
           height: 270,
           borderRadius: 1,
@@ -27,29 +27,7 @@ const SkeletonVideo = () => {
         variant="rectangular"
         sx={{
           aspectRatio: "16/9",
-          width: 550,
-          minWidth: 300,
-          height: 270,
-          borderRadius: 1,
-          m: 3,
-        }}
-      />
-      <Skeleton
-        variant="rectangular"
-        sx={{
-          aspectRatio: "16/9",
-          width: 550,
-          minWidth: 300,
-          height: 270,
-          borderRadius: 1,
-          m: 3,
-        }}
-      />
-      <Skeleton
-        variant="rectangular"
-        sx={{
-          aspectRatio: "16/9",
-          width: 550,
+          width: 450,
           minWidth: 300,
           height: 270,
           borderRadius: 1,
