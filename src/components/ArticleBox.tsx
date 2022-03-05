@@ -107,6 +107,7 @@ const ArticleBox = (props: Props) => {
               flexDirection: "column",
               justifyContent: "space-around",
               textAlign: "left",
+              width: "65%",
               height: 150,
             }}
           >
@@ -118,7 +119,7 @@ const ArticleBox = (props: Props) => {
                 sx={{
                   overflow: "hidden",
                   textOverflow: "ellipsis",
-                  width: "11rem",
+                  width: "auto",
                   display: "flex",
                   gap: 2,
                   color: "#607d8b",
