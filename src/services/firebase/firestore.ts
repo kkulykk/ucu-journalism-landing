@@ -1,13 +1,17 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, DocumentData, getDocs, QuerySnapshot } from "firebase/firestore";
 import { firestore } from "../../utils/firebaseConfig"
 
-const getData = async () => {
-    const querySnapshot = await getDocs(collection(firestore, "dayPhotos"));
-    // querySnapshot.forEach((doc) => {
-    //   // doc.data() is never undefined for query doc snapshots
-    //   console.log(doc.id, " => ", doc.data());
-    // });
+enum CollectionNames {
+    ANALYTICS_MATERIAL = "analyticalMaterials",
+    DAY_PHOTOS = "dayPhotos",
+    LEADER_INTERVIEWS = "leaderInterviews",
+    WAR_HISTORY = "warHistory",
+    WORLD_ABOUT_UKRAINE = "worldAboutUkraine",
+}
 
+const getFirestoreRecords = async (firestoreCollection: CollectionNames): Promise<QuerySnapshot<DocumentData>> => {
+    const querySnapshot = await getDocs(collection(firestore, firestoreCollection));
     return querySnapshot;
 }
-export { getData }
+
+export { getFirestoreRecords, CollectionNames }

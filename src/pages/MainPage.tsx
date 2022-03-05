@@ -1,11 +1,17 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { getData } from "../services/firebase/firestore";
+import { getFirestoreRecords, CollectionNames } from "../services/firebase/firestore";
+import { AnalyticalMaterialsObj } from "../services/models/firestoreDocuments";
 
-const MainPage: React.FC = () => {
-  const a = getData().then((res) => {
-    console.log(res)
-  });
+const MainPage = () => {
+  // const a = getFirestoreRecords(CollectionNames.ANALYTICS_MATERIAL)
+  //   .then((res) => {
+  //       res.forEach((doc) => {
+  //         const document = doc.data()
+
+  //       new AnalyticalMaterialsObj(document.title, document.date, document.source, document.imageUrl, document.lead, document.text).disp();
+  //   });
+  // });
   
   return (
     <div>

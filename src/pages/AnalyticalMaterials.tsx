@@ -1,6 +1,4 @@
-import React from "react";
-
-const AnalyticalMaterials: React.FC = () => {
+const AnalyticalMaterials = () => {
   return <div>AnalyticalMaterials</div>;
 };
 
