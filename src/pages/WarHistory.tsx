@@ -3,7 +3,7 @@ import {
   getFirestoreRecords,
   CollectionNames,
 } from "../services/firebase/firestore";
-import { warHistoryObj  } from "../services/models/firestoreDocuments";
+import { warHistoryObj } from "../services/models/firestoreDocuments";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SectionDescription from "../components/SectionDescription";
@@ -14,39 +14,42 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import SkeletonVideo from "../components/SkeletonVideo";
 
-
-
 // Constants
-const VIDEOS_NUMBER = 1
+const VIDEOS_NUMBER = 2;
 
 const WarHisttory = () => {
-  const [warHistoryObjects, setWarHistoryObjects] = useState<warHistoryObj[]>([])
+  const [warHistoryObjects, setWarHistoryObjects] = useState<warHistoryObj[]>(
+    []
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [videosNumber, setVideosNumber] = useState<number>(VIDEOS_NUMBER)
+  const [videosNumber, setVideosNumber] = useState<number>(VIDEOS_NUMBER);
 
   const getWarHistoryVideos = async () => {
     const videoObjectsArray: warHistoryObj[] = [];
     try {
       setIsLoading(true); // switch ON page loader
-      const videos = await getFirestoreRecords(CollectionNames.WAR_HISTORY, videosNumber);
+      const videos = await getFirestoreRecords(
+        CollectionNames.WAR_HISTORY,
+        videosNumber
+      );
 
       videos.forEach((doc) => {
-        const docData = doc.data()
+        const docData = doc.data();
         const singleWarHistoryObject: warHistoryObj = new warHistoryObj(
           docData.title,
           docData.date,
           docData.videoUrl
-        )
-        videoObjectsArray.push(singleWarHistoryObject)
-      })
+        );
+        videoObjectsArray.push(singleWarHistoryObject);
+      });
 
-      setWarHistoryObjects(videoObjectsArray)
+      setWarHistoryObjects(videoObjectsArray);
 
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  }
+  };
 
   const mappedHistoryVideoPosts = () => {
     return warHistoryObjects.map((video, index) => {
@@ -57,14 +60,13 @@ const WarHisttory = () => {
           date={video.date}
           videoUrl={video.videoUrl}
         />
-      )
-    })
-  }
+      );
+    });
+  };
 
   useEffect(() => {
     getWarHistoryVideos();
-  }, [videosNumber])
-
+  }, [videosNumber]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -77,9 +79,14 @@ const WarHisttory = () => {
         so on"
       />
       <Box sx={{ display: "flex", flexWrap: "wrap", p: "0 8%" }}>
-        {isLoading ? "Loading" : mappedHistoryVideoPosts()}
+        {isLoading ? <SkeletonVideo /> : mappedHistoryVideoPosts()}
       </Box>
-      <Button disabled={isLoading} variant="outlined" sx={{ marginTop: 5 }} onClick={() => setVideosNumber(videosNumber + VIDEOS_NUMBER)}>
+      <Button
+        disabled={isLoading}
+        variant="outlined"
+        sx={{ marginTop: 5 }}
+        onClick={() => setVideosNumber(videosNumber + VIDEOS_NUMBER)}
+      >
         Load more
       </Button>
       <Footer />
