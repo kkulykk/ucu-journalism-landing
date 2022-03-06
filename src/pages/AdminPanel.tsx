@@ -1,10 +1,11 @@
 import { useState, useEffect, SetStateAction, SyntheticEvent } from "react";
 import { ThemeProvider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
+import Modal from "@mui/material/Modal";
 import { auth } from "../utils/firebaseConfig";
 import { onAuthStateChanged, signOut } from "@firebase/auth";
-
+import Snackbar from "@mui/material/Snackbar";
+import TextField from "@mui/material/TextField";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -22,6 +23,10 @@ import { MdVideoCameraFront } from "react-icons/md";
 import { MdOutlineLanguage } from "react-icons/md";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { MdAnalytics } from "react-icons/md";
+import { styled } from "@mui/material/styles";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
 
 import theme from "../utils/theme";
 
@@ -59,10 +64,31 @@ function a11yProps(index: number) {
 }
 
 const AdminPanel = () => {
+  const style = {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "60vw",
+    maxHeight: "90vh",
+    bgcolor: "white",
+    overflow: "scroll",
+    borderRadius: 3,
+    boxShadow: 24,
+  };
+
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [user, setUser] = useState<{} | null>({});
+  const [date, setDate] = useState<any>(new Date());
+
+  const [openWarHistoryModal, setOpenWarHistoryModal] =
+    useState<boolean>(false);
+  const [openAnalyticalMaterialModal, setOpenAnalyticalMaterialModal] =
+    useState<boolean>(false);
+
+  const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -73,12 +99,37 @@ const AdminPanel = () => {
   };
 
   const actions = [
-    { icon: <MdAddPhotoAlternate />, name: "Add photo of the day" },
-    { icon: <MdAnalytics />, name: "Add analytical material post" },
-    { icon: <MdOutlineQuestionAnswer />, name: "Add war history post" },
-    { icon: <MdOutlineLanguage />, name: "Add world about Ukraine post" },
-    { icon: <MdVideoCameraFront />, name: "Add leader interview post" },
+    {
+      icon: <MdAddPhotoAlternate />,
+      name: "Add photo of the day",
+      onClick: () => setOpenWarHistoryModal(true),
+    },
+    {
+      icon: <MdAnalytics />,
+      name: "Add analytical material post",
+      onClick: () => setOpenAnalyticalMaterialModal(true),
+    },
+    {
+      icon: <MdOutlineQuestionAnswer />,
+      name: "Add war history post",
+      onClick: () => setOpenWarHistoryModal(true),
+    },
+    {
+      icon: <MdOutlineLanguage />,
+      name: "Add world about Ukraine post",
+      onClick: () => setOpenWarHistoryModal(true),
+    },
+    {
+      icon: <MdVideoCameraFront />,
+      name: "Add leader interview post",
+      onClick: () => setOpenWarHistoryModal(true),
+    },
   ];
+
+  const Input = styled("input")({
+    display: "none",
+  });
+
   const logout = async () => {
     await signOut(auth);
   };
@@ -103,6 +154,151 @@ const AdminPanel = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Modal
+        open={openAnalyticalMaterialModal}
+        onClose={() => setOpenAnalyticalMaterialModal(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Box sx={{ p: 5, overflow: "scroll" }}>
+            <Typography variant="h3" sx={{ marginBottom: 1 }}>
+              Add new Analytical Material post
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                m: "5% 0",
+                gap: 2,
+              }}
+            >
+              <Box sx={{ display: "flex", gap: 2 }}>
+                <TextField
+                  sx={{ width: "100%" }}
+                  label="Title"
+                  variant="outlined"
+                />
+                <TextField
+                  sx={{ width: 300 }}
+                  label="Author"
+                  variant="outlined"
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  alignItems: "center",
+                }}
+              >
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    label="Date"
+                    value={date}
+                    onChange={(newValue) => {
+                      setDate(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+                <label htmlFor="contained-button-file">
+                  <Input
+                    accept="image/*"
+                    id="contained-button-file"
+                    multiple
+                    type="file"
+                  />
+                  <Button variant="outlined" component="span">
+                    Upload image
+                  </Button>
+                </label>
+              </Box>
+              <TextField
+                sx={{ width: "100%" }}
+                multiline
+                maxRows={3}
+                label="Lead"
+                variant="outlined"
+              />
+              <TextField
+                multiline
+                maxRows={5}
+                sx={{ width: "100%" }}
+                label="Text"
+                variant="outlined"
+              />
+            </Box>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={() => {
+                setOpenAnalyticalMaterialModal(false);
+                setOpenSnackBar(true);
+              }}
+            >
+              Add post
+            </Button>
+            <Button
+              color="secondary"
+              sx={{ marginLeft: "2%" }}
+              onClick={() => setOpenAnalyticalMaterialModal(false)}
+            >
+              Close
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={openWarHistoryModal}
+        onClose={() => setOpenWarHistoryModal(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Box sx={{ p: 5, overflow: "scroll" }}>
+            <Typography variant="h3" sx={{ marginBottom: 1 }}>
+              Add new War History post
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                m: "5% 0",
+                gap: 2,
+              }}
+            >
+              <TextField label="Title" variant="outlined" />
+              <TextField label="Video URL" variant="outlined" />
+            </Box>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={() => {
+                setOpenWarHistoryModal(false);
+                setOpenSnackBar(true);
+              }}
+            >
+              Add post
+            </Button>
+            <Button
+              color="secondary"
+              sx={{ marginLeft: "2%" }}
+              onClick={() => setOpenWarHistoryModal(false)}
+            >
+              Close
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+
+      <Snackbar
+        open={openSnackBar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackBar(false)}
+        message="New item added"
+      />
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <AppBar position="static">
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -183,6 +379,7 @@ const AdminPanel = () => {
               key={action.name}
               icon={action.icon}
               tooltipTitle={action.name}
+              onClick={action.onClick}
             />
           ))}
         </SpeedDial>
