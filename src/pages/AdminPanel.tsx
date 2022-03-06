@@ -88,7 +88,8 @@ const AdminPanel = () => {
   });
 
   useEffect(() => {
-    if (user == null) {
+    if (!auth.currentUser) {
+      // user is NOT logged in
       navigate("/admin");
     }
   }, [user]);

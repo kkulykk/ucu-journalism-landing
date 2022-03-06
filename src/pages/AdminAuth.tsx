@@ -31,7 +31,7 @@ const AdminAuth = () => {
         setError(true);
         console.error(err)
       }
-      
+
     } else {
       setError(true);
     }
@@ -42,7 +42,7 @@ const AdminAuth = () => {
   })
 
   useEffect(() => {
-    if (user != null) {
+    if (auth.currentUser) {
       navigate("/adminPanel")
     }
   }, [user])
