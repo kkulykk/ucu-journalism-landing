@@ -30,6 +30,11 @@ import DatePicker from "@mui/lab/DatePicker";
 
 import theme from "../utils/theme";
 
+import DayPhotoModal from "../components/modals/DayPhotoModal";
+import AnalyticalMaterialModal from "../components/modals/AnalyticalMaterialModal";
+import WarHistoryLeaderInterviewModal from "../components/modals/WarHistoryLeaderInterviewModal";
+import WorldAboutUkraineModal from "../components/modals/WorldAboutUkraineModal"
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -81,12 +86,12 @@ const AdminPanel = () => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [user, setUser] = useState<{} | null>({});
-  const [date, setDate] = useState<any>(new Date());
-
-  const [openWarHistoryModal, setOpenWarHistoryModal] =
-    useState<boolean>(false);
-  const [openAnalyticalMaterialModal, setOpenAnalyticalMaterialModal] =
-    useState<boolean>(false);
+  
+  const [openDayPhotoModal, setOpenDayPhotoModal] = useState<boolean>(false);
+  const [openAnalyticalMaterialModal, setOpenAnalyticalMaterialModal] = useState<boolean>(false);
+  const [openWarHistoryModal, setOpenWarHistoryModal] = useState<boolean>(false);
+  const [openWorldAboutUkraineModal, setOpenWorldAboutUkraineModal] = useState<boolean>(false);
+  const [openLeaderInterviewModal, setOpenLeaderInterviewModal] = useState<boolean>(false);
 
   const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
 
@@ -102,7 +107,7 @@ const AdminPanel = () => {
     {
       icon: <MdAddPhotoAlternate />,
       name: "Add photo of the day",
-      onClick: () => setOpenWarHistoryModal(true),
+      onClick: () => setOpenDayPhotoModal(true),
     },
     {
       icon: <MdAnalytics />,
@@ -117,33 +122,14 @@ const AdminPanel = () => {
     {
       icon: <MdOutlineLanguage />,
       name: "Add world about Ukraine post",
-      onClick: () => setOpenWarHistoryModal(true),
+      onClick: () => setOpenWorldAboutUkraineModal(true),
     },
     {
       icon: <MdVideoCameraFront />,
       name: "Add leader interview post",
-      onClick: () => setOpenWarHistoryModal(true),
+      onClick: () => setOpenLeaderInterviewModal(true),
     },
   ];
-
-  const Input = styled("input")({
-    display: "none",
-  });
-
-  const logout = async () => {
-    await signOut(auth);
-  };
-
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
-
-  useEffect(() => {
-    if (!auth.currentUser) {
-      // user is NOT logged in
-      navigate("/admin");
-    }
-  }, [user]);
 
   const [value, setValue] = useState(0);
 
@@ -152,147 +138,26 @@ const AdminPanel = () => {
     setValue(newValue);
   };
 
+  // Authentication part
+  const logout = async () => { await signOut(auth); };
+
+  onAuthStateChanged(auth, (currentUser) => { setUser(currentUser); });
+
+  useEffect(() => {
+    if (!auth.currentUser) {
+      // user is NOT logged in
+      navigate("/admin");
+    }
+  }, [user]);
+
+
   return (
     <ThemeProvider theme={theme}>
-      <Modal
-        open={openAnalyticalMaterialModal}
-        onClose={() => setOpenAnalyticalMaterialModal(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Box sx={{ p: 5, overflow: "scroll" }}>
-            <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Add new Analytical Material post
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                m: "5% 0",
-                gap: 2,
-              }}
-            >
-              <Box sx={{ display: "flex", gap: 2 }}>
-                <TextField
-                  sx={{ width: "100%" }}
-                  label="Title"
-                  variant="outlined"
-                />
-                <TextField
-                  sx={{ width: 300 }}
-                  label="Author"
-                  variant="outlined"
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 2,
-                  alignItems: "center",
-                }}
-              >
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker
-                    label="Date"
-                    value={date}
-                    onChange={(newValue) => {
-                      setDate(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
-                <label htmlFor="contained-button-file">
-                  <Input
-                    accept="image/*"
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                  />
-                  <Button variant="outlined" component="span">
-                    Upload image
-                  </Button>
-                </label>
-              </Box>
-              <TextField
-                sx={{ width: "100%" }}
-                multiline
-                maxRows={3}
-                label="Lead"
-                variant="outlined"
-              />
-              <TextField
-                multiline
-                maxRows={5}
-                sx={{ width: "100%" }}
-                label="Text"
-                variant="outlined"
-              />
-            </Box>
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={() => {
-                setOpenAnalyticalMaterialModal(false);
-                setOpenSnackBar(true);
-              }}
-            >
-              Add post
-            </Button>
-            <Button
-              color="secondary"
-              sx={{ marginLeft: "2%" }}
-              onClick={() => setOpenAnalyticalMaterialModal(false)}
-            >
-              Close
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-
-      <Modal
-        open={openWarHistoryModal}
-        onClose={() => setOpenWarHistoryModal(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Box sx={{ p: 5, overflow: "scroll" }}>
-            <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Add new War History post
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                m: "5% 0",
-                gap: 2,
-              }}
-            >
-              <TextField label="Title" variant="outlined" />
-              <TextField label="Video URL" variant="outlined" />
-            </Box>
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={() => {
-                setOpenWarHistoryModal(false);
-                setOpenSnackBar(true);
-              }}
-            >
-              Add post
-            </Button>
-            <Button
-              color="secondary"
-              sx={{ marginLeft: "2%" }}
-              onClick={() => setOpenWarHistoryModal(false)}
-            >
-              Close
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-
+      <DayPhotoModal modalIsOpen={openDayPhotoModal} setModalIsOpen={setOpenDayPhotoModal} setSnackBarIsOpen={setOpenSnackBar} />
+      <AnalyticalMaterialModal modalIsOpen={openAnalyticalMaterialModal} setModalIsOpen={setOpenAnalyticalMaterialModal} setSnackBarIsOpen={setOpenSnackBar} />
+      <WarHistoryLeaderInterviewModal title="War History" modalIsOpen={openWarHistoryModal} setModalIsOpen={setOpenWarHistoryModal} setSnackBarIsOpen={setOpenSnackBar} />
+      <WarHistoryLeaderInterviewModal title="Leader Interview" modalIsOpen={openLeaderInterviewModal} setModalIsOpen={setOpenLeaderInterviewModal} setSnackBarIsOpen={setOpenSnackBar} />
+      <WorldAboutUkraineModal modalIsOpen={openWorldAboutUkraineModal} setModalIsOpen={setOpenWorldAboutUkraineModal} setSnackBarIsOpen={setOpenSnackBar} />
       <Snackbar
         open={openSnackBar}
         autoHideDuration={6000}
