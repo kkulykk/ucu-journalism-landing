@@ -2,6 +2,9 @@ import { useState, useEffect, SetStateAction } from "react";
 import { ThemeProvider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
+import { auth } from "../utils/firebaseConfig";
+import { onAuthStateChanged, signOut } from "@firebase/auth";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,12 +19,8 @@ import theme from "../utils/theme";
 const AdminPanel = () => {
   const navigate = useNavigate();
 
-  const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
+  const [user, setUser] = useState<{} | null>({})
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -31,16 +30,20 @@ const AdminPanel = () => {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("adminId");
-    navigate("/admin");
+  const logout = async () => {
+    await signOut(auth);
   };
 
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  })
+
   useEffect(() => {
-    if (!localStorage.getItem("adminId")) {
-      navigate("/admin");
+    if (user == null) {
+      navigate("/admin")
     }
-  }, []);
+  }, [user])
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -76,7 +79,7 @@ const AdminPanel = () => {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleLogout}>Log out</MenuItem>
+                  <MenuItem onClick={() => logout()}>Log out</MenuItem>
                 </Menu>
               </div>
             )}
