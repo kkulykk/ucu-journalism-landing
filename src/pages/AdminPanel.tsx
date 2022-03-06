@@ -39,11 +39,11 @@ const AdminPanel = () => {
   })
 
   useEffect(() => {
-    if (user == null) {
+    if (!auth.currentUser) { // user is NOT logged in
       navigate("/admin")
     }
   }, [user])
-
+  
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
