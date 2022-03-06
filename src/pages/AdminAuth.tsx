@@ -1,5 +1,9 @@
 import { useState, useEffect, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { auth } from "../utils/firebaseConfig";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "@firebase/auth";
+
 import { ThemeProvider } from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -10,48 +14,38 @@ import theme from "../utils/theme";
 
 const AdminAuth = () => {
   const navigate = useNavigate();
-  const [login, setLogin] = useState<string>("");
+  
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [visible, setVisible] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [user, setUser] = useState<{} | null>(null)
 
-  const hangleLoginInput = (event: {
-    target: { value: SetStateAction<string> };
-  }): void => {
-    setLogin(event.target.value);
-  };
+  const login = async (email: string, password: string) => {
+    if (email != "" && password != "") {
+      setError(false);
 
-  const hanglePasswordInput = (event: {
-    target: { value: SetStateAction<string> };
-  }): void => {
-    setPassword(event.target.value);
-  };
-
-  const handleLogin = (login: string, password: string): void => {
-    if (login != "" && password != "") {
-      setError("");
-      console.log(login);
-      console.log(password);
-      localStorage.setItem("adminId", login + password);
-      navigate("/adminPanel");
+      try {
+        const user = await signInWithEmailAndPassword(auth, email, password);
+        navigate("/adminPanel");
+      } catch (err) {
+        setError(true);
+        console.error(err)
+      }
+      
     } else {
-      setError("error");
+      setError(true);
     }
   };
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  })
+
   useEffect(() => {
-    if (localStorage.getItem("adminId")) {
-      navigate("/adminPanel");
-    } else {
-      setVisible(true);
+    if (user != null) {
+      navigate("/adminPanel")
     }
-  }, []);
-
-  if (!visible)
-    return (
-      <ThemeProvider theme={theme}>
-        <CircularProgress />
-      </ThemeProvider>
-    );
+  }, [user])
 
   return (
     <ThemeProvider theme={theme}>
@@ -80,19 +74,19 @@ const AdminAuth = () => {
           <TextField
             label="Login"
             variant="outlined"
-            onChange={hangleLoginInput}
+            onChange={(event) => setEmail(event.target.value)}
           />
           <TextField
-            error={error != ""}
-            helperText={error ? "Incorrect login or password" : ""}
+            error={error}
+            helperText={error ? "Incorrect email or password" : ""}
             autoComplete="current-password"
             label="Password"
             type="password"
             variant="outlined"
-            onChange={hanglePasswordInput}
+            onChange={(event) => setPassword(event.target.value)}
           />
           <Button
-            onClick={() => handleLogin(login, password)}
+            onClick={() => login(email, password)}
             variant="contained"
             sx={{ height: 50 }}
           >

@@ -2,6 +2,9 @@ import { useState, useEffect, SetStateAction, SyntheticEvent } from "react";
 import { ThemeProvider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
+import { auth } from "../utils/firebaseConfig";
+import { onAuthStateChanged, signOut } from "@firebase/auth";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,7 +17,6 @@ import Tab from "@mui/material/Tab";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { MdAddPhotoAlternate } from "react-icons/md";
 import { MdVideoCameraFront } from "react-icons/md";
 import { MdOutlineLanguage } from "react-icons/md";
@@ -60,18 +62,14 @@ const AdminPanel = () => {
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [user, setUser] = useState<{} | null>({});
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>): void => {
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = (): void => {
     setAnchorEl(null);
-  };
-
-  const handleLogout = (): void => {
-    localStorage.removeItem("adminId");
-    navigate("/admin");
   };
 
   const actions = [
@@ -81,51 +79,26 @@ const AdminPanel = () => {
     { icon: <MdOutlineLanguage />, name: "Add world about Ukraine post" },
     { icon: <MdVideoCameraFront />, name: "Add leader interview post" },
   ];
+  const logout = async () => {
+    await signOut(auth);
+  };
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
 
   useEffect(() => {
-    if (!localStorage.getItem("adminId")) {
+    if (user == null) {
       navigate("/admin");
     }
-  }, []);
+  }, [user]);
 
   const [value, setValue] = useState(0);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
+    console.log(newValue);
     setValue(newValue);
   };
-
-  const rows = [
-    { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-    { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-    { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-    { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-    { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-    { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-    { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-    { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-    { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  ];
-
-  const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "firstName", headerName: "First name", width: 130 },
-    { field: "lastName", headerName: "Last name", width: 130 },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      width: 90,
-    },
-    {
-      field: "fullName",
-      headerName: "Full name",
-      description: "This column has a value getter and is not sortable.",
-      sortable: false,
-      width: 160,
-      valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-    },
-  ];
 
   return (
     <ThemeProvider theme={theme}>
@@ -161,7 +134,7 @@ const AdminPanel = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleLogout}>Log out</MenuItem>
+                <MenuItem onClick={() => logout()}>Log out</MenuItem>
               </Menu>
             </div>
           </Toolbar>
@@ -183,18 +156,7 @@ const AdminPanel = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <Box sx={{ height: "70vh" }}>
-            War stories
-            <div style={{ height: 400, width: "100%" }}>
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-              />
-            </div>
-          </Box>
+          <Box sx={{ height: "70vh" }}>War stories</Box>
         </TabPanel>
         <TabPanel value={value} index={1}>
           Leaders interviews
