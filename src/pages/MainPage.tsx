@@ -146,7 +146,6 @@ const MainPage = () => {
             sx={{
               display: "flex",
               justifyContent: "center",
-              // backgroundColor: "aqua",
               width: 3 / 4,
               flexWrap: "wrap",
             }}
@@ -173,6 +172,10 @@ const MainPage = () => {
             />
           </Box>
         </Box>
+        <Typography variant="h3" color="primary">
+          UCU partnership projects
+        </Typography>
+        <Box></Box>
       </div>
       <Footer />
     </ThemeProvider>
