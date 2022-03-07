@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import {
-  getFirestoreRecords,
+  getFirestoreRecordsLimit,
   CollectionNames,
 } from "../services/firebase/firestore";
 import CircularProgress from "@mui/material/CircularProgress";
-import { dayPhotosObj } from "../services/models/firestoreDocuments";
+import { DayPhotosObj } from "../services/models/firestoreDocuments";
 import { ThemeProvider } from "@mui/material";
 import Header from "../components/Header";
 import theme from "../utils/theme";
@@ -25,17 +25,17 @@ const MAXX = 7;
 const MainPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [dayPhotosObjects, setDayPhotosObjects] = useState<dayPhotosObj[]>([]);
+  const [dayPhotosObjects, setDayPhotosObjects] = useState<DayPhotosObj[]>([]);
 
   const getDayPhotos = async () => {
-    const dayPhotosArray: dayPhotosObj[] = [];
+    const dayPhotosArray: DayPhotosObj[] = [];
     try {
       setIsLoading(true); // switch ON page loader
-      const photos = await getFirestoreRecords(CollectionNames.DAY_PHOTOS, 3);
+      const photos = await getFirestoreRecordsLimit(CollectionNames.DAY_PHOTOS, 3);
 
       photos.forEach((doc) => {
         const docData = doc.data();
-        const singleDayPhotoObject: dayPhotosObj = new dayPhotosObj(
+        const singleDayPhotoObject: DayPhotosObj = new DayPhotosObj(
           docData.imageUrl,
           docData.date,
           docData.source,
@@ -47,7 +47,6 @@ const MainPage = () => {
       setDayPhotosObjects(dayPhotosArray);
 
       setIsLoading(false);
-      console.log(dayPhotosArray);
     } catch (err) {
       console.error(err);
     }

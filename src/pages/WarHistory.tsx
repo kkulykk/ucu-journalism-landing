@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import {
-  getFirestoreRecords,
+  getFirestoreRecordsLimit,
   CollectionNames,
 } from "../services/firebase/firestore";
-import { warHistoryObj } from "../services/models/firestoreDocuments";
+import { WarHistoryObj } from "../services/models/firestoreDocuments";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SectionDescription from "../components/SectionDescription";
@@ -18,24 +18,25 @@ import SkeletonVideo from "../components/SkeletonVideo";
 const VIDEOS_NUMBER = 2;
 
 const WarHistory = () => {
-  const [warHistoryObjects, setWarHistoryObjects] = useState<warHistoryObj[]>(
+  const [warHistoryObjects, setWarHistoryObjects] = useState<WarHistoryObj[]>(
     []
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [videosNumber, setVideosNumber] = useState<number>(VIDEOS_NUMBER);
 
   const getWarHistoryVideos = async () => {
-    const videoObjectsArray: warHistoryObj[] = [];
+    const videoObjectsArray: WarHistoryObj[] = [];
     try {
       setIsLoading(true); // switch ON page loader
-      const videos = await getFirestoreRecords(
+      const videos = await getFirestoreRecordsLimit(
         CollectionNames.WAR_HISTORY,
         videosNumber
       );
 
       videos.forEach((doc) => {
         const docData = doc.data();
-        const singleWarHistoryObject: warHistoryObj = new warHistoryObj(
+        const singleWarHistoryObject: WarHistoryObj = new WarHistoryObj(
+          doc.id,
           docData.title,
           docData.date,
           docData.videoUrl

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import {
-  getFirestoreRecords,
+  getFirestoreRecordsLimit,
   CollectionNames,
 } from "../services/firebase/firestore";
-import { leaderInterviewsObj } from "../services/models/firestoreDocuments";
+import { LeaderInterviewsObj } from "../services/models/firestoreDocuments";
 
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -20,22 +20,22 @@ import SkeletonVideo from "../components/SkeletonVideo";
 const VIDEOS_NUMBER = 1;
 
 const LeaderInterviews = () => {
-  const [leaderInterviewObjects, setLeaderInterviewObjects] = useState<leaderInterviewsObj[]>([]);
+  const [leaderInterviewObjects, setLeaderInterviewObjects] = useState<LeaderInterviewsObj[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [videosNumber, setVideosNumber] = useState<number>(VIDEOS_NUMBER);
 
   const getLeaderInterviewVideos = async () => {
-    const videoObjectsArray: leaderInterviewsObj[] = [];
+    const videoObjectsArray: LeaderInterviewsObj[] = [];
     try {
       setIsLoading(true);
-      const videos = await getFirestoreRecords(
+      const videos = await getFirestoreRecordsLimit(
         CollectionNames.LEADER_INTERVIEWS,
         videosNumber
       );
 
       videos.forEach((doc) => {
         const docData = doc.data();
-        const singleLeaderInterviewObject: leaderInterviewsObj = new leaderInterviewsObj(
+        const singleLeaderInterviewObject: LeaderInterviewsObj = new LeaderInterviewsObj(
           docData.title,
           docData.date,
           docData.videoUrl

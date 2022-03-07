@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import {
-  getFirestoreRecords,
+  getFirestoreRecordsLimit,
   CollectionNames,
 } from "../services/firebase/firestore";
-import { worldAboutUkraineObj } from "../services/models/firestoreDocuments";
+import { WorldAboutUkraineObj } from "../services/models/firestoreDocuments";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SectionDescription from "../components/SectionDescription";
@@ -17,23 +17,23 @@ import WorldArticle from "../components/WorldArticle";
 const POSTS_NUMBER = 1
 
 const WorldAboutUkraine = () => {
-  const [worldAboutUkraineObjects, setWorldAboutUkraineObjects] = useState<worldAboutUkraineObj[]>([]);
+  const [worldAboutUkraineObjects, setWorldAboutUkraineObjects] = useState<WorldAboutUkraineObj[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [postsNumber, setPostsNumber] = useState<number>(POSTS_NUMBER)
 
   const getWorldAboutUkrainePosts = async () => {
-    const postObjects: worldAboutUkraineObj[] = [];
+    const postObjects: WorldAboutUkraineObj[] = [];
     try {
       setIsLoading(true);
-      const posts = await getFirestoreRecords(
+      const posts = await getFirestoreRecordsLimit(
         CollectionNames.WORLD_ABOUT_UKRAINE,
         postsNumber
       )
 
       posts.forEach((doc) => {
         const docData = doc.data();
-        const signleWorldAboutUkraineObject: worldAboutUkraineObj =
-          new worldAboutUkraineObj(
+        const signleWorldAboutUkraineObject: WorldAboutUkraineObj =
+          new WorldAboutUkraineObj(
             docData.title,
             docData.date,
             docData.source,

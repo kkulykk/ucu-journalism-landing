@@ -29,7 +29,7 @@ class AnalyticalMaterialsObj {
   }
 }
 
-class dayPhotosObj {
+class DayPhotosObj {
   imageUrl: string;
   date: any;
   source: string;
@@ -54,7 +54,7 @@ class dayPhotosObj {
   }
 }
 
-class leaderInterviewsObj {
+class LeaderInterviewsObj {
   title: string;
   date: any;
   videoUrl: string;
@@ -72,12 +72,14 @@ class leaderInterviewsObj {
   }
 }
 
-class warHistoryObj {
+class WarHistoryObj {
+  id: string;
   title: string;
   date: any;
   videoUrl: string;
 
-  constructor(title: string, date: any, videoUrl: string) {
+  constructor(id: string, title: string, date: any, videoUrl: string) {
+    this.id = id;
     this.title = title;
     this.date = date.toDate().toDateString();
     this.videoUrl = videoUrl;
@@ -85,12 +87,12 @@ class warHistoryObj {
 
   disp(): void {
     console.log(
-      `Title: ${this.title}, Date: ${this.date}, VideoUrl: ${this.videoUrl}`
+      `Id: ${this.id}, Title: ${this.title}, Date: ${this.date}, VideoUrl: ${this.videoUrl}`
     );
   }
 }
 
-class worldAboutUkraineObj {
+class WorldAboutUkraineObj {
   title: string;
   date: any;
   source: string;
@@ -123,8 +125,8 @@ class worldAboutUkraineObj {
 
 export {
   AnalyticalMaterialsObj,
-  dayPhotosObj,
-  leaderInterviewsObj,
-  warHistoryObj,
-  worldAboutUkraineObj,
+  DayPhotosObj,
+  LeaderInterviewsObj,
+  WarHistoryObj,
+  WorldAboutUkraineObj,
 };

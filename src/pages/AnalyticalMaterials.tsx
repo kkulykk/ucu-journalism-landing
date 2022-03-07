@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import {
-  getFirestoreRecords,
+  getFirestoreRecordsLimit,
   CollectionNames,
 } from "../services/firebase/firestore";
 import { AnalyticalMaterialsObj } from "../services/models/firestoreDocuments";
@@ -26,7 +26,7 @@ const AnalyticalMaterials = () => {
     const postObjectsArray: AnalyticalMaterialsObj[] = [];
     try {
       setIsLoading(true); // switch ON page loader
-      const posts = await getFirestoreRecords(
+      const posts = await getFirestoreRecordsLimit(
         CollectionNames.ANALYTICS_MATERIAL,
         postsNumber
       );

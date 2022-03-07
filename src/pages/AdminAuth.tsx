@@ -2,8 +2,8 @@ import { useState, useEffect, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { auth } from "../utils/firebaseConfig";
-import { onAuthStateChanged, signInWithEmailAndPassword } from "@firebase/auth";
-
+import { signInWithEmailAndPassword } from "@firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { ThemeProvider } from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -17,34 +17,41 @@ const AdminAuth = () => {
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<boolean>(false);
-  const [user, setUser] = useState<{} | null>(null);
+  const [user, loading, error] = useAuthState(auth);
+  const [warning, setWarning] = useState<boolean>(false);
 
   const login = async (email: string, password: string) => {
-    if (email != "" && password != "") {
-      setError(false);
-
-      try {
-        const user = await signInWithEmailAndPassword(auth, email, password);
-        navigate("/adminPanel");
-      } catch (err) {
-        setError(true);
-        console.error(err);
-      }
-    } else {
-      setError(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.error(err);
+      setWarning(true);
     }
   };
 
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
+  const Loader = () => {
+    return (
+      <ThemeProvider theme={theme}>
+        <Box
+          sx={{
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      </ThemeProvider>
+    );
+  };
 
   useEffect(() => {
-    if (auth.currentUser) {
-      navigate("/adminPanel");
+    if (loading) {
+      return;
     }
-  }, [user]);
+    if (user) navigate("/adminPanel");
+  }, [user, loading]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -76,8 +83,8 @@ const AdminAuth = () => {
             onChange={(event) => setEmail(event.target.value)}
           />
           <TextField
-            error={error}
-            helperText={error ? "Incorrect email or password" : ""}
+            error={warning}
+            helperText={warning ? "Incorrect email or password" : ""}
             autoComplete="current-password"
             label="Password"
             type="password"
