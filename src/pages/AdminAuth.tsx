@@ -2,7 +2,7 @@ import { useState, useEffect, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { auth } from "../utils/firebaseConfig";
-import { onAuthStateChanged, signInWithEmailAndPassword } from "@firebase/auth";
+import { signInWithEmailAndPassword } from "@firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { ThemeProvider } from "@mui/material";
 import Button from "@mui/material/Button";

@@ -150,9 +150,6 @@ const AdminPanel = () => {
     await signOut(auth);
   };
 
-  // onAuthStateChanged(auth, (currentUser) => {
-  //   setUser(currentUser);
-  // });
 
   const getAdminName = async () => {
     try {

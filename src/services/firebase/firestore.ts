@@ -35,12 +35,11 @@ const getFirestoreRecords = async (
   return records;
 };
 
-const fetchAdminName = async (
-  uid: string | undefined
-): Promise<QuerySnapshot<DocumentData>> => {
+const fetchAdminName = async (uid: string | undefined): Promise<QuerySnapshot<DocumentData>> => {
   const adminsRef = collection(firestore, "admins");
   const querySnapshot = query(adminsRef, where("uid", "==", uid));
   const doc = await getDocs(querySnapshot);
+  
   return doc;
 };
 
