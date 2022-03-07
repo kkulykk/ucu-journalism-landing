@@ -5,6 +5,7 @@ import Modal from "@mui/material/Modal";
 import { auth } from "../utils/firebaseConfig";
 import { onAuthStateChanged, signOut } from "@firebase/auth";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useAuthState } from "react-firebase-hooks/auth";
 import Snackbar from "@mui/material/Snackbar";
 import TextField from "@mui/material/TextField";
 import AppBar from "@mui/material/AppBar";
@@ -83,7 +84,8 @@ const AdminPanel = () => {
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [user, setUser] = useState<{} | null>({});
+
+  const [user, loading, error] = useAuthState(auth);
 
   const [openDayPhotoModal, setOpenDayPhotoModal] = useState<boolean>(false);
   const [openAnalyticalMaterialModal, setOpenAnalyticalMaterialModal] =
@@ -145,17 +147,36 @@ const AdminPanel = () => {
     await signOut(auth);
   };
 
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-  });
+  // onAuthStateChanged(auth, (currentUser) => {
+  //   setUser(currentUser);
+  // });
+
+  const Loader = () => {};
 
   useEffect(() => {
-    if (!auth.currentUser) {
-      // user is NOT logged in
+    if (loading) {
+      return;
+    }
+    if (!user) {
       navigate("/admin");
     }
-  }, [user]);
+  }, [user, loading]);
 
+  if (loading)
+    return (
+      <ThemeProvider theme={theme}>
+        <Box
+          sx={{
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      </ThemeProvider>
+    );
   return (
     <ThemeProvider theme={theme}>
       <DayPhotoModal
