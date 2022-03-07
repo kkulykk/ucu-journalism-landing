@@ -47,7 +47,6 @@ const MainPage = () => {
       setDayPhotosObjects(dayPhotosArray);
 
       setIsLoading(false);
-      console.log(dayPhotosArray);
     } catch (err) {
       console.error(err);
     }

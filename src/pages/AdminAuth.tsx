@@ -48,7 +48,7 @@ const AdminAuth = () => {
 
   useEffect(() => {
     if (loading) {
-      Loader();
+      return;
     }
     if (user) navigate("/adminPanel");
   }, [user, loading]);

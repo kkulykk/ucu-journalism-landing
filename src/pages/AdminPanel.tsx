@@ -1,5 +1,6 @@
 import { useState, useEffect, SetStateAction, SyntheticEvent } from "react";
 import { ThemeProvider } from "@mui/material";
+import { fetchAdminName } from "../services/firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import { auth } from "../utils/firebaseConfig";
@@ -85,6 +86,8 @@ const AdminPanel = () => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  const [adminName, setAdminName] = useState<string | undefined>("");
+
   const [user, loading, error] = useAuthState(auth);
 
   const [openDayPhotoModal, setOpenDayPhotoModal] = useState<boolean>(false);
@@ -151,7 +154,15 @@ const AdminPanel = () => {
   //   setUser(currentUser);
   // });
 
-  const Loader = () => {};
+  const getAdminName = async () => {
+    try {
+      const userName = await fetchAdminName(user?.uid);
+      const data = userName.docs[0].data();
+      setAdminName(data.name);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     if (loading) {
@@ -160,6 +171,7 @@ const AdminPanel = () => {
     if (!user) {
       navigate("/admin");
     }
+    getAdminName();
   }, [user, loading]);
 
   if (loading)
@@ -235,7 +247,7 @@ const AdminPanel = () => {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <Typography>Maria Banias</Typography>
+                <Typography>{adminName}</Typography>
               </Button>
               <Menu
                 id="menu-appbar"
