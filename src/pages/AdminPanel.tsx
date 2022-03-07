@@ -28,6 +28,9 @@ import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { MdAnalytics } from "react-icons/md";
 import { styled } from "@mui/material/styles";
 
+// Tables imports
+import WarHistoryTable from "../components/adminPanelTables/WarHistoryTable";
+
 import theme from "../utils/theme";
 
 import DayPhotoModal from "../components/modals/DayPhotoModal";
@@ -275,7 +278,7 @@ const AdminPanel = () => {
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            <Tab label="War stories" {...a11yProps(0)} />
+            <Tab label="War history" {...a11yProps(0)} />
             <Tab label="Leaders interviews" {...a11yProps(1)} />
             <Tab label="Analytical Materials" {...a11yProps(2)} />
             <Tab label="World about Ukraine" {...a11yProps(3)} />
@@ -283,7 +286,13 @@ const AdminPanel = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <Box sx={{ height: "70vh" }}>War stories</Box>
+          <Typography variant="h4" sx={{ marginBottom: 1 }}>
+            War history
+          </Typography>
+          <Box>
+            {/* TABLE */}
+            <WarHistoryTable />
+          </Box>
         </TabPanel>
         <TabPanel value={value} index={1}>
           Leaders interviews

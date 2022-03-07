@@ -20,7 +20,7 @@ enum CollectionNames {
   WORLD_ABOUT_UKRAINE = "worldAboutUkraine",
 }
 
-const getFirestoreRecords = async (
+const getFirestoreRecordsLimit = async (
   firestoreCollection: CollectionNames,
   recordsLimit: number
 ): Promise<QuerySnapshot<DocumentData>> => {
@@ -64,4 +64,4 @@ const addAnalyticalMaterials = async () => {
   );
 };
 
-export { getFirestoreRecords, fetchAdminName, CollectionNames };
+export { getFirestoreRecordsLimit, fetchAdminName, CollectionNames };

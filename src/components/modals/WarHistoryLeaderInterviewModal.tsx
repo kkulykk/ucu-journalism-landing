@@ -87,7 +87,10 @@ const WarHistoryLeaderInterviewModal = (props: Props) => {
             <Button
               color="secondary"
               sx={{ marginLeft: "2%" }}
-              onClick={() => props.setModalIsOpen(false)}
+              onClick={() => {
+                props.setModalIsOpen(false);
+                console.log("CLOSE")
+              }}
             >
               Close
             </Button>
