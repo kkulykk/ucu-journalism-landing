@@ -38,7 +38,8 @@ const MainPage = () => {
         const singleDayPhotoObject: dayPhotosObj = new dayPhotosObj(
           docData.imageUrl,
           docData.date,
-          docData.source
+          docData.source,
+          docData.description
         );
         dayPhotosArray.push(singleDayPhotoObject);
       });
@@ -83,7 +84,7 @@ const MainPage = () => {
                     objectFit: "cover",
                   }}
                   src={step.imageUrl}
-                  alt={step.source}
+                  alt={step.description}
                 />
               ) : null}
             </div>
@@ -92,23 +93,27 @@ const MainPage = () => {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
-            gap: 2,
+            flexDirection: "column",
             backgroundColor: "rgb(0, 0, 0, 0.5)",
             paddingLeft: 2,
             fontWeight: "400",
             color: "white",
             position: "absolute",
-            top: "60vh",
+            top: "55vh",
             right: 0,
             paddingRight: "5%",
           }}
         >
-          <Typography variant="caption">
-            {dayPhotosObjects[activeStep]?.source}
-          </Typography>
-          <Typography variant="caption">
-            {dayPhotosObjects[activeStep]?.date}
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Typography variant="caption">
+              {dayPhotosObjects[activeStep]?.source}
+            </Typography>
+            <Typography variant="caption">
+              {dayPhotosObjects[activeStep]?.date}
+            </Typography>
+          </Box>
+          <Typography variant="body2">
+            {dayPhotosObjects[activeStep]?.description}
           </Typography>
         </Box>
       </Box>

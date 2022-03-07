@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "@mui/material/Modal";
 import { auth } from "../utils/firebaseConfig";
 import { onAuthStateChanged, signOut } from "@firebase/auth";
+import CircularProgress from "@mui/material/CircularProgress";
 import Snackbar from "@mui/material/Snackbar";
 import TextField from "@mui/material/TextField";
 import AppBar from "@mui/material/AppBar";
@@ -24,16 +25,13 @@ import { MdOutlineLanguage } from "react-icons/md";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { MdAnalytics } from "react-icons/md";
 import { styled } from "@mui/material/styles";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DatePicker from "@mui/lab/DatePicker";
 
 import theme from "../utils/theme";
 
 import DayPhotoModal from "../components/modals/DayPhotoModal";
 import AnalyticalMaterialModal from "../components/modals/AnalyticalMaterialModal";
 import WarHistoryLeaderInterviewModal from "../components/modals/WarHistoryLeaderInterviewModal";
-import WorldAboutUkraineModal from "../components/modals/WorldAboutUkraineModal"
+import WorldAboutUkraineModal from "../components/modals/WorldAboutUkraineModal";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -86,12 +84,16 @@ const AdminPanel = () => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [user, setUser] = useState<{} | null>({});
-  
+
   const [openDayPhotoModal, setOpenDayPhotoModal] = useState<boolean>(false);
-  const [openAnalyticalMaterialModal, setOpenAnalyticalMaterialModal] = useState<boolean>(false);
-  const [openWarHistoryModal, setOpenWarHistoryModal] = useState<boolean>(false);
-  const [openWorldAboutUkraineModal, setOpenWorldAboutUkraineModal] = useState<boolean>(false);
-  const [openLeaderInterviewModal, setOpenLeaderInterviewModal] = useState<boolean>(false);
+  const [openAnalyticalMaterialModal, setOpenAnalyticalMaterialModal] =
+    useState<boolean>(false);
+  const [openWarHistoryModal, setOpenWarHistoryModal] =
+    useState<boolean>(false);
+  const [openWorldAboutUkraineModal, setOpenWorldAboutUkraineModal] =
+    useState<boolean>(false);
+  const [openLeaderInterviewModal, setOpenLeaderInterviewModal] =
+    useState<boolean>(false);
 
   const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
 
@@ -139,9 +141,13 @@ const AdminPanel = () => {
   };
 
   // Authentication part
-  const logout = async () => { await signOut(auth); };
+  const logout = async () => {
+    await signOut(auth);
+  };
 
-  onAuthStateChanged(auth, (currentUser) => { setUser(currentUser); });
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
 
   useEffect(() => {
     if (!auth.currentUser) {
@@ -150,14 +156,35 @@ const AdminPanel = () => {
     }
   }, [user]);
 
-
   return (
     <ThemeProvider theme={theme}>
-      <DayPhotoModal modalIsOpen={openDayPhotoModal} setModalIsOpen={setOpenDayPhotoModal} setSnackBarIsOpen={setOpenSnackBar} />
-      <AnalyticalMaterialModal modalIsOpen={openAnalyticalMaterialModal} setModalIsOpen={setOpenAnalyticalMaterialModal} setSnackBarIsOpen={setOpenSnackBar} />
-      <WarHistoryLeaderInterviewModal title="War History" modalIsOpen={openWarHistoryModal} setModalIsOpen={setOpenWarHistoryModal} setSnackBarIsOpen={setOpenSnackBar} />
-      <WarHistoryLeaderInterviewModal title="Leader Interview" modalIsOpen={openLeaderInterviewModal} setModalIsOpen={setOpenLeaderInterviewModal} setSnackBarIsOpen={setOpenSnackBar} />
-      <WorldAboutUkraineModal modalIsOpen={openWorldAboutUkraineModal} setModalIsOpen={setOpenWorldAboutUkraineModal} setSnackBarIsOpen={setOpenSnackBar} />
+      <DayPhotoModal
+        modalIsOpen={openDayPhotoModal}
+        setModalIsOpen={setOpenDayPhotoModal}
+        setSnackBarIsOpen={setOpenSnackBar}
+      />
+      <AnalyticalMaterialModal
+        modalIsOpen={openAnalyticalMaterialModal}
+        setModalIsOpen={setOpenAnalyticalMaterialModal}
+        setSnackBarIsOpen={setOpenSnackBar}
+      />
+      <WarHistoryLeaderInterviewModal
+        title="War History"
+        modalIsOpen={openWarHistoryModal}
+        setModalIsOpen={setOpenWarHistoryModal}
+        setSnackBarIsOpen={setOpenSnackBar}
+      />
+      <WarHistoryLeaderInterviewModal
+        title="Leader Interview"
+        modalIsOpen={openLeaderInterviewModal}
+        setModalIsOpen={setOpenLeaderInterviewModal}
+        setSnackBarIsOpen={setOpenSnackBar}
+      />
+      <WorldAboutUkraineModal
+        modalIsOpen={openWorldAboutUkraineModal}
+        setModalIsOpen={setOpenWorldAboutUkraineModal}
+        setSnackBarIsOpen={setOpenSnackBar}
+      />
       <Snackbar
         open={openSnackBar}
         autoHideDuration={6000}
@@ -172,7 +199,15 @@ const AdminPanel = () => {
             </Typography>
             <div>
               <Button
-                size="large"
+                onClick={() => navigate("/")}
+                size="small"
+                sx={{ marginRight: 2 }}
+                color="inherit"
+              >
+                <Typography variant="caption">To website</Typography>
+              </Button>
+              <Button
+                variant="outlined"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"

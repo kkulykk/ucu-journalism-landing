@@ -1,4 +1,4 @@
-import { useState  } from "react";
+import { useState } from "react";
 
 import { ThemeProvider } from "@mui/material";
 import Modal from "@mui/material/Modal";
@@ -6,29 +6,37 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
+import { styled } from "@mui/material/styles";
 import theme from "../../utils/theme";
 
-
 interface Props {
-    modalIsOpen: boolean;
-    setModalIsOpen(isOpen: boolean): void;
-    setSnackBarIsOpen(isOpen: boolean): void;
-  }
+  modalIsOpen: boolean;
+  setModalIsOpen(isOpen: boolean): void;
+  setSnackBarIsOpen(isOpen: boolean): void;
+}
 
 const DayPhotoModal = (props: Props) => {
-    const style = {
-        position: "absolute" as "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        width: "60vw",
-        maxHeight: "90vh",
-        bgcolor: "white",
-        overflow: "scroll",
-        borderRadius: 3,
-        boxShadow: 24,
-      };
+  const [date, setDate] = useState<Date | null>(new Date());
+
+  const Input = styled("input")({
+    display: "none",
+  });
+
+  const style = {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "60vw",
+    maxHeight: "90vh",
+    bgcolor: "white",
+    overflow: "scroll",
+    borderRadius: 3,
+    boxShadow: 24,
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -51,11 +59,40 @@ const DayPhotoModal = (props: Props) => {
                 gap: 2,
               }}
             >
-              <TextField label="Title" variant="outlined" />
-              <TextField label="Image URL (EDIT IT TO PHOTO UPLOADING)" variant="outlined" />
-              <Typography variant="h5" sx={{ marginBottom: 1 }}>
-                ADD DATE SELECTION THERE
-              </Typography>
+              <Box sx={{ display: "flex", gap: 2 }}>
+                <TextField
+                  sx={{ width: "100%" }}
+                  label="Title"
+                  variant="outlined"
+                />
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    label="Date"
+                    value={date}
+                    onChange={(newValue) => {
+                      setDate(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </Box>
+              <TextField
+                label="Description"
+                multiline
+                maxRows={2}
+                variant="outlined"
+              />
+              <label htmlFor="contained-button-file">
+                <Input
+                  accept="image/*"
+                  id="contained-button-file"
+                  multiple
+                  type="file"
+                />
+                <Button variant="outlined" component="span">
+                  Upload image
+                </Button>
+              </label>
             </Box>
             <Button
               color="primary"
@@ -77,9 +114,8 @@ const DayPhotoModal = (props: Props) => {
           </Box>
         </Box>
       </Modal>
-  </ ThemeProvider>
-
-  )
-}
+    </ThemeProvider>
+  );
+};
 
 export default DayPhotoModal;

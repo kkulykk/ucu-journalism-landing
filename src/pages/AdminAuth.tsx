@@ -14,11 +14,11 @@ import theme from "../utils/theme";
 
 const AdminAuth = () => {
   const navigate = useNavigate();
-  
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
-  const [user, setUser] = useState<{} | null>(null)
+  const [user, setUser] = useState<{} | null>(null);
 
   const login = async (email: string, password: string) => {
     if (email != "" && password != "") {
@@ -29,9 +29,8 @@ const AdminAuth = () => {
         navigate("/adminPanel");
       } catch (err) {
         setError(true);
-        console.error(err)
+        console.error(err);
       }
-
     } else {
       setError(true);
     }
@@ -39,13 +38,13 @@ const AdminAuth = () => {
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
-  })
+  });
 
   useEffect(() => {
     if (auth.currentUser) {
-      navigate("/adminPanel")
+      navigate("/adminPanel");
     }
-  }, [user])
+  }, [user]);
 
   return (
     <ThemeProvider theme={theme}>
