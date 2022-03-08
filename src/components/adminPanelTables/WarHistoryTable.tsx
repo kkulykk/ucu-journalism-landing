@@ -5,8 +5,7 @@ import {
   CollectionNames,
 } from "../../services/firebase/firestore";
 import { WarHistoryObj } from "../../services/models/firestoreDocuments";
-
-import WarHistoryLeaderInterviewModal from "../modals/WarHistoryLeaderInterviewModal";
+import WarHistoryLeaderInterviewEditModal from "../modals/WarHistoryLeaderInterviewEditModal";
 
 
 import Table from '@mui/material/Table';
@@ -37,7 +36,10 @@ const WarHistoryTable = () => {
   const [tableRecordsNumber, setTableRecordsNumber] = useState<number>(TABLE_RECORDS_NUMBER)
 
   const [editModalIsOpen, setEditModalIsOpen] = useState<boolean>(false)
-  const [noExistingSnackbarIsOpen, setNoExistingSnackbarIsOpen] = useState<boolean>(false) // think about Snackbar placing
+
+  const [editModalTitle, setEditModalTitle] = useState<string>("11111")
+  const [editModalVideoUrl, setEditModalVideoUrll] = useState<string>("33333")
+  const [editModalDate, setEditModalDate] = useState<Date>(new Date())
 
   const getWarHistoryFirestoreRecords = async () => {
     const recordObjectsArray: WarHistoryObj[] = [];
@@ -64,38 +66,48 @@ const WarHistoryTable = () => {
     }
   }
 
-  const renderRows = () => {
-    return warHistoryAdminPanelObject.map((rowObject) => {
-      return (
-        <TableRow onClick={() => {
-          setEditModalIsOpen(true);
-          console.log("OPEN")
-        }}>
-          {/* TEMPORARY SOLUTION | MOVE ROW ITEM IN SEPARATE FILE */}
-          <WarHistoryLeaderInterviewModal title={"War History " + rowObject.id} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen} setSnackBarIsOpen={setNoExistingSnackbarIsOpen}/>
-
-          {
-            columns.map((column) => {
-              const value = (rowObject as any)[column.id]; // Yeah that pretty interesting fix from StackOverflow
-              return (
-                <TableCell key={column.id}>
-                  {value}
-                </TableCell>
-              )
-            })
-          }
-        </TableRow>
-      )
-    })
-  }
-
   useEffect(() => {
     getWarHistoryFirestoreRecords()
   }, [tableRecordsNumber])
 
+  const openEditModal = (title: string, videoUrl: string, date: Date): void => {
+    setEditModalTitle(title);
+    setEditModalVideoUrll(videoUrl);
+    setEditModalDate(date);
+
+    setEditModalIsOpen(true);    
+  }
+
+  const renderRows = () => {
+    return warHistoryAdminPanelObject.map((rowObject) => {
+      return (
+        <Box>
+
+          <TableRow onClick={() => openEditModal(rowObject.title, rowObject.videoUrl, rowObject.dateObj)}>
+            {
+              columns.map((column) => {
+                const value = (rowObject as any)[column.id]; // Yeah, that pretty interesting fix from StackOverflow
+                return (
+                  <TableCell key={column.id}>
+                    {value}
+                  </TableCell>
+                )
+              })
+            }
+          </TableRow>
+            </Box>
+      )
+    })
+  }
+
+
+
+
 
   return (
     <Box>
+      <WarHistoryLeaderInterviewEditModal modalHeading={"War History Post | Id: " + "ID"} title={editModalTitle} videoUrl={editModalVideoUrl} date={editModalDate} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen} />
+
       <TableContainer sx={{ height: 250, background: "aqua" }}>
         <Table>
           <TableHead>
