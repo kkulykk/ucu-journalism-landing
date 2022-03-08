@@ -73,12 +73,20 @@ const WarHistory = () => {
       <Header />
 
       <SectionDescription
-        title="War History"
+        title="RESILIENCE STORIES"
         desc="Here we describe the objectivs of the project and tell readers what we
         mainly post here. There is also small description of all the authors and
         so on"
       />
-      <Box sx={{ display: "flex", flexWrap: "wrap", p: "0 8%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          width: "100%",
+          m: 0,
+          justifyContent: "center",
+        }}
+      >
         {isLoading ? <SkeletonVideo /> : mappedHistoryVideoPosts()}
       </Box>
       <Button

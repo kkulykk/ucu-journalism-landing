@@ -14,21 +14,22 @@ const SectionButton = (props: Props) => {
   return (
     <ThemeProvider theme={theme}>
       <Button
-        color="info"
+        color="primary"
         variant="contained"
         sx={{
           display: "flex",
           flexWrap: "nowrap",
           flexDirection: "column",
           height: 200,
-          maxWidth: 350,
-          minWidth: 250,
-          m: 3,
+          width: 300,
+          m: 1.5,
         }}
         href={props.link}
       >
-        {props.title}
-        <Typography variant="body1">{props.desc}</Typography>
+        <Typography variant="h3">{props.title}</Typography>
+        <Typography variant="body2" sx={{ textTransform: "none" }}>
+          {props.desc}
+        </Typography>
       </Button>
     </ThemeProvider>
   );

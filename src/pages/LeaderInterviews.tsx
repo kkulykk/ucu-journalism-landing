@@ -15,12 +15,13 @@ import Button from "@mui/material/Button";
 import VideoPost from "../components/VideoPost";
 import SkeletonVideo from "../components/SkeletonVideo";
 
-
 // Constants
 const VIDEOS_NUMBER = 1;
 
 const LeaderInterviews = () => {
-  const [leaderInterviewObjects, setLeaderInterviewObjects] = useState<LeaderInterviewsObj[]>([]);
+  const [leaderInterviewObjects, setLeaderInterviewObjects] = useState<
+    LeaderInterviewsObj[]
+  >([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [videosNumber, setVideosNumber] = useState<number>(VIDEOS_NUMBER);
 
@@ -35,13 +36,14 @@ const LeaderInterviews = () => {
 
       videos.forEach((doc) => {
         const docData = doc.data();
-        const singleLeaderInterviewObject: LeaderInterviewsObj = new LeaderInterviewsObj(
-          docData.title,
-          docData.date,
-          docData.videoUrl
-        )
+        const singleLeaderInterviewObject: LeaderInterviewsObj =
+          new LeaderInterviewsObj(
+            docData.title,
+            docData.date,
+            docData.videoUrl
+          );
         videoObjectsArray.push(singleLeaderInterviewObject);
-      })
+      });
 
       setLeaderInterviewObjects(videoObjectsArray);
       setIsLoading(false);
@@ -54,24 +56,24 @@ const LeaderInterviews = () => {
     return leaderInterviewObjects.map((video, index) => {
       return (
         <VideoPost
-        key={index}
-        title={video.title}
-        date={video.date}
-        videoUrl={video.videoUrl}
-      />
+          key={index}
+          title={video.title}
+          date={video.date}
+          videoUrl={video.videoUrl}
+        />
       );
     });
   };
 
   useEffect(() => {
     getLeaderInterviewVideos();
-  }, [videosNumber])
+  }, [videosNumber]);
 
   return (
     <ThemeProvider theme={theme}>
       <Header />
       <SectionDescription
-        title="Leader Interviews"
+        title="OPINION LEADERS INTERVIES"
         desc="Here we describe the objectivs of the project and tell readers what we
         mainly post here. There is also small description of all the authors and
         so on"

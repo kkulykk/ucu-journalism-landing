@@ -16,11 +16,14 @@ import "./MainPage.css";
 import SectionButton from "../components/SectionButton";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+
 import Footer from "../components/Footer";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import VideoPost from "../components/VideoPost";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const MAXX = 7;
+const MAX_PHOTOS = 3;
 
 const MainPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -31,7 +34,10 @@ const MainPage = () => {
     const dayPhotosArray: DayPhotosObj[] = [];
     try {
       setIsLoading(true); // switch ON page loader
-      const photos = await getFirestoreRecordsLimit(CollectionNames.DAY_PHOTOS, 3);
+      const photos = await getFirestoreRecordsLimit(
+        CollectionNames.DAY_PHOTOS,
+        MAX_PHOTOS
+      );
 
       photos.forEach((doc) => {
         const docData = doc.data();
@@ -50,6 +56,14 @@ const MainPage = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   const handleStepChange = (step: number) => {
@@ -89,6 +103,33 @@ const MainPage = () => {
             </div>
           ))}
         </AutoPlaySwipeableViews>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "35vh",
+            right: 0,
+            width: "100vw",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Button
+            size="large"
+            color={"info"}
+            onClick={handleBack}
+            disabled={activeStep === 0}
+          >
+            <MdKeyboardArrowLeft size={42} />
+          </Button>
+          <Button
+            size="large"
+            color={"info"}
+            onClick={handleNext}
+            disabled={activeStep === MAX_PHOTOS - 1}
+          >
+            <MdKeyboardArrowRight size={42} />
+          </Button>
+        </Box>
         <Box
           sx={{
             display: "flex",
@@ -145,36 +186,47 @@ const MainPage = () => {
             sx={{
               display: "flex",
               justifyContent: "center",
-              width: 3 / 4,
+              width: "95%",
               flexWrap: "wrap",
+              marginTop: 3,
             }}
           >
             <SectionButton
-              title="War Stories"
+              title="RESILIENCE STORIES"
               desc="Here goes description what is this section about"
               link="stories"
             />
             <SectionButton
-              title="Leaders Interviews"
+              title="OPINION LEADERS INTERVIES"
               desc="Here goes description what is this section about"
               link="leaders"
             />
             <SectionButton
-              title="Analytical Materials"
+              title="UKRAINE AND GLOBAL AGENDA"
               desc="Here goes description what is this section about"
               link="analytics"
             />
             <SectionButton
-              title="The World About Ukraine "
+              title="ART DURING WAR"
               desc="Here goes description what is this section about"
               link="world"
             />
           </Box>
         </Box>
-        <Typography variant="h3" color="primary">
-          UCU partnership projects
-        </Typography>
-        <Box></Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            width: "100vw",
+            marginTop: 3,
+          }}
+        >
+          <VideoPost
+            title="You are the part of the big Ukainian ocean"
+            date="08 Mar 2022"
+            videoUrl="https://www.youtube.com/embed/VKP_WdbgqNc?autoplay=1"
+          />
+        </Box>
       </div>
       <Footer />
     </ThemeProvider>
