@@ -2,14 +2,13 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material";
 import ucuLogo from "../assets/ucu_logo.svg";
-import fsnLogo from "../assets/inFSN.png";
+import fsnLogo from "../assets/logo_png.png";
 import theme from "../utils/theme";
 
 const Footer = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        height={"50vh"}
         sx={{
           backgroundColor: "secondary.main",
           marginTop: "7vh",
@@ -17,30 +16,136 @@ const Footer = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          height: "50vh",
+          [theme.breakpoints.down(850)]: {
+            height: "80vh",
+          },
+          [theme.breakpoints.down(700)]: {
+            height: "100vh",
+          },
         }}
       >
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "center",
+            alignItems: "flex-start",
             width: "90vw",
+            [theme.breakpoints.down(850)]: {
+              flexDirection: "column",
+            },
           }}
         >
-          <Box>
-            <img src={ucuLogo} style={{ position: "relative" }} />
-            <img
-              src={fsnLogo}
-              style={{ position: "relative", width: "400px" }}
-            />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "flex-start",
+              [theme.breakpoints.down(850)]: {
+                flexDirection: "column",
+                width: "100%",
+                alignItems: "center",
+              },
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <a
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  fontWeight: "400",
+                }}
+                href=" https://ucu.edu.ua/en/"
+                target="_blank"
+              >
+                <img
+                  src={ucuLogo}
+                  style={{
+                    width: "200px",
+                  }}
+                />
+                <p>UCU</p>
+              </a>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                [theme.breakpoints.down(850)]: {
+                  alignItems: "center",
+                },
+              }}
+            >
+              <a
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  fontWeight: "400",
+                }}
+                href="https://fss.ucu.edu.ua/ua/"
+                target="_blank"
+              >
+                <img
+                  src={fsnLogo}
+                  style={{
+                    width: "300px",
+                    marginTop: "5px",
+                  }}
+                />
+              </a>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  margin: "12px 0 0 5px",
+                  alignItems: "flex-start",
+                  [theme.breakpoints.down(850)]: {
+                    margin: "20px 0",
+                    alignItems: "center",
+                  },
+                }}
+              >
+                <a
+                  style={{
+                    textDecoration: "none",
+                    color: "white",
+                    fontWeight: "400",
+                  }}
+                  href="https://fss.ucu.edu.ua/ua/"
+                  target="_blank"
+                >
+                  Faculty of Social Sciences
+                </a>
+                <a
+                  style={{
+                    textDecoration: "none",
+                    color: "white",
+                    fontWeight: "400",
+                  }}
+                  href="http://sjc.ucu.edu.ua/"
+                  target="_blank"
+                >
+                  School of Journalism & Communication
+                </a>
+              </Box>
+            </Box>
           </Box>
           <Box
             sx={{
               display: "flex",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
+              justifyContent: "center",
+              alignItems: "flex-end",
               flexDirection: "column",
-              width: 200,
+              [theme.breakpoints.down(850)]: {
+                width: "100%",
+                alignItems: "center",
+              },
             }}
           >
             <Typography variant="h4" sx={{ color: "white", marginBottom: 2 }}>
@@ -51,7 +156,7 @@ const Footer = () => {
                 style={{
                   textDecoration: "none",
                   color: "white",
-                  fontWeight: "400",
+                  fontWeight: "300",
                 }}
                 href="https://www.weareukraine.info/?fbclid=IwAR1-EP6YgUVdN5ROpplm9BRMikxhF3UQbMdvp4La2DnGlKpVe3agtKxMw1U"
               >
@@ -63,7 +168,7 @@ const Footer = () => {
                 style={{
                   textDecoration: "none",
                   color: "white",
-                  fontWeight: "400",
+                  fontWeight: "300",
                 }}
                 href="https://betha.in.ua"
               >
@@ -75,7 +180,7 @@ const Footer = () => {
                 style={{
                   textDecoration: "none",
                   color: "white",
-                  fontWeight: "400",
+                  fontWeight: "300",
                 }}
                 href="https://warinua.ucu.edu.ua/ucu-student-projects/"
               >
@@ -87,7 +192,7 @@ const Footer = () => {
                 style={{
                   textDecoration: "none",
                   color: "white",
-                  fontWeight: "400",
+                  fontWeight: "300",
                 }}
                 href="https://ucu.edu.ua/en/"
               >
@@ -99,7 +204,7 @@ const Footer = () => {
                 style={{
                   textDecoration: "none",
                   color: "white",
-                  fontWeight: "400",
+                  fontWeight: "300",
                 }}
                 href="https://uccmc.org"
               >
@@ -111,7 +216,7 @@ const Footer = () => {
                 style={{
                   textDecoration: "none",
                   color: "white",
-                  fontWeight: "400",
+                  fontWeight: "300",
                 }}
                 href="https://post-to-stop-war.in.ua"
               >
@@ -120,7 +225,7 @@ const Footer = () => {
             </Typography>
           </Box>
         </Box>
-        <Typography color="white" sx={{ top: "85%" }}>
+        <Typography color="white" sx={{ marginTop: "25px" }}>
           For more details contact us:{" "}
           <a
             style={{

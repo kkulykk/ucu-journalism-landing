@@ -74,9 +74,7 @@ const WarHistory = () => {
 
       <SectionDescription
         title="RESILIENCE STORIES"
-        desc="Here we describe the objectivs of the project and tell readers what we
-        mainly post here. There is also small description of all the authors and
-        so on"
+        desc="About those who are witnesses and participants in the war with Russia, who suffered from the shelling, who are helping military and civilians by 'quiet and tireless work'"
       />
       <Box
         sx={{

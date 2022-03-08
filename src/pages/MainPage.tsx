@@ -222,7 +222,7 @@ const MainPage = () => {
           }}
         >
           <VideoPost
-            title="You are the part of the big Ukainian ocean"
+            title="You are the part of the big Ukrainian ocean"
             date="08 Mar 2022"
             videoUrl="https://www.youtube.com/embed/VKP_WdbgqNc?autoplay=1"
           />
