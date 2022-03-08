@@ -77,10 +77,12 @@ class WarHistoryObj {
   title: string;
   date: any;
   videoUrl: string;
+  dateObj: Date;
 
   constructor(id: string, title: string, date: any, videoUrl: string) {
     this.id = id;
     this.title = title;
+    this.dateObj = date.toDate();
     this.date = date.toDate().toDateString();
     this.videoUrl = videoUrl;
   }

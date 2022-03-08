@@ -12,14 +12,19 @@ import DatePicker from "@mui/lab/DatePicker";
 import theme from "../../utils/theme";
 
 interface Props {
-  title: string;
+  modalHeading: string;
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
-  setSnackBarIsOpen(isOpen: boolean): void;
+
+  title: string;
+  videoUrl: string;
+  date: Date;
 }
 
-const WarHistoryLeaderInterviewModal = (props: Props) => {
-  const [date, setDate] = useState<Date | null>(new Date());
+const WarHistoryLeaderInterviewEditModal = (props: Props) => {
+  const [title, setTitle] = useState<string>(props.title)
+  const [videoUrl, setVideoUrl] = useState<string>(props.videoUrl)
+  const [dateSelected, setDateSelected] = useState<Date | null>(props.date);
 
   const style = {
     position: "absolute" as "absolute",
@@ -45,7 +50,7 @@ const WarHistoryLeaderInterviewModal = (props: Props) => {
         <Box sx={style}>
           <Box sx={{ p: 5, overflow: "scroll" }}>
             <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Add new {props.title} post
+              Edit {props.modalHeading} 
             </Typography>
             <Box
               sx={{
@@ -56,30 +61,40 @@ const WarHistoryLeaderInterviewModal = (props: Props) => {
               }}
             >
               <Box sx={{ display: "flex", gap: 2 }}>
+                <Typography variant="h3" sx={{ marginBottom: 1 }}>
+                  {props.title} 
+                </Typography>
                 <TextField
                   sx={{ width: "100%" }}
-                  label="Titlllllllllllllllle"
-                  variant="outlined"                  
+                  label="Title"
+                  variant="outlined"
+                  value={title}
                 />
+                <Typography variant="h3" sx={{ marginBottom: 1 }}>
+                  {props.date.toISOString()} 
+                </Typography>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
                     label="Date"
-                    value={date}
+                    value={dateSelected}
                     onChange={(newValue) => {
-                      setDate(newValue);
+                      setDateSelected(newValue);
                     }}
                     renderInput={(params) => <TextField {...params} />}
+
                   />
                 </LocalizationProvider>
               </Box>
-              <TextField label="Video URL" variant="outlined" />
+              <Typography variant="h3" sx={{ marginBottom: 1 }}>
+                  {props.videoUrl} 
+                </Typography>
+              <TextField label="Video URL" variant="outlined" value={videoUrl}/>
             </Box>
             <Button
               color="primary"
               variant="contained"
               onClick={() => {
                 props.setModalIsOpen(false);
-                props.setSnackBarIsOpen(true);
               }}
             >
               Add post
@@ -101,4 +116,4 @@ const WarHistoryLeaderInterviewModal = (props: Props) => {
   );
 };
 
-export default WarHistoryLeaderInterviewModal;
+export default WarHistoryLeaderInterviewEditModal;
