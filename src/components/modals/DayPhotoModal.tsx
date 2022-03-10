@@ -20,6 +20,11 @@ interface Props {
 
 const DayPhotoModal = (props: Props) => {
   const [date, setDate] = useState<Date | null>(new Date());
+  const [selectedFile, setSelectedFile] = useState<any>(null);
+  const handleCapture = ({ target }: any) => {
+    setSelectedFile(target.files[0]);
+    console.log(selectedFile);
+  };
 
   const Input = styled("input")({
     display: "none",
@@ -88,10 +93,16 @@ const DayPhotoModal = (props: Props) => {
                   id="contained-button-file"
                   multiple
                   type="file"
+                  onChange={handleCapture}
                 />
                 <Button variant="outlined" component="span">
                   Upload image
                 </Button>
+                {selectedFile ? (
+                  <Typography variant="caption" sx={{ marginLeft: 3 }}>
+                    Image uploaded
+                  </Typography>
+                ) : null}
               </label>
             </Box>
             <Button

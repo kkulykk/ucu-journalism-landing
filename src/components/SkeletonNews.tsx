@@ -6,12 +6,24 @@ const SkeletonNews = () => {
   return (
     <Stack spacing={5}>
       <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
-        <Skeleton variant="rectangular" width={"20vw"} height={200} />
+        <Skeleton
+          variant="rectangular"
+          sx={{
+            "@media (max-width: 750px)": {
+              width: "90vw",
+            },
+          }}
+          width={"100%"}
+          height={200}
+        />
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-around",
+            "@media (max-width: 750px)": {
+              width: "90vw",
+            },
           }}
         >
           <Box>
@@ -28,12 +40,24 @@ const SkeletonNews = () => {
         </Box>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
-        <Skeleton variant="rectangular" width={"20vw"} height={200} />
+        <Skeleton
+          variant="rectangular"
+          sx={{
+            "@media (max-width: 750px)": {
+              width: "90vw",
+            },
+          }}
+          width={"100%"}
+          height={200}
+        />
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-around",
+            "@media (max-width: 750px)": {
+              width: "90vw",
+            },
           }}
         >
           <Box>

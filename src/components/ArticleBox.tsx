@@ -81,7 +81,7 @@ const ArticleBox = (props: Props) => {
           </Box>
           <Button
             color="secondary"
-            sx={{ marginBottom: 2, left: "90%" }}
+            sx={{ marginBottom: 2.5, left: "3%" }}
             onClick={handleClose}
           >
             Close
