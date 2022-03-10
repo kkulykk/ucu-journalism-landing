@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import { ThemeProvider } from "@mui/material";
 import theme from "../utils/theme";
 import WorldArticle from "../components/WorldArticle";
+import SkeletonNews from "../components/SkeletonNews";
 
 // Constants
 const POSTS_NUMBER = 5;
@@ -77,12 +78,7 @@ const WorldAboutUkraine = () => {
   return (
     <ThemeProvider theme={theme}>
       <Header />
-      <SectionDescription
-        title="ART DURING WAR"
-        desc="Here we describe the objectivs of the project and tell readers what we
-        mainly post here. There is also small description of all the authors and
-        so on"
-      />
+      <SectionDescription title="ART DURING WAR" desc="Art is also a weapon" />
       <Box
         sx={{
           display: "flex",
@@ -92,7 +88,7 @@ const WorldAboutUkraine = () => {
           width: "100%",
         }}
       >
-        {isLoading ? <CircularProgress /> : mappedWorldArticles()}
+        {isLoading ? <SkeletonNews /> : mappedWorldArticles()}
       </Box>
       <Button variant="outlined" sx={{ marginTop: 5 }}>
         Load more

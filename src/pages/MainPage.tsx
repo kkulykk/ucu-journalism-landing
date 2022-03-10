@@ -16,7 +16,7 @@ import "./MainPage.css";
 import SectionButton from "../components/SectionButton";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
-
+import PartnerButton from "../components/PartnerButton";
 import Footer from "../components/Footer";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import VideoPost from "../components/VideoPost";
@@ -193,31 +193,34 @@ const MainPage = () => {
           >
             <SectionButton
               title="RESILIENCE STORIES"
-              desc="Here goes description what is this section about"
+              desc="About those who are witnesses and participants in the war with Russia, who suffered from the shelling, who are helping military and civilians by 'quiet and tireless work'"
               link="stories"
             />
             <SectionButton
               title="OPINION LEADERS INTERVIEWS"
-              desc="Here goes description what is this section about"
+              desc=" 
+              Opinions of political scientists, historians, teachers, psychologists and other opinion leaders about the war waged by Russia"
               link="leaders"
             />
             <SectionButton
               title="UKRAINE AND GLOBAL AGENDA"
-              desc="Here goes description what is this section about"
+              desc="A look at the war from Ukrainian experts and the world media"
               link="analytics"
             />
             <SectionButton
               title="ART DURING WAR"
-              desc="Here goes description what is this section about"
+              desc="Art is also a weapon"
               link="world"
             />
           </Box>
         </Box>
+
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            marginTop: "5vh",
           }}
         >
           <Box
@@ -241,6 +244,44 @@ const MainPage = () => {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               title="Embedded youtube"
+            />
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            marginTop: "10vh",
+          }}
+        >
+          <Typography variant="h2" color="secondary">
+            Partner Projects
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              width: "95%",
+              flexWrap: "wrap",
+              marginTop: 3,
+            }}
+          >
+            <PartnerButton
+              title="WeAreUkraine.info"
+              link="https://www.weareukraine.info/?fbclid=IwAR1-EP6YgUVdN5ROpplm9BRMikxhF3UQbMdvp4La2DnGlKpVe3agtKxMw1U"
+            />
+            <PartnerButton title="Betha.in.ua" link="https://betha.in.ua" />
+            <PartnerButton
+              title="Warinua.ucu.edu.ua"
+              link="https://warinua.ucu.edu.ua/ucu-student-projects/"
+            />
+            <PartnerButton title="UCU Website" link="https://ucu.edu.ua/en" />
+            <PartnerButton title="UCCMC" link="https://uccmc.org" />
+            <PartnerButton
+              title="Post To Stop War"
+              link="https://post-to-stop-war.in.ua"
             />
           </Box>
         </Box>

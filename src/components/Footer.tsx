@@ -1,9 +1,14 @@
 import Box from "@mui/material/Box";
+import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material";
 import ucuLogo from "../assets/ucu_logo.svg";
 import fsnLogo from "../assets/logo_png.png";
 import theme from "../utils/theme";
+import { AiOutlineInstagram } from "react-icons/ai";
+import { AiOutlineFacebook } from "react-icons/ai";
+import { AiOutlineTwitter } from "react-icons/ai";
+import { AiOutlineLinkedin } from "react-icons/ai";
 
 const Footer = () => {
   return (
@@ -18,10 +23,8 @@ const Footer = () => {
           alignItems: "center",
           height: "50vh",
           [theme.breakpoints.down(850)]: {
-            height: "80vh",
-          },
-          [theme.breakpoints.down(700)]: {
-            height: "100vh",
+            height: "auto",
+            padding: "7%",
           },
         }}
       >
@@ -139,90 +142,35 @@ const Footer = () => {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "center",
-              alignItems: "flex-end",
-              flexDirection: "column",
+              gap: 2,
               [theme.breakpoints.down(850)]: {
-                width: "100%",
+                justifyContent: "center",
                 alignItems: "center",
+                width: "100%",
               },
             }}
           >
-            <Typography variant="h4" sx={{ color: "white", marginBottom: 2 }}>
-              Partner projects
-            </Typography>
-            <Typography variant="body1">
-              <a
-                style={{
-                  textDecoration: "none",
-                  color: "white",
-                  fontWeight: "300",
-                }}
-                href="https://www.weareukraine.info/?fbclid=IwAR1-EP6YgUVdN5ROpplm9BRMikxhF3UQbMdvp4La2DnGlKpVe3agtKxMw1U"
-              >
-                WeAreUkraine.info
-              </a>
-            </Typography>
-            <Typography variant="body1">
-              <a
-                style={{
-                  textDecoration: "none",
-                  color: "white",
-                  fontWeight: "300",
-                }}
-                href="https://betha.in.ua"
-              >
-                Betha.in.ua
-              </a>
-            </Typography>
-            <Typography variant="body1">
-              <a
-                style={{
-                  textDecoration: "none",
-                  color: "white",
-                  fontWeight: "300",
-                }}
-                href="https://warinua.ucu.edu.ua/ucu-student-projects/"
-              >
-                Warinua.ucu.edu.ua
-              </a>
-            </Typography>
-            <Typography variant="body1">
-              <a
-                style={{
-                  textDecoration: "none",
-                  color: "white",
-                  fontWeight: "300",
-                }}
-                href="https://ucu.edu.ua/en/"
-              >
-                UCU Website
-              </a>
-            </Typography>
-            <Typography variant="body1">
-              <a
-                style={{
-                  textDecoration: "none",
-                  color: "white",
-                  fontWeight: "300",
-                }}
-                href="https://uccmc.org"
-              >
-                UCCMC
-              </a>
-            </Typography>
-            <Typography variant="body1">
-              <a
-                style={{
-                  textDecoration: "none",
-                  color: "white",
-                  fontWeight: "300",
-                }}
-                href="https://post-to-stop-war.in.ua"
-              >
-                Post To Stop War
-              </a>
-            </Typography>
+            <a
+              href="https://www.facebook.com/UkrainianCatholicUniversity"
+              target="_blank"
+            >
+              <AiOutlineFacebook size={30} color="white" />
+            </a>
+            <a
+              href="https://instagram.com/ucu_official?utm_medium=copy_link"
+              target="_blank"
+            >
+              <AiOutlineInstagram size={30} color="white" />
+            </a>
+            <a href="https://twitter.com/ucu_university/" target="_blank">
+              <AiOutlineTwitter size={30} color="white" />
+            </a>
+            <a
+              href="https://www.linkedin.com/school/ukrainian-catholic-university/"
+              target="_blank"
+            >
+              <AiOutlineLinkedin size={30} color="white" />
+            </a>
           </Box>
         </Box>
         <Typography color="white" sx={{ marginTop: "25px" }}>

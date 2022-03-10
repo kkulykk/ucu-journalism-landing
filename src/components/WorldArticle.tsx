@@ -37,7 +37,7 @@ const WorldArticle = (props: Props) => {
           sx={{ display: "flex" }}
         >
           <CardMedia
-            sx={{ height: 200, width: "35%" }}
+            sx={{ height: 250, width: "35%", objectFit: "cover" }}
             component="img"
             alt="green iguana"
             image={props.imageUrl}
@@ -49,7 +49,7 @@ const WorldArticle = (props: Props) => {
               flexDirection: "column",
               justifyContent: "space-around",
               textAlign: "left",
-              height: 150,
+              height: "auto",
             }}
           >
             <div>

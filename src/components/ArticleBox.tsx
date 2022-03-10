@@ -91,7 +91,7 @@ const ArticleBox = (props: Props) => {
       <Card
         sx={{
           maxWidth: "60vw",
-          height: "100%",
+          height: "auto",
           boxShadow: 3,
           borderRadius: 3,
           transition: "all ease-in-out 0.1s",
@@ -103,7 +103,7 @@ const ArticleBox = (props: Props) => {
       >
         <CardActionArea onClick={handleOpen} sx={{ display: "flex" }}>
           <CardMedia
-            sx={{ height: 200, width: "35%" }}
+            sx={{ height: 250, width: "35%", objectFit: "cover" }}
             component="img"
             alt="green iguana"
             image={props.imageUrl}
@@ -116,7 +116,7 @@ const ArticleBox = (props: Props) => {
               justifyContent: "space-around",
               textAlign: "left",
               width: "65%",
-              height: 150,
+              height: "auto",
             }}
           >
             <div>
