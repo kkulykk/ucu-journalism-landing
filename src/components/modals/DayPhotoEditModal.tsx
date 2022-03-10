@@ -6,43 +6,32 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
-
+import { styled } from "@mui/material/styles";
 import theme from "../../utils/theme";
 
 interface Props {
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
 
-  recordValuesObj: {
-    title: string,
-    date: Date,
-    source: string,
-    imageUrl: string,
-    lead: string,
-    text: string
-  }
+  recordValuesObj: {imageUrl: string, date: Date, source: string, description: string}
 }
 
-const AnalyticalMaterialEditModal = (props: Props) => {
-  const [title, setTitle] = useState<string>(props.recordValuesObj.title);
+const DayPhotoEditModal = (props: Props) => {
+  const [imageUrl, setImageUrl] = useState<string>(props.recordValuesObj.imageUrl)
   const [dateSelected, setDateSelected] = useState<Date | null>(props.recordValuesObj.date);
-  const [source, setSource] = useState<string>(props.recordValuesObj.source);
-  const [imageUrl, setImageUrl] = useState<string>(props.recordValuesObj.imageUrl);
-  const [lead, setLead] = useState<string>(props.recordValuesObj.lead);
-  const [text, setText] = useState<string>(props.recordValuesObj.text);
+  const [source, setSource] = useState<string>(props.recordValuesObj.source)
+  const [description, setDescription] = useState<string>(props.recordValuesObj.description)
 
   useEffect(() => {
-    setTitle(props.recordValuesObj.title);
-    setDateSelected(props.recordValuesObj.date);
-    setSource(props.recordValuesObj.source);
-    setImageUrl(props.recordValuesObj.imageUrl);
-    setLead(props.recordValuesObj.lead);
-    setText(props.recordValuesObj.text);
+    setImageUrl(props.recordValuesObj.imageUrl)
+    setDateSelected(props.recordValuesObj.date)
+    setSource(props.recordValuesObj.source)
+    setDescription(props.recordValuesObj.description)
   }, [props.recordValuesObj])
+
 
   const Input = styled("input")({
     display: "none",
@@ -72,7 +61,7 @@ const AnalyticalMaterialEditModal = (props: Props) => {
         <Box sx={style}>
           <Box sx={{ p: 5, overflow: "scroll" }}>
             <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Add new Analytical Material post
+              Add new Photo Of The Day
             </Typography>
             <Box
               sx={{
@@ -85,25 +74,10 @@ const AnalyticalMaterialEditModal = (props: Props) => {
               <Box sx={{ display: "flex", gap: 2 }}>
                 <TextField
                   sx={{ width: "100%" }}
-                  label="Title"
+                  label="Image URL"
                   variant="outlined"
-                  value={title}
-                  onChange={(event) => setTitle(event.target.value)}
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 2,
-                  alignItems: "center",
-                }}
-              >
-                <TextField
-                  sx={{ width: "100%" }}
-                  label="Source"
-                  variant="outlined"
-                  value={source}
-                  onChange={(event) => setSource(event.target.value)}
+                  value={imageUrl}
+                  onChange={(event) => setImageUrl(event.target.value)}
                 />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
@@ -115,43 +89,29 @@ const AnalyticalMaterialEditModal = (props: Props) => {
                     renderInput={(params) => <TextField {...params} />}
                   />
                 </LocalizationProvider>
-                <Typography variant="h3" sx={{ marginBottom: 1 }}>
-                  ADD IMAGE URL STRING AND THINK ABOUT EDITING IMAGE
-                </Typography>
-                <label htmlFor="contained-button-file">
-                  <Input
-                    accept="image/*"
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                  />
-                  <Button
-                    sx={{ width: 130 }}
-                    variant="outlined"
-                    component="span"
-                  >
-                    Upload image
-                  </Button>
-                </label>
               </Box>
               <TextField
-                sx={{ width: "100%" }}
+                label="Source"
                 multiline
-                maxRows={3}
-                label="Lead"
+                maxRows={2}
                 variant="outlined"
-                value={lead}
-                onChange={(event) => setLead(event.target.value)}
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
               />
-              <TextField
-                multiline
-                maxRows={5}
-                sx={{ width: "100%" }}
-                label="Text"
-                variant="outlined"
-                value={text}
-                onChange={(event) => setText(event.target.value)}
-              />
+              <Typography variant="h3" sx={{ marginBottom: 1 }}>
+                ADD IMAGE URL STRING AND THINK ABOUT EDITING IMAGE
+              </Typography>
+              <label htmlFor="contained-button-file">
+                <Input
+                  accept="image/*"
+                  id="contained-button-file"
+                  multiple
+                  type="file"
+                />
+                <Button variant="outlined" component="span">
+                  Upload image
+                </Button>
+              </label>
             </Box>
             <Button
               color="primary"
@@ -176,4 +136,4 @@ const AnalyticalMaterialEditModal = (props: Props) => {
   );
 };
 
-export default AnalyticalMaterialEditModal;
+export default DayPhotoEditModal;

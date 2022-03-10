@@ -36,6 +36,7 @@ const MainPage = () => {
       photos.forEach((doc) => {
         const docData = doc.data();
         const singleDayPhotoObject: DayPhotosObj = new DayPhotosObj(
+          doc.id,
           docData.imageUrl,
           docData.date,
           docData.source,

@@ -35,18 +35,23 @@ class AnalyticalMaterialsObj {
 }
 
 class DayPhotosObj {
+  id: string;
   imageUrl: string;
+  dateObj: Date;
   date: any;
   source: string;
   description: string;
 
   constructor(
+    id: string,
     imageUrl: string,
     date: any,
     source: string,
     description: string
   ) {
+    this.id = id;
     this.imageUrl = imageUrl;
+    this.dateObj = date.toDate();
     this.date = date.toDate().toDateString();
     this.source = source;
     this.description = description;
@@ -54,7 +59,7 @@ class DayPhotosObj {
 
   disp(): void {
     console.log(
-      `ImageUrl: ${this.imageUrl}, Date: ${this.date}, Source: ${this.source}, Description: ${this.description}`
+      `Id: ${this.id}, ImageUrl: ${this.imageUrl}, Date: ${this.date}, Source: ${this.source}, Description: ${this.description}`
     );
   }
 }

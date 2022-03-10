@@ -34,6 +34,7 @@ import WarHistoryTable from "../components/adminPanelTables/WarHistoryTable";
 import LeaderInterviewsTable from "../components/adminPanelTables/LeaderInterviewsTable";
 import AnalyticalMaterialsTable from "../components/adminPanelTables/AnalyticalMaterialsTable";
 import WorldAboutUkraineTable from "../components/adminPanelTables/WorldAboutUkraineTable";
+import DayPhotosTable from "../components/adminPanelTables/DayPhotosTable";
 
 import DayPhotoModal from "../components/modals/DayPhotoModal";
 import AnalyticalMaterialModal from "../components/modals/AnalyticalMaterialModal";
@@ -325,7 +326,13 @@ const AdminPanel = () => {
           </Box>
         </TabPanel>
         <TabPanel value={value} index={4}>
+          <Typography variant="h4" sx={{ marginBottom: 1 }}>
           Photos of day
+          </Typography>
+          <Box>
+            {/* TABLE */}
+            <DayPhotosTable />
+          </Box>
         </TabPanel>
       </Box>
       <Box sx={{ flexGrow: 1 }}>
