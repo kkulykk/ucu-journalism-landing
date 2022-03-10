@@ -67,18 +67,19 @@ const WarHistoryTable = () => {
       setWarHistoryAdminPanelObjects(recordObjectsArray);
       setIsTableLoading(false);
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
   }
 
   useEffect(() => {
     getWarHistoryFirestoreRecords();
-  }, [tableRecordsNumber])
+  }, [tableRecordsNumber]);
 
   const openEditModal = (title: string, videoUrl: string, date: Date): void => {
     setEditModalValuesObj({title: title, videoUrl: videoUrl, date: date})
     setEditModalIsOpen(true);    
   }
+  
 
   const renderRows = () => {
     return warHistoryAdminPanelObjects.map((rowObject) => {
@@ -98,6 +99,7 @@ const WarHistoryTable = () => {
       )
     })
   }
+
 
   return (
     <Box>

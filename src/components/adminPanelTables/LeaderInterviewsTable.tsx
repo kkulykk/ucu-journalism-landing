@@ -66,19 +66,20 @@ const LeaderInterviewsTable = () => {
       setLeaderInterviewAdminPanelObjects(recordObjectsArray);
       setIsTableLoading(false);
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
   }
 
   useEffect(() => {
     getLeaderInterviewFirestoreRecords();
-  }, [tableRecordsNumber])
+  }, [tableRecordsNumber]);
 
+    
   const openEditModal = (title: string, videoUrl: string, date: Date): void => {
     setEditModalValuesObj({title: title, videoUrl: videoUrl, date: date})
     setEditModalIsOpen(true);    
   }
-
+  
   const renderRows = () => {
     return leaderInterviewAdminPanelObjects.map((rowObject) => {
       return (
@@ -98,6 +99,7 @@ const LeaderInterviewsTable = () => {
     })
   }
 
+  
   return (
     <Box>
       <WarHistoryLeaderInterviewEditModal modalHeading={"War History Post | Id: " + "ID"} recordValuesObj={editModalValuesObj} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen} />

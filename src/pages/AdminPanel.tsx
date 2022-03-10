@@ -27,17 +27,19 @@ import { MdOutlineLanguage } from "react-icons/md";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { MdAnalytics } from "react-icons/md";
 import { styled } from "@mui/material/styles";
+import theme from "../utils/theme";
 
 // Tables imports
 import WarHistoryTable from "../components/adminPanelTables/WarHistoryTable";
 import LeaderInterviewsTable from "../components/adminPanelTables/LeaderInterviewsTable";
 import AnalyticalMaterialsTable from "../components/adminPanelTables/AnalyticalMaterialsTable";
-import theme from "../utils/theme";
+import WorldAboutUkraineTable from "../components/adminPanelTables/WorldAboutUkraineTable";
 
 import DayPhotoModal from "../components/modals/DayPhotoModal";
 import AnalyticalMaterialModal from "../components/modals/AnalyticalMaterialModal";
 import WarHistoryLeaderInterviewModal from "../components/modals/WarHistoryLeaderInterviewModal";
 import WorldAboutUkraineModal from "../components/modals/WorldAboutUkraineModal";
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -314,7 +316,13 @@ const AdminPanel = () => {
           </Box>
         </TabPanel>
         <TabPanel value={value} index={3}>
-          World about Ukraine
+          <Typography variant="h4" sx={{ marginBottom: 1 }}>
+            World about Ukraine
+          </Typography>
+          <Box>
+            {/* TABLE */}
+            <WorldAboutUkraineTable />
+          </Box>
         </TabPanel>
         <TabPanel value={value} index={4}>
           Photos of day

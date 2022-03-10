@@ -78,13 +78,13 @@ const AnalyticalMaterialsTable = () => {
       setAnalyticalMaterialAdminPanelObjects(recordObjectsArray);
       setIsTableLoading(false);
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
   }
 
   useEffect(() => {
     getAnalyticalMaterialFirestoreRecords();
-  }, [tableRecordsNumber])
+  }, [tableRecordsNumber]);
 
   const openEditModal = (title: string, date: Date, source: string, imageUrl: string, lead: string, text: string) => {
     setEditModalValuesObj({
@@ -98,8 +98,7 @@ const AnalyticalMaterialsTable = () => {
 
     setEditModalIsOpen(true);
   }
-
-
+  
   const renderRows = () => {
     return analyticalMaterialAdminPanelObjects.map((rowObject) => {
       return (
@@ -118,6 +117,7 @@ const AnalyticalMaterialsTable = () => {
       )
     })
   }
+  
 
   return (
     <Box>

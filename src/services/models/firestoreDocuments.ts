@@ -105,7 +105,9 @@ class WarHistoryObj {
 }
 
 class WorldAboutUkraineObj {
+  id: string;
   title: string;
+  dateObj: Date;
   date: any;
   source: string;
   sourceUrl: string;
@@ -113,6 +115,7 @@ class WorldAboutUkraineObj {
   lead: string;
 
   constructor(
+    id: string,
     title: string,
     date: any,
     source: string,
@@ -120,7 +123,9 @@ class WorldAboutUkraineObj {
     imageUrl: string,
     lead: string
   ) {
+    this.id = id;
     this.title = title;
+    this.dateObj = date.toDate();
     this.date = date.toDate().toDateString();
     this.source = source;
     this.sourceUrl = sourceUrl;
@@ -130,7 +135,7 @@ class WorldAboutUkraineObj {
 
   disp(): void {
     console.log(
-      `Title: ${this.title}, Date: ${this.date}, Source: ${this.source}, SourceUrl: ${this.sourceUrl}, ImageUrl: ${this.imageUrl}, Lead: ${this.lead}`
+      `Id: ${this.id}, Title: ${this.title}, Date: ${this.date}, Source: ${this.source}, SourceUrl: ${this.sourceUrl}, ImageUrl: ${this.imageUrl}, Lead: ${this.lead}`
     );
   }
 }

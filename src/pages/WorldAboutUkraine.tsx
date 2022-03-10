@@ -34,6 +34,7 @@ const WorldAboutUkraine = () => {
         const docData = doc.data();
         const signleWorldAboutUkraineObject: WorldAboutUkraineObj =
           new WorldAboutUkraineObj(
+            doc.id,
             docData.title,
             docData.date,
             docData.source,
