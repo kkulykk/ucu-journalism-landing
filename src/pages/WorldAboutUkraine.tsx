@@ -91,7 +91,11 @@ const WorldAboutUkraine = () => {
       >
         {isLoading ? <SkeletonNews /> : mappedWorldArticles()}
       </Box>
-      <Button variant="outlined" sx={{ marginTop: 5 }}>
+      <Button
+        variant="outlined"
+        sx={{ marginTop: 5 }}
+        onClick={() => setPostsNumber(postsNumber + POSTS_NUMBER)}
+      >
         Load more
       </Button>
       <Footer />
