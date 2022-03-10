@@ -94,7 +94,7 @@ const WarHistoryLeaderInterviewEditModal = (props: Props) => {
                 props.setModalIsOpen(false);
               }}
             >
-              Add post
+              Edit post
             </Button>
             <Button
               color="secondary"

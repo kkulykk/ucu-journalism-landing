@@ -73,7 +73,7 @@ const AnalyticalMaterialEditModal = (props: Props) => {
         <Box sx={style}>
           <Box sx={{ p: 5, overflow: "scroll" }}>
             <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Add new Analytical Material post
+              Edit Analytical Material post
             </Typography>
             <Box
               sx={{
@@ -161,7 +161,7 @@ const AnalyticalMaterialEditModal = (props: Props) => {
                 props.setModalIsOpen(false);
               }}
             >
-              Add post
+              Edit post
             </Button>
             <Button
               color="secondary"

@@ -74,7 +74,7 @@ const WorldAboutUkraineEditModal = (props: Props) => {
         <Box sx={style}>
           <Box sx={{ p: 5, overflow: "scroll" }}>
             <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Add new World About Ukraine post
+              Edit World About Ukraine post
             </Typography>
             <Box
               sx={{
@@ -160,7 +160,7 @@ const WorldAboutUkraineEditModal = (props: Props) => {
                 props.setModalIsOpen(false);
               }}
             >
-              Add post
+              Edit post
             </Button>
             <Button
               color="secondary"

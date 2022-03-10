@@ -61,7 +61,7 @@ const DayPhotoEditModal = (props: Props) => {
         <Box sx={style}>
           <Box sx={{ p: 5, overflow: "scroll" }}>
             <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Add new Photo Of The Day
+              Edit Photo Of The Day
             </Typography>
             <Box
               sx={{
@@ -120,7 +120,7 @@ const DayPhotoEditModal = (props: Props) => {
                 props.setModalIsOpen(false);
               }}
             >
-              Add post
+              Edit post
             </Button>
             <Button
               color="secondary"
