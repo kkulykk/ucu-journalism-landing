@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 
+import { firestore } from "../../utils/firebaseConfig";
+import { doc, deleteDoc } from "firebase/firestore";
+
+import { CollectionNames } from "../../services/firebase/firestore";
+
 import { ThemeProvider } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
@@ -17,8 +22,24 @@ interface Props {
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
 
-  recordValuesObj: {id: string, title: string, videoUrl: string, date: Date}
+  recordValuesObj: {id: string, title: string, videoUrl: string, date: Date};
+  getRecordsFunction(): void;
+  modalType?: CollectionNames;
+
 }
+
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "60vw",
+  maxHeight: "90vh",
+  bgcolor: "white",
+  overflow: "scroll",
+  borderRadius: 3,
+  boxShadow: 24,
+};
 
 const WarHistoryLeaderInterviewEditModal = (props: Props) => {
   const [title, setTitle] = useState<string>(props.recordValuesObj.title)
@@ -31,18 +52,21 @@ const WarHistoryLeaderInterviewEditModal = (props: Props) => {
     setDateSelected(props.recordValuesObj.date)
   }, [props.recordValuesObj])
 
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "60vw",
-    maxHeight: "90vh",
-    bgcolor: "white",
-    overflow: "scroll",
-    borderRadius: 3,
-    boxShadow: 24,
-  };
+  const deleteWarHistoryLeaderInterviewRecord = async () => {
+    // rewrite it without if, just by passing props.modalType in doc(firestore, %THERE%, id)
+    if (props.modalType === CollectionNames.LEADER_INTERVIEWS) {
+      await deleteDoc(doc(firestore, CollectionNames.LEADER_INTERVIEWS, props.recordValuesObj.id));
+    }
+
+    if (props.modalType === CollectionNames.WAR_HISTORY) {
+      await deleteDoc(doc(firestore, CollectionNames.WAR_HISTORY, props.recordValuesObj.id));
+    }
+
+    props.setModalIsOpen(false);
+    props.getRecordsFunction();
+  }
+
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -87,25 +111,33 @@ const WarHistoryLeaderInterviewEditModal = (props: Props) => {
               </Box>
               <TextField label="Video URL" variant="outlined" value={videoUrl}  onChange={(event) => setVideoUrl(event.target.value)}/>
             </Box>
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={() => {
-                props.setModalIsOpen(false);
-              }}
-            >
-              Edit post
-            </Button>
-            <Button
-              color="secondary"
-              sx={{ marginLeft: "2%" }}
-              onClick={() => {
-                props.setModalIsOpen(false);
-                console.log("CLOSE")
-              }}
-            >
-              Close
-            </Button>
+            <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between"}}>
+              <Box sx={{ display: "flex", width: "30%" }}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => {
+                    props.setModalIsOpen(false);
+                  }}
+                  >
+                  Edit post
+                </Button>
+                <Button
+                  color="secondary"
+                  sx={{ marginLeft: "2%" }}
+                  onClick={() => props.setModalIsOpen(false)}
+                  >
+                  Close
+                </Button>
+              </Box>
+              <Button
+                color="secondary"
+                sx={{ marginLeft: "2%" }}
+                onClick={() => deleteWarHistoryLeaderInterviewRecord()}
+                >
+                Delete
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Modal>

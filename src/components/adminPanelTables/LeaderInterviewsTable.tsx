@@ -104,7 +104,8 @@ const LeaderInterviewsTable = () => {
   
   return (
     <Box>
-      <WarHistoryLeaderInterviewEditModal modalHeading={"War History Post | Id: " + "ID"} recordValuesObj={editModalValuesObj} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen} />
+      <Button onClick={() => getLeaderInterviewFirestoreRecords()}>Reload</Button>
+      <WarHistoryLeaderInterviewEditModal modalHeading={"War History Post | Id: " + "ID"} modalType={CollectionNames.LEADER_INTERVIEWS} recordValuesObj={editModalValuesObj} getRecordsFunction={getLeaderInterviewFirestoreRecords} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen} />
 
       <TableContainer sx={{ height: 500, background: "beige" }}>
         <Table>

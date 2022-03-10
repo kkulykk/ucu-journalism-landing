@@ -44,6 +44,16 @@ const fetchAdminName = async (uid: string | undefined): Promise<QuerySnapshot<Do
 };
 
 // Functions for adding records
+
+
+
+
+
+
+
+
+
+
 const addAnalyticalMaterials = async () => {
   const singleAnalyticalMaterial = {
     title: "What Happened on Day 7 of Russia’s Invasion of Ukraine",

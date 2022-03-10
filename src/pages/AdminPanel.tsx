@@ -29,6 +29,8 @@ import { MdAnalytics } from "react-icons/md";
 import { styled } from "@mui/material/styles";
 import theme from "../utils/theme";
 
+import { CollectionNames } from "../services/firebase/firestore";
+
 // Tables imports
 import WarHistoryTable from "../components/adminPanelTables/WarHistoryTable";
 import LeaderInterviewsTable from "../components/adminPanelTables/LeaderInterviewsTable";
@@ -210,12 +212,14 @@ const AdminPanel = () => {
         modalIsOpen={openWarHistoryModal}
         setModalIsOpen={setOpenWarHistoryModal}
         setSnackBarIsOpen={setOpenSnackBar}
+        modalType={CollectionNames.WAR_HISTORY}
       />
       <WarHistoryLeaderInterviewModal
         title="Leader Interview"
         modalIsOpen={openLeaderInterviewModal}
         setModalIsOpen={setOpenLeaderInterviewModal}
         setSnackBarIsOpen={setOpenSnackBar}
+        modalType={CollectionNames.LEADER_INTERVIEWS}
       />
       <WorldAboutUkraineModal
         modalIsOpen={openWorldAboutUkraineModal}

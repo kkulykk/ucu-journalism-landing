@@ -124,7 +124,8 @@ const AnalyticalMaterialsTable = () => {
 
   return (
     <Box>
-      <AnalyticalMaterialEditModal recordValuesObj={editModalValuesObj} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen}/>
+      <Button onClick={() => getAnalyticalMaterialFirestoreRecords()}>Reload</Button>
+      <AnalyticalMaterialEditModal recordValuesObj={editModalValuesObj} getRecordsFunction={getAnalyticalMaterialFirestoreRecords} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen}/>
 
       <TableContainer sx={{ height: 500, background: "beige"}}>
         <Table>

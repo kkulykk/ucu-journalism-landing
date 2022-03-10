@@ -7,6 +7,7 @@ class AnalyticalMaterialsObj {
   imageUrl: string;
   lead: string;
   text: string;
+  
 
   constructor(
     id: string,

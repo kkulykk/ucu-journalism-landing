@@ -106,37 +106,38 @@ const DayPhotosTable = () => {
 
   return (
     <Box>
-    <DayPhotoEditModal recordValuesObj={editModalValuesObj} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen}/>
+      <Button onClick={() => getDayPhotoFirestoreRecords()}>Reload</Button>
+      <DayPhotoEditModal recordValuesObj={editModalValuesObj} getRecordsFunction={getDayPhotoFirestoreRecords} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen}/>
 
-    <TableContainer sx={{ height: 500, background: "beige" }}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            {columns.map((column) => (
-                <TableCell
-                key={column.id}
-                  style={{ top: 57, minWidth: column.minWidth }}
-                  >
-                  {column.label}
-                </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {isTableLoading ? "Loading" : renderRows()}
-          <Button
-            disabled={isTableLoading}
-            variant="outlined"
-            sx={{ marginTop: 5 }}
-            onClick={() => setTableRecordsNumber(tableRecordsNumber + TABLE_RECORDS_NUMBER)}
-            >
-            Load more
-          </Button>
-        </TableBody>
+      <TableContainer sx={{ height: 500, background: "beige" }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                  <TableCell
+                  key={column.id}
+                    style={{ top: 57, minWidth: column.minWidth }}
+                    >
+                    {column.label}
+                  </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {isTableLoading ? "Loading" : renderRows()}
+            <Button
+              disabled={isTableLoading}
+              variant="outlined"
+              sx={{ marginTop: 5 }}
+              onClick={() => setTableRecordsNumber(tableRecordsNumber + TABLE_RECORDS_NUMBER)}
+              >
+              Load more
+            </Button>
+          </TableBody>
 
-      </Table>
-    </TableContainer>
-  </Box>
+        </Table>
+      </TableContainer>
+    </Box>
   )
 };
 

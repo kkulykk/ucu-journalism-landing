@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 
+import { firestore } from "../../utils/firebaseConfig";
+import { doc, deleteDoc } from "firebase/firestore";
+
+import { CollectionNames } from "../../services/firebase/firestore";
+
 import { ThemeProvider } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
@@ -16,8 +21,26 @@ interface Props {
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
 
-  recordValuesObj: {id: string, imageUrl: string, date: Date, source: string, description: string}
+  recordValuesObj: {id: string, imageUrl: string, date: Date, source: string, description: string};
+  getRecordsFunction(): void;
 }
+
+const Input = styled("input")({
+  display: "none",
+});
+
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "60vw",
+  maxHeight: "90vh",
+  bgcolor: "white",
+  overflow: "scroll",
+  borderRadius: 3,
+  boxShadow: 24,
+};
 
 const DayPhotoEditModal = (props: Props) => {
   const [imageUrl, setImageUrl] = useState<string>(props.recordValuesObj.imageUrl)
@@ -32,23 +55,13 @@ const DayPhotoEditModal = (props: Props) => {
     setDescription(props.recordValuesObj.description)
   }, [props.recordValuesObj])
 
+  const deleteDayPhotoRecord = async () => {
+    await deleteDoc(doc(firestore, CollectionNames.DAY_PHOTOS, props.recordValuesObj.id));
+    props.setModalIsOpen(false);
+    props.getRecordsFunction();
+  }
 
-  const Input = styled("input")({
-    display: "none",
-  });
 
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "60vw",
-    maxHeight: "90vh",
-    bgcolor: "white",
-    overflow: "scroll",
-    borderRadius: 3,
-    boxShadow: 24,
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -113,22 +126,33 @@ const DayPhotoEditModal = (props: Props) => {
                 </Button>
               </label>
             </Box>
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={() => {
-                props.setModalIsOpen(false);
-              }}
-            >
-              Edit post
-            </Button>
-            <Button
-              color="secondary"
-              sx={{ marginLeft: "2%" }}
-              onClick={() => props.setModalIsOpen(false)}
-            >
-              Close
-            </Button>
+            <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between"}}>
+              <Box sx={{ display: "flex", width: "30%" }}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => {
+                    props.setModalIsOpen(false);
+                  }}
+                  >
+                  Edit post
+                </Button>
+                <Button
+                  color="secondary"
+                  sx={{ marginLeft: "2%" }}
+                  onClick={() => props.setModalIsOpen(false)}
+                  >
+                  Close
+                </Button>
+              </Box>
+              <Button
+                color="secondary"
+                sx={{ marginLeft: "2%" }}
+                onClick={() => deleteDayPhotoRecord()}
+                >
+                Delete
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Modal>

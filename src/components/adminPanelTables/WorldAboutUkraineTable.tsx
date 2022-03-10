@@ -124,7 +124,8 @@ const WorldAboutUkraineTable = () => {
 
   return (
     <Box>
-      <WorldAboutUkraineEditModal recordValuesObj={editModalValuesObj} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen} />
+      <Button onClick={() => getWorldAboutUkraineFirebaseRecords()}>Reload</Button>
+      <WorldAboutUkraineEditModal recordValuesObj={editModalValuesObj} getRecordsFunction={getWorldAboutUkraineFirebaseRecords} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen} />
 
       <TableContainer sx={{ height: 500, background: "beige"}}>
         <Table>

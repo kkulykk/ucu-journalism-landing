@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 
+import { firestore } from "../../utils/firebaseConfig";
+import { doc, deleteDoc } from "firebase/firestore";
+
+import { CollectionNames } from "../../services/firebase/firestore";
+
 import { ThemeProvider } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
@@ -25,8 +30,27 @@ interface Props {
     imageUrl: string,
     lead: string,
     text: string
-  }
+  };
+
+  getRecordsFunction(): void;
 }
+
+const Input = styled("input")({
+  display: "none",
+});
+
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "60vw",
+  maxHeight: "90vh",
+  bgcolor: "white",
+  overflow: "scroll",
+  borderRadius: 3,
+  boxShadow: 24,
+};
 
 const AnalyticalMaterialEditModal = (props: Props) => {
   const [title, setTitle] = useState<string>(props.recordValuesObj.title);
@@ -45,22 +69,12 @@ const AnalyticalMaterialEditModal = (props: Props) => {
     setText(props.recordValuesObj.text);
   }, [props.recordValuesObj])
 
-  const Input = styled("input")({
-    display: "none",
-  });
+  const deleteAnalyticalMaterialRecord = async () => {
+    await deleteDoc(doc(firestore, CollectionNames.ANALYTICS_MATERIAL, props.recordValuesObj.id));
+    props.setModalIsOpen(false);
+    props.getRecordsFunction();
+  }
 
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "60vw",
-    maxHeight: "90vh",
-    bgcolor: "white",
-    overflow: "scroll",
-    borderRadius: 3,
-    boxShadow: 24,
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -154,22 +168,33 @@ const AnalyticalMaterialEditModal = (props: Props) => {
                 onChange={(event) => setText(event.target.value)}
               />
             </Box>
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={() => {
-                props.setModalIsOpen(false);
-              }}
-            >
-              Edit post
-            </Button>
-            <Button
-              color="secondary"
-              sx={{ marginLeft: "2%" }}
-              onClick={() => props.setModalIsOpen(false)}
-            >
-              Close
-            </Button>
+            <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between"}}>
+              <Box sx={{ display: "flex", width: "30%" }}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => {
+                    props.setModalIsOpen(false);
+                  }}
+                  >
+                  Edit post
+                </Button>
+                <Button
+                  color="secondary"
+                  sx={{ marginLeft: "2%" }}
+                  onClick={() => props.setModalIsOpen(false)}
+                  >
+                  Close
+                </Button>
+              </Box>
+              <Button
+                color="secondary"
+                sx={{ marginLeft: "2%" }}
+                onClick={() => deleteAnalyticalMaterialRecord()}
+                >
+                Delete
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Modal>
