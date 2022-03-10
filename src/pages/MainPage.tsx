@@ -135,13 +135,13 @@ const MainPage = () => {
             display: "flex",
             flexDirection: "column",
             backgroundColor: "rgb(0, 0, 0, 0.5)",
-            paddingLeft: 2,
+            paddingRight: 2,
             fontWeight: "400",
             color: "white",
             position: "absolute",
             top: "55vh",
-            right: 0,
-            paddingRight: "5%",
+            left: 0,
+            paddingLeft: "5%",
           }}
         >
           <Box sx={{ display: "flex", gap: 2 }}>
@@ -197,7 +197,7 @@ const MainPage = () => {
               link="stories"
             />
             <SectionButton
-              title="OPINION LEADERS INTERVIES"
+              title="OPINION LEADERS INTERVIEWS"
               desc="Here goes description what is this section about"
               link="leaders"
             />
@@ -217,15 +217,32 @@ const MainPage = () => {
           sx={{
             display: "flex",
             justifyContent: "center",
-            width: "100vw",
-            marginTop: 3,
+            alignItems: "center",
           }}
         >
-          <VideoPost
-            title="You are the part of the big Ukrainian ocean"
-            date="08 Mar 2022"
-            videoUrl="https://www.youtube.com/embed/VKP_WdbgqNc?autoplay=1"
-          />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100vw",
+              "@media (min-width:800px)": {
+                width: "800px",
+              },
+              aspectRatio: "16 / 9",
+              marginTop: 3,
+            }}
+          >
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/VKP_WdbgqNc?rel=0&mute=1&amp;autoplay=1"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="Embedded youtube"
+            />
+          </Box>
         </Box>
       </div>
       <Footer />

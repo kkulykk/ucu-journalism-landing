@@ -15,7 +15,7 @@ import VideoPost from "../components/VideoPost";
 import SkeletonVideo from "../components/SkeletonVideo";
 
 // Constants
-const VIDEOS_NUMBER = 2;
+const VIDEOS_NUMBER = 5;
 
 const WarHistory = () => {
   const [warHistoryObjects, setWarHistoryObjects] = useState<WarHistoryObj[]>(

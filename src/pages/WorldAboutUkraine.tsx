@@ -3,6 +3,7 @@ import {
   getFirestoreRecordsLimit,
   CollectionNames,
 } from "../services/firebase/firestore";
+import CircularProgress from "@mui/material/CircularProgress";
 import { WorldAboutUkraineObj } from "../services/models/firestoreDocuments";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -14,7 +15,7 @@ import theme from "../utils/theme";
 import WorldArticle from "../components/WorldArticle";
 
 // Constants
-const POSTS_NUMBER = 1;
+const POSTS_NUMBER = 5;
 
 const WorldAboutUkraine = () => {
   const [worldAboutUkraineObjects, setWorldAboutUkraineObjects] = useState<
@@ -91,7 +92,7 @@ const WorldAboutUkraine = () => {
           width: "100%",
         }}
       >
-        {isLoading ? "Loading..." : mappedWorldArticles()}
+        {isLoading ? <CircularProgress /> : mappedWorldArticles()}
       </Box>
       <Button variant="outlined" sx={{ marginTop: 5 }}>
         Load more

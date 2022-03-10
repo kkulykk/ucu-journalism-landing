@@ -16,7 +16,7 @@ import VideoPost from "../components/VideoPost";
 import SkeletonVideo from "../components/SkeletonVideo";
 
 // Constants
-const VIDEOS_NUMBER = 1;
+const VIDEOS_NUMBER = 5;
 
 const LeaderInterviews = () => {
   const [leaderInterviewObjects, setLeaderInterviewObjects] = useState<

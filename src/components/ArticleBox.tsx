@@ -31,6 +31,9 @@ const ArticleBox = (props: Props) => {
     overflow: "scroll",
     borderRadius: 3,
     boxShadow: 24,
+    "@media (max-width: 750px)": {
+      width: "90vw",
+    },
   };
 
   const [open, setOpen] = React.useState(false);
@@ -64,7 +67,7 @@ const ArticleBox = (props: Props) => {
               sx={{
                 overflow: "hidden",
                 textOverflow: "ellipsis",
-                width: "11rem",
+                width: "100%",
                 display: "flex",
                 gap: 2,
                 color: "#607d8b",
@@ -88,8 +91,13 @@ const ArticleBox = (props: Props) => {
       <Card
         sx={{
           maxWidth: "60vw",
+          height: "100%",
           boxShadow: 3,
           borderRadius: 3,
+          transition: "all ease-in-out 0.1s",
+          "@media (max-width: 800px)": {
+            maxWidth: "90vw",
+          },
           m: 2,
         }}
       >

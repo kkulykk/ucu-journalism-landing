@@ -22,8 +22,13 @@ const WorldArticle = (props: Props) => {
       <Card
         sx={{
           maxWidth: "60vw",
+          height: "100%",
           boxShadow: 3,
           borderRadius: 3,
+          transition: "all ease-in-out 0.1s",
+          "@media (max-width: 800px)": {
+            maxWidth: "90vw",
+          },
           m: 2,
         }}
       >

@@ -15,7 +15,7 @@ import SectionDescription from "../components/SectionDescription";
 import SkeletonNews from "../components/SkeletonNews";
 
 // Constants
-const POSTS_NUMBER = 1;
+const POSTS_NUMBER = 5;
 
 const AnalyticalMaterials = () => {
   const [analyticalMaterialObjects, setAnalyticalMaterialObjects] = useState<
@@ -81,9 +81,7 @@ const AnalyticalMaterials = () => {
 
         <SectionDescription
           title="UKRAINE AND GLOBAL AGENDA"
-          desc="Here we describe the objectivs of the project and tell readers what we
-        mainly post here. There is also small description of all the authors and
-        so on"
+          desc="A look at the war from Ukrainian experts and the world media"
         />
         <Box
           sx={{

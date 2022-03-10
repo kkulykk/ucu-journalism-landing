@@ -8,6 +8,7 @@ const Header = () => {
     <ThemeProvider theme={theme}>
       <div className="header">
         <a
+          className="header-title"
           style={{
             display: "flex",
             flexDirection: "column",
@@ -16,6 +17,7 @@ const Header = () => {
             textDecoration: "none",
             fontSize: "1.3rem",
             fontWeight: 600,
+            transition: "all ease-in-out 0.5s",
           }}
           href="/"
         >

@@ -13,7 +13,6 @@ const VideoPost = (props: Props) => {
   return (
     <Card
       sx={{
-        aspectRatio: "16/9",
         width: "100%",
         minWidth: 250,
         maxWidth: 550,
@@ -26,8 +25,7 @@ const VideoPost = (props: Props) => {
     >
       <CardMedia
         component="iframe"
-        allow="autoplay"
-        height="70%"
+        sx={{ aspectRatio: "16 /9" }}
         allowFullScreen
         frameBorder="0"
         image={props.videoUrl}
