@@ -4,9 +4,8 @@ import {
   getFirestoreRecordsLimit,
   CollectionNames,
 } from "../../services/firebase/firestore";
-import { WarHistoryObj } from "../../services/models/firestoreDocuments";
+import { LeaderInterviewsObj } from "../../services/models/firestoreDocuments";
 import WarHistoryLeaderInterviewEditModal from "../modals/WarHistoryLeaderInterviewEditModal";
-
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -27,44 +26,44 @@ const columns: {id: string, label: string, minWidth: number}[] = [
 ];
 
 // Custom types
-type EditWarHistoryModalType = {
+type EditLeaderInterviewModalType = {
   title: string,
   date: Date,
   videoUrl: string,
 }
 
-const WarHistoryTable = () => {
-  const [warHistoryAdminPanelObjects, setWarHistoryAdminPanelObjects] = useState<WarHistoryObj[]>([])
+const LeaderInterviewsTable = () => {
+  const [leaderInterviewAdminPanelObjects, setLeaderInterviewAdminPanelObjects] = useState<LeaderInterviewsObj[]>([])
   const [isTableLoading, setIsTableLoading] = useState<boolean>(false);
   const [tableRecordsNumber, setTableRecordsNumber] = useState<number>(TABLE_RECORDS_NUMBER)
 
   const [editModalIsOpen, setEditModalIsOpen] = useState<boolean>(false)
 
-  const [editModalValuesObj, setEditModalValuesObj] = useState<EditWarHistoryModalType>({
+  const [editModalValuesObj, setEditModalValuesObj] = useState<EditLeaderInterviewModalType>({
     title: "Initial string",
     date: new Date(),
     videoUrl: "Initial string",
   })
 
-  const getWarHistoryFirestoreRecords = async () => {
-    const recordObjectsArray: WarHistoryObj[] = [];
+  const getLeaderInterviewFirestoreRecords = async () => {
+    const recordObjectsArray: LeaderInterviewsObj[] = [];
     try {
       setIsTableLoading(true);
-      const records = await getFirestoreRecordsLimit(CollectionNames.WAR_HISTORY, tableRecordsNumber);  
+      const records = await getFirestoreRecordsLimit(CollectionNames.LEADER_INTERVIEWS, tableRecordsNumber);  
       
       records.forEach((doc) => {
         const docData = doc.data();
-        const singleWarHistoryAdminPanelObject: WarHistoryObj = new WarHistoryObj(
+        const singleLeaderInterviewAdminPanelObject: LeaderInterviewsObj = new LeaderInterviewsObj(
           doc.id,
           docData.title,
           docData.date,
           docData.videoUrl
         )
 
-        recordObjectsArray.push(singleWarHistoryAdminPanelObject);
+        recordObjectsArray.push(singleLeaderInterviewAdminPanelObject);
       })
 
-      setWarHistoryAdminPanelObjects(recordObjectsArray);
+      setLeaderInterviewAdminPanelObjects(recordObjectsArray);
       setIsTableLoading(false);
     } catch (err) {
       console.error(err)
@@ -72,7 +71,7 @@ const WarHistoryTable = () => {
   }
 
   useEffect(() => {
-    getWarHistoryFirestoreRecords();
+    getLeaderInterviewFirestoreRecords();
   }, [tableRecordsNumber])
 
   const openEditModal = (title: string, videoUrl: string, date: Date): void => {
@@ -81,7 +80,7 @@ const WarHistoryTable = () => {
   }
 
   const renderRows = () => {
-    return warHistoryAdminPanelObjects.map((rowObject) => {
+    return leaderInterviewAdminPanelObjects.map((rowObject) => {
       return (
           <TableRow onClick={() => openEditModal(rowObject.title, rowObject.videoUrl, rowObject.dateObj)}>
             {
@@ -109,7 +108,7 @@ const WarHistoryTable = () => {
             <TableRow>
               {columns.map((column) => (
                   <TableCell
-                  key={column.id}
+                    key={column.id}
                     style={{ top: 57, minWidth: column.minWidth }}
                     >
                     {column.label}
@@ -135,4 +134,4 @@ const WarHistoryTable = () => {
   );
 };
 
-export default WarHistoryTable;
+export default LeaderInterviewsTable;

@@ -6,30 +6,49 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
+
 import theme from "../../utils/theme";
-import { setDate } from "date-fns/esm";
+
 
 interface Props {
-  modalHeading: string;
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
 
-  recordValuesObj: {title: string, videoUrl: string, date: Date}
+  recordValuesObj: {
+    title: string,
+    date: Date,
+    source: string,
+    imageUrl: string,
+    lead: string,
+    text: string
+  }
 }
 
-const WarHistoryLeaderInterviewEditModal = (props: Props) => {
-  const [title, setTitle] = useState<string>(props.recordValuesObj.title)
-  const [videoUrl, setVideoUrl] = useState<string>(props.recordValuesObj.videoUrl)
+const AnalyticalMaterialEditModal = (props: Props) => {
+  const [title, setTitle] = useState<string>(props.recordValuesObj.title);
   const [dateSelected, setDateSelected] = useState<Date | null>(props.recordValuesObj.date);
+  const [source, setSource] = useState<string>(props.recordValuesObj.source);
+  const [imageUrl, setImageUrl] = useState<string>(props.recordValuesObj.imageUrl);
+  const [lead, setLead] = useState<string>(props.recordValuesObj.lead);
+  const [text, setText] = useState<string>(props.recordValuesObj.text);
 
   useEffect(() => {
-    setTitle(props.recordValuesObj.title)
-    setVideoUrl(props.recordValuesObj.videoUrl)
-    setDateSelected(props.recordValuesObj.date)
+    setTitle(props.recordValuesObj.title);
+    setDateSelected(props.recordValuesObj.date);
+    setSource(props.recordValuesObj.source);
+    setImageUrl(props.recordValuesObj.imageUrl);
+    setLead(props.recordValuesObj.lead);
+    setText(props.recordValuesObj.text);
   }, [props.recordValuesObj])
+
+
+  const Input = styled("input")({
+    display: "none",
+  });
 
   const style = {
     position: "absolute" as "absolute",
@@ -55,7 +74,7 @@ const WarHistoryLeaderInterviewEditModal = (props: Props) => {
         <Box sx={style}>
           <Box sx={{ p: 5, overflow: "scroll" }}>
             <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Edit {props.modalHeading} 
+              Add new Analytical Material post
             </Typography>
             <Box
               sx={{
@@ -73,6 +92,21 @@ const WarHistoryLeaderInterviewEditModal = (props: Props) => {
                   value={title}
                   onChange={(event) => setTitle(event.target.value)}
                 />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  alignItems: "center",
+                }}
+              >
+                <TextField
+                  sx={{ width: "100%" }}
+                  label="Source"
+                  variant="outlined"
+                  value={source}
+                  onChange={(event) => setSource(event.target.value)}
+                />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
                     label="Date"
@@ -81,11 +115,45 @@ const WarHistoryLeaderInterviewEditModal = (props: Props) => {
                       setDateSelected(newDate);
                     }}
                     renderInput={(params) => <TextField {...params} />}
-
                   />
                 </LocalizationProvider>
+                <Typography variant="h3" sx={{ marginBottom: 1 }}>
+                  ADD IMAGE URL STRING AND THINK ABOUT EDITING IMAGE
+                </Typography>
+                <label htmlFor="contained-button-file">
+                  <Input
+                    accept="image/*"
+                    id="contained-button-file"
+                    multiple
+                    type="file"
+                  />
+                  <Button
+                    sx={{ width: 130 }}
+                    variant="outlined"
+                    component="span"
+                  >
+                    Upload image
+                  </Button>
+                </label>
               </Box>
-              <TextField label="Video URL" variant="outlined" value={videoUrl}  onChange={(event) => setVideoUrl(event.target.value)}/>
+              <TextField
+                sx={{ width: "100%" }}
+                multiline
+                maxRows={3}
+                label="Lead"
+                variant="outlined"
+                value={lead}
+                onChange={(event) => setLead(event.target.value)}
+              />
+              <TextField
+                multiline
+                maxRows={5}
+                sx={{ width: "100%" }}
+                label="Text"
+                variant="outlined"
+                value={text}
+                onChange={(event) => setText(event.target.value)}
+              />
             </Box>
             <Button
               color="primary"
@@ -99,10 +167,7 @@ const WarHistoryLeaderInterviewEditModal = (props: Props) => {
             <Button
               color="secondary"
               sx={{ marginLeft: "2%" }}
-              onClick={() => {
-                props.setModalIsOpen(false);
-                console.log("CLOSE")
-              }}
+              onClick={() => props.setModalIsOpen(false)}
             >
               Close
             </Button>
@@ -113,4 +178,4 @@ const WarHistoryLeaderInterviewEditModal = (props: Props) => {
   );
 };
 
-export default WarHistoryLeaderInterviewEditModal;
+export default AnalyticalMaterialEditModal;

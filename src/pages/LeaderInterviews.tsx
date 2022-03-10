@@ -36,6 +36,7 @@ const LeaderInterviews = () => {
       videos.forEach((doc) => {
         const docData = doc.data();
         const singleLeaderInterviewObject: LeaderInterviewsObj = new LeaderInterviewsObj(
+          doc.id,
           docData.title,
           docData.date,
           docData.videoUrl

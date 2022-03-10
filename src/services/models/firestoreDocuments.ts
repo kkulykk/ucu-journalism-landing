@@ -1,12 +1,15 @@
 class AnalyticalMaterialsObj {
+  id: string;
   title: string;
   date: any;
+  dateObj: Date;
   source: string;
   imageUrl: string;
   lead: string;
   text: string;
 
   constructor(
+    id: string,
     title: string,
     date: any,
     source: string,
@@ -14,7 +17,9 @@ class AnalyticalMaterialsObj {
     lead: string,
     text: string
   ) {
+    this.id = id;
     this.title = title;
+    this.dateObj = date.toDate();
     this.date = date.toDate().toDateString();
     this.source = source;
     this.imageUrl = imageUrl;
@@ -55,19 +60,24 @@ class DayPhotosObj {
 }
 
 class LeaderInterviewsObj {
+  id: string;
   title: string;
+  dateObj: Date;
   date: any;
   videoUrl: string;
 
-  constructor(title: string, date: any, videoUrl: string) {
+
+  constructor(id: string, title: string, date: any, videoUrl: string) {
+    this.id = id;
     this.title = title;
+    this.dateObj = date.toDate();
     this.date = date.toDate().toDateString();
     this.videoUrl = videoUrl;
   }
 
   disp(): void {
     console.log(
-      `Title: ${this.title}, Date: ${this.date}, VideoUrl: ${this.videoUrl}`
+      `Id: ${this.id}, Title: ${this.title}, Date: ${this.date}, VideoUrl: ${this.videoUrl}`
     );
   }
 }
@@ -75,9 +85,9 @@ class LeaderInterviewsObj {
 class WarHistoryObj {
   id: string;
   title: string;
+  dateObj: Date;
   date: any;
   videoUrl: string;
-  dateObj: Date;
 
   constructor(id: string, title: string, date: any, videoUrl: string) {
     this.id = id;

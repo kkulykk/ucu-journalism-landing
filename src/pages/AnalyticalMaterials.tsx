@@ -35,6 +35,7 @@ const AnalyticalMaterials = () => {
         const docData = doc.data();
         const singleAnalyticalMaterialObject: AnalyticalMaterialsObj =
           new AnalyticalMaterialsObj(
+            doc.id,
             docData.title,
             docData.date,
             docData.source,

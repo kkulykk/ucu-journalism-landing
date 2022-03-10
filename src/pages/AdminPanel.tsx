@@ -30,7 +30,8 @@ import { styled } from "@mui/material/styles";
 
 // Tables imports
 import WarHistoryTable from "../components/adminPanelTables/WarHistoryTable";
-
+import LeaderInterviewsTable from "../components/adminPanelTables/LeaderInterviewsTable";
+import AnalyticalMaterialsTable from "../components/adminPanelTables/AnalyticalMaterialsTable";
 import theme from "../utils/theme";
 
 import DayPhotoModal from "../components/modals/DayPhotoModal";
@@ -295,10 +296,22 @@ const AdminPanel = () => {
           </Box>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Leaders interviews
+          <Typography variant="h4" sx={{ marginBottom: 1 }}>
+            Leaders interviews
+          </Typography>
+          <Box>
+            {/* TABLE */}
+            <LeaderInterviewsTable />
+          </Box>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Analytical Materials
+          <Typography variant="h4" sx={{ marginBottom: 1 }}>
+            Analytical Materials
+          </Typography>
+          <Box>
+            {/* TABLE */}
+            <AnalyticalMaterialsTable />
+          </Box>
         </TabPanel>
         <TabPanel value={value} index={3}>
           World about Ukraine
