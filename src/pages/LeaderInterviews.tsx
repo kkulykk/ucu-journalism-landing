@@ -15,12 +15,13 @@ import Button from "@mui/material/Button";
 import VideoPost from "../components/VideoPost";
 import SkeletonVideo from "../components/SkeletonVideo";
 
-
 // Constants
-const VIDEOS_NUMBER = 1;
+const VIDEOS_NUMBER = 5;
 
 const LeaderInterviews = () => {
-  const [leaderInterviewObjects, setLeaderInterviewObjects] = useState<LeaderInterviewsObj[]>([]);
+  const [leaderInterviewObjects, setLeaderInterviewObjects] = useState<
+    LeaderInterviewsObj[]
+  >([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [videosNumber, setVideosNumber] = useState<number>(VIDEOS_NUMBER);
 
@@ -42,7 +43,7 @@ const LeaderInterviews = () => {
           docData.videoUrl
         )
         videoObjectsArray.push(singleLeaderInterviewObject);
-      })
+      });
 
       setLeaderInterviewObjects(videoObjectsArray);
       setIsLoading(false);
@@ -55,29 +56,35 @@ const LeaderInterviews = () => {
     return leaderInterviewObjects.map((video, index) => {
       return (
         <VideoPost
-        key={index}
-        title={video.title}
-        date={video.date}
-        videoUrl={video.videoUrl}
-      />
+          key={index}
+          title={video.title}
+          date={video.date}
+          videoUrl={video.videoUrl}
+        />
       );
     });
   };
 
   useEffect(() => {
     getLeaderInterviewVideos();
-  }, [videosNumber])
+  }, [videosNumber]);
 
   return (
     <ThemeProvider theme={theme}>
       <Header />
       <SectionDescription
-        title="Leader Interviews"
-        desc="Here we describe the objectivs of the project and tell readers what we
-        mainly post here. There is also small description of all the authors and
-        so on"
+        title="OPINION LEADERS INTERVIEWS"
+        desc="Opinions of political scientists, historians, teachers, psychologists and other opinion leaders about the war waged by Russia"
       />
-      <Box sx={{ display: "flex", flexWrap: "wrap", p: "0 8%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          width: "100%",
+          m: 0,
+          justifyContent: "center",
+        }}
+      >
         {isLoading ? <SkeletonVideo /> : mappedLeaderInterviewVideoPosts()}
       </Box>
       <Button

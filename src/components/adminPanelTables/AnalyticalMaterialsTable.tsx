@@ -127,7 +127,7 @@ const AnalyticalMaterialsTable = () => {
       <Button onClick={() => getAnalyticalMaterialFirestoreRecords()}>Reload</Button>
       <AnalyticalMaterialEditModal recordValuesObj={editModalValuesObj} getRecordsFunction={getAnalyticalMaterialFirestoreRecords} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen}/>
 
-      <TableContainer sx={{ height: 500, background: "beige"}}>
+      <TableContainer sx={{ height: "65vh" }}>
         <Table>
           <TableHead>
             <TableRow>

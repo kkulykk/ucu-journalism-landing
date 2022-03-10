@@ -108,7 +108,7 @@ const WarHistoryTable = () => {
       <Button onClick={() => getWarHistoryFirestoreRecords()}>Reload</Button>
       <WarHistoryLeaderInterviewEditModal modalHeading={"War History Post | Id: " + "ID"} modalType={CollectionNames.WAR_HISTORY} recordValuesObj={editModalValuesObj} getRecordsFunction={getWarHistoryFirestoreRecords} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen} />
 
-      <TableContainer sx={{ height: 500, background: "beige" }}>
+      <TableContainer sx={{ height: "65vh" }}>
         <Table>
           <TableHead>
             <TableRow>

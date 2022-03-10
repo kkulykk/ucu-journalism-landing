@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@mui/material/styles";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import theme from "../utils/theme";
 import "./Header.css";
 
@@ -8,22 +8,28 @@ const Header = () => {
     <ThemeProvider theme={theme}>
       <div className="header">
         <a
+          className="header-title"
           style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
             color: "white",
             textDecoration: "none",
             fontSize: "1.3rem",
             fontWeight: 600,
+            transition: "all ease-in-out 0.5s",
           }}
           href="/"
         >
-          VICTORY CHRONICLES
+          UKRAINE. VICTORY CHRONICLES
+          <Typography variant="body2">УКРАЇНА. ХРОНІКИ ПЕРЕМОГИ</Typography>
         </a>
         <Button
           disableElevation
           variant="contained"
           color="info"
           target="_blank"
-          href="https://betha.in.ua"
+          href="https://warinua.ucu.edu.ua/donate/"
         >
           Support
         </Button>

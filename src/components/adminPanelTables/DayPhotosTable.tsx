@@ -109,7 +109,7 @@ const DayPhotosTable = () => {
       <Button onClick={() => getDayPhotoFirestoreRecords()}>Reload</Button>
       <DayPhotoEditModal recordValuesObj={editModalValuesObj} getRecordsFunction={getDayPhotoFirestoreRecords} modalIsOpen={editModalIsOpen} setModalIsOpen={setEditModalIsOpen}/>
 
-      <TableContainer sx={{ height: 500, background: "beige" }}>
+      <TableContainer sx={{ height: "65vh" }}>
         <Table>
           <TableHead>
             <TableRow>

@@ -16,11 +16,14 @@ import "./MainPage.css";
 import SectionButton from "../components/SectionButton";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import PartnerButton from "../components/PartnerButton";
 import Footer from "../components/Footer";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import VideoPost from "../components/VideoPost";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const MAXX = 7;
+const MAX_PHOTOS = 3;
 
 const MainPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -31,7 +34,10 @@ const MainPage = () => {
     const dayPhotosArray: DayPhotosObj[] = [];
     try {
       setIsLoading(true); // switch ON page loader
-      const photos = await getFirestoreRecordsLimit(CollectionNames.DAY_PHOTOS, 3);
+      const photos = await getFirestoreRecordsLimit(
+        CollectionNames.DAY_PHOTOS,
+        MAX_PHOTOS
+      );
 
       photos.forEach((doc) => {
         const docData = doc.data();
@@ -51,6 +57,14 @@ const MainPage = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   const handleStepChange = (step: number) => {
@@ -92,16 +106,43 @@ const MainPage = () => {
         </AutoPlaySwipeableViews>
         <Box
           sx={{
+            position: "absolute",
+            top: "35vh",
+            right: 0,
+            width: "100vw",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Button
+            size="large"
+            color={"info"}
+            onClick={handleBack}
+            disabled={activeStep === 0}
+          >
+            <MdKeyboardArrowLeft size={42} />
+          </Button>
+          <Button
+            size="large"
+            color={"info"}
+            onClick={handleNext}
+            disabled={activeStep === MAX_PHOTOS - 1}
+          >
+            <MdKeyboardArrowRight size={42} />
+          </Button>
+        </Box>
+        <Box
+          sx={{
             display: "flex",
             flexDirection: "column",
             backgroundColor: "rgb(0, 0, 0, 0.5)",
-            paddingLeft: 2,
+            paddingRight: 2,
             fontWeight: "400",
             color: "white",
             position: "absolute",
             top: "55vh",
-            right: 0,
-            paddingRight: "5%",
+            left: 0,
+            paddingLeft: "5%",
           }}
         >
           <Box sx={{ display: "flex", gap: 2 }}>
@@ -146,30 +187,102 @@ const MainPage = () => {
             sx={{
               display: "flex",
               justifyContent: "center",
-              // backgroundColor: "aqua",
-              width: 3 / 4,
+              width: "95%",
               flexWrap: "wrap",
+              marginTop: 3,
             }}
           >
             <SectionButton
-              title="War Stories"
-              desc="Here goes description what is this section about"
+              title="RESILIENCE STORIES"
+              desc="About those who are witnesses and participants in the war with Russia, who suffered from the shelling, who are helping military and civilians by 'quiet and tireless work'"
               link="stories"
             />
             <SectionButton
-              title="Leaders Interviews"
-              desc="Here goes description what is this section about"
+              title="OPINION LEADERS INTERVIEWS"
+              desc=" 
+              Opinions of political scientists, historians, teachers, psychologists and other opinion leaders about the war waged by Russia"
               link="leaders"
             />
             <SectionButton
-              title="Analytical Materials"
-              desc="Here goes description what is this section about"
+              title="UKRAINE AND GLOBAL AGENDA"
+              desc="A look at the war from Ukrainian experts and the world media"
               link="analytics"
             />
             <SectionButton
-              title="The World About Ukraine "
-              desc="Here goes description what is this section about"
+              title="ART DURING WAR"
+              desc="Art is also a weapon"
               link="world"
+            />
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "5vh",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100vw",
+              "@media (min-width:800px)": {
+                width: "800px",
+              },
+              aspectRatio: "16 / 9",
+              marginTop: 3,
+            }}
+          >
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/VKP_WdbgqNc?rel=0&mute=1&amp;autoplay=1"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="Embedded youtube"
+            />
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            marginTop: "10vh",
+          }}
+        >
+          <Typography variant="h2" color="secondary">
+            Partner Projects
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              width: "95%",
+              flexWrap: "wrap",
+              marginTop: 3,
+            }}
+          >
+            <PartnerButton
+              title="WeAreUkraine.info"
+              link="https://www.weareukraine.info/?fbclid=IwAR1-EP6YgUVdN5ROpplm9BRMikxhF3UQbMdvp4La2DnGlKpVe3agtKxMw1U"
+            />
+            <PartnerButton title="Betha.in.ua" link="https://betha.in.ua" />
+            <PartnerButton
+              title="Warinua.ucu.edu.ua"
+              link="https://warinua.ucu.edu.ua/ucu-student-projects/"
+            />
+            <PartnerButton title="UCU Website" link="https://ucu.edu.ua/en" />
+            <PartnerButton title="UCCMC" link="https://uccmc.org" />
+            <PartnerButton
+              title="Post To Stop War"
+              link="https://post-to-stop-war.in.ua"
             />
           </Box>
         </Box>

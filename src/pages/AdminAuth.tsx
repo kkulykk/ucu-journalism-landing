@@ -53,6 +53,22 @@ const AdminAuth = () => {
     if (user) navigate("/adminPanel");
   }, [user, loading]);
 
+  if (loading)
+    return (
+      <ThemeProvider theme={theme}>
+        <Box
+          sx={{
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      </ThemeProvider>
+    );
+
   return (
     <ThemeProvider theme={theme}>
       <Box
