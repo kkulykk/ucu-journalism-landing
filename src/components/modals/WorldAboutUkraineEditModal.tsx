@@ -19,6 +19,7 @@ interface Props {
   setModalIsOpen(isOpen: boolean): void;
 
   recordValuesObj: {
+    id: string,
     title: string,
     date: Date,
     source: string,

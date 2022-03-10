@@ -16,7 +16,7 @@ interface Props {
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
 
-  recordValuesObj: {imageUrl: string, date: Date, source: string, description: string}
+  recordValuesObj: {id: string, imageUrl: string, date: Date, source: string, description: string}
 }
 
 const DayPhotoEditModal = (props: Props) => {

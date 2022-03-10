@@ -17,7 +17,7 @@ interface Props {
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
 
-  recordValuesObj: {title: string, videoUrl: string, date: Date}
+  recordValuesObj: {id: string, title: string, videoUrl: string, date: Date}
 }
 
 const WarHistoryLeaderInterviewEditModal = (props: Props) => {

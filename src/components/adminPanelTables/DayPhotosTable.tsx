@@ -28,6 +28,7 @@ const columns: { id: string; label: string; minWidth: number }[] = [
 
 // Custom types
 type EditDayPhotoType = {
+  id: string,
   imageUrl: string;
   date: Date;
   source: string;
@@ -41,8 +42,8 @@ const DayPhotosTable = () => {
 
   const [editModalIsOpen, setEditModalIsOpen] = useState<boolean>(false);
 
-  const [editModalValuesObj, setEditModalValuesObj] =
-    useState<EditDayPhotoType>({
+  const [editModalValuesObj, setEditModalValuesObj] = useState<EditDayPhotoType>({
+      id: "Initial string",
       imageUrl: "Initial string",
       date: new Date(),
       source: "Initial string",
@@ -78,15 +79,15 @@ const DayPhotosTable = () => {
     getDayPhotoFirestoreRecords();
   }, [tableRecordsNumber]);
 
-  const openEditModal = (imageUrl: string, date: Date, source: string, description: string,): void => {
-    setEditModalValuesObj({imageUrl: imageUrl, date: date, source: source, description: description})
+  const openEditModal = (id: string, imageUrl: string, date: Date, source: string, description: string,): void => {
+    setEditModalValuesObj({id: id, imageUrl: imageUrl, date: date, source: source, description: description})
     setEditModalIsOpen(true);    
   }
 
   const renderRows = () => {
     return dayPhotoAdminPanelObjects.map((rowObject) => {
       return (
-          <TableRow onClick={() => openEditModal(rowObject.imageUrl, rowObject.dateObj, rowObject.source, rowObject.description)}>
+          <TableRow onClick={() => openEditModal(rowObject.id, rowObject.imageUrl, rowObject.dateObj, rowObject.source, rowObject.description)}>
             {
               columns.map((column) => {
                 const value = (rowObject as any)[column.id]; // Yeah, that pretty interesting fix from StackOverflow

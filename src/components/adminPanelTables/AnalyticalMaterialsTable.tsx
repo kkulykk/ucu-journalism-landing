@@ -30,6 +30,7 @@ const columns: {id: string, label: string, minWidth: number}[] = [
 
 // Custom types
 type EditAnalyticalMaterialModalType = {
+  id: string,
   title: string,
   date: Date,
   source: string,
@@ -46,6 +47,7 @@ const AnalyticalMaterialsTable = () => {
   const [editModalIsOpen, setEditModalIsOpen] = useState<boolean>(false)
 
   const [editModalValuesObj, setEditModalValuesObj] = useState<EditAnalyticalMaterialModalType>({
+    id: "Initial string",
     title: "Initial string",
     date: new Date(),
     source: "Initial string",
@@ -86,8 +88,9 @@ const AnalyticalMaterialsTable = () => {
     getAnalyticalMaterialFirestoreRecords();
   }, [tableRecordsNumber]);
 
-  const openEditModal = (title: string, date: Date, source: string, imageUrl: string, lead: string, text: string) => {
+  const openEditModal = (id: string, title: string, date: Date, source: string, imageUrl: string, lead: string, text: string) => {
     setEditModalValuesObj({
+      id: id,
       title: title,
       date: date,
       source: source,
@@ -102,7 +105,7 @@ const AnalyticalMaterialsTable = () => {
   const renderRows = () => {
     return analyticalMaterialAdminPanelObjects.map((rowObject) => {
       return (
-        <TableRow onClick={() => openEditModal(rowObject.title, rowObject.dateObj, rowObject.source, rowObject.imageUrl, rowObject.lead, rowObject.text)} >
+        <TableRow onClick={() => openEditModal(rowObject.id, rowObject.title, rowObject.dateObj, rowObject.source, rowObject.imageUrl, rowObject.lead, rowObject.text)} >
           {
             columns.map((column) => {
               const value = (rowObject as any)[column.id];

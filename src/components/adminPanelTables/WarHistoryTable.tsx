@@ -28,6 +28,7 @@ const columns: {id: string, label: string, minWidth: number}[] = [
 
 // Custom types
 type EditWarHistoryModalType = {
+  id: string;
   title: string,
   date: Date,
   videoUrl: string,
@@ -41,6 +42,7 @@ const WarHistoryTable = () => {
   const [editModalIsOpen, setEditModalIsOpen] = useState<boolean>(false)
 
   const [editModalValuesObj, setEditModalValuesObj] = useState<EditWarHistoryModalType>({
+    id: "Initial string",
     title: "Initial string",
     date: new Date(),
     videoUrl: "Initial string",
@@ -75,8 +77,8 @@ const WarHistoryTable = () => {
     getWarHistoryFirestoreRecords();
   }, [tableRecordsNumber]);
 
-  const openEditModal = (title: string, videoUrl: string, date: Date): void => {
-    setEditModalValuesObj({title: title, videoUrl: videoUrl, date: date})
+  const openEditModal = (id: string, title: string, videoUrl: string, date: Date): void => {
+    setEditModalValuesObj({id: id, title: title, videoUrl: videoUrl, date: date})
     setEditModalIsOpen(true);    
   }
   
@@ -84,7 +86,7 @@ const WarHistoryTable = () => {
   const renderRows = () => {
     return warHistoryAdminPanelObjects.map((rowObject) => {
       return (
-          <TableRow onClick={() => openEditModal(rowObject.title, rowObject.videoUrl, rowObject.dateObj)}>
+          <TableRow onClick={() => openEditModal(rowObject.id, rowObject.title, rowObject.videoUrl, rowObject.dateObj)}>
             {
               columns.map((column) => {
                 const value = (rowObject as any)[column.id]; // Yeah, that pretty interesting fix from StackOverflow

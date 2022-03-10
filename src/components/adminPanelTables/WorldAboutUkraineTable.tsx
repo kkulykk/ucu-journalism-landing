@@ -30,6 +30,7 @@ const columns: { id: string; label: string; minWidth: number }[] = [
 
 // Custom types
 type EditWorldAboutUkraineModalType = {
+  id: string,
   title: string;
   date: Date;
   source: string;
@@ -46,6 +47,7 @@ const WorldAboutUkraineTable = () => {
   const [editModalIsOpen, setEditModalIsOpen] = useState<boolean>(false)
 
   const [editModalValuesObj, setEditModalValuesObj] = useState<EditWorldAboutUkraineModalType>({
+    id: "Initial string",
     title: "Initial string",
     date: new Date(),
     source: "Initial string",
@@ -85,8 +87,9 @@ const WorldAboutUkraineTable = () => {
     getWorldAboutUkraineFirebaseRecords();
   }, [tableRecordsNumber]);
 
-  const openEditModal = (title: string, date: Date, source: string, sourceUrl: string, imageUrl: string, lead: string) => {
+  const openEditModal = (id: string, title: string, date: Date, source: string, sourceUrl: string, imageUrl: string, lead: string) => {
     setEditModalValuesObj({
+      id: id,
       title: title,
       date: date,
       source: source,
@@ -101,7 +104,7 @@ const WorldAboutUkraineTable = () => {
   const renderRows = () => {
     return worldAboutUkraineAdminPanelObjects.map((rowObject) => {
       return (
-        <TableRow onClick={() => openEditModal(rowObject.title, rowObject.dateObj, rowObject.source, rowObject.sourceUrl, rowObject.imageUrl, rowObject.lead)}>
+        <TableRow onClick={() => openEditModal(rowObject.id, rowObject.title, rowObject.dateObj, rowObject.source, rowObject.sourceUrl, rowObject.imageUrl, rowObject.lead)}>
             {
               columns.map((column) => {
                 const value = (rowObject as any)[column.id]; // Yeah, that pretty interesting fix from StackOverflow

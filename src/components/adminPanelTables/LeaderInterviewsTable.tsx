@@ -27,6 +27,7 @@ const columns: {id: string, label: string, minWidth: number}[] = [
 
 // Custom types
 type EditLeaderInterviewModalType = {
+  id: string,
   title: string,
   date: Date,
   videoUrl: string,
@@ -40,6 +41,7 @@ const LeaderInterviewsTable = () => {
   const [editModalIsOpen, setEditModalIsOpen] = useState<boolean>(false)
 
   const [editModalValuesObj, setEditModalValuesObj] = useState<EditLeaderInterviewModalType>({
+    id: "Initial string",
     title: "Initial string",
     date: new Date(),
     videoUrl: "Initial string",
@@ -75,15 +77,15 @@ const LeaderInterviewsTable = () => {
   }, [tableRecordsNumber]);
 
     
-  const openEditModal = (title: string, videoUrl: string, date: Date): void => {
-    setEditModalValuesObj({title: title, videoUrl: videoUrl, date: date})
+  const openEditModal = (id: string, title: string, videoUrl: string, date: Date): void => {
+    setEditModalValuesObj({id: id, title: title, videoUrl: videoUrl, date: date})
     setEditModalIsOpen(true);    
   }
   
   const renderRows = () => {
     return leaderInterviewAdminPanelObjects.map((rowObject) => {
       return (
-          <TableRow onClick={() => openEditModal(rowObject.title, rowObject.videoUrl, rowObject.dateObj)}>
+          <TableRow onClick={() => openEditModal(rowObject.id, rowObject.title, rowObject.videoUrl, rowObject.dateObj)}>
             {
               columns.map((column) => {
                 const value = (rowObject as any)[column.id]; // Yeah, that pretty interesting fix from StackOverflow
