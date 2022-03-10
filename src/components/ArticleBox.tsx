@@ -77,7 +77,16 @@ const ArticleBox = (props: Props) => {
               <Typography variant="caption">{props.source}</Typography>
               <Typography variant="caption">{props.date}</Typography>
             </Box>
-            <Typography variant="body1">{props.text}</Typography>
+
+            <Typography variant="body1">
+              {props.text.split("_").map((i, key) => {
+                return (
+                  <div style={{ marginTop: "15px" }} key={key}>
+                    {i}
+                  </div>
+                );
+              })}
+            </Typography>
           </Box>
           <Button
             color="secondary"
