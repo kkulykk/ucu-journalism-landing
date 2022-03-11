@@ -19,7 +19,6 @@ import DatePicker from "@mui/lab/DatePicker";
 
 import theme from "../../utils/theme";
 
-
 interface Props {
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
@@ -44,55 +43,58 @@ const style = {
 };
 
 const AnalyticalMaterialModal = (props: Props) => {
-  const [title, setTitle] = useState<string>('')
+  const [title, setTitle] = useState<string>("");
   const [date, setDate] = useState<Date | any>(new Date());
-  const [source, setSource] = useState<string>('');
-  const [lead, setLead] = useState<string>('');
-  const [text, setText] = useState<string>('');
+  const [source, setSource] = useState<string>("");
+  const [lead, setLead] = useState<string>("");
+  const [text, setText] = useState<string>("");
 
   const [file, setFile] = useState<File | any>(null);
-  const [fileName, setFileName] = useState<string>('');
+  const [fileName, setFileName] = useState<string>("");
 
   const handleFileAdd = (event: any) => {
     setFile(event.target.files[0]);
     setFileName(event.target.files[0].name);
-  }
-
+  };
 
   const addAnalyticalMaterial = async () => {
-    const storageRef = ref(storage, `/analyticalMaterial/${Date.now()}${fileName}`);
+    const storageRef = ref(
+      storage,
+      `/analyticalMaterial/${Date.now()}${fileName}`
+    );
     await uploadBytes(storageRef, file);
     const downloadUrl = await getDownloadURL(storageRef);
 
     const analyticalMaterialToAdd: {
-      title: string,
-      date: Timestamp,
-      source: string,
-      imageUrl: string
-      lead: string,
-      text: string
+      title: string;
+      date: Timestamp;
+      source: string;
+      imageUrl: string;
+      lead: string;
+      text: string;
     } = {
       title: title,
       date: Timestamp.fromDate(date),
       source: source,
       imageUrl: downloadUrl,
       lead: lead,
-      text: text
-    }
+      text: text,
+    };
 
-    const docRef = await addDoc(collection(firestore, CollectionNames.ANALYTICS_MATERIAL), analyticalMaterialToAdd);
+    const docRef = await addDoc(
+      collection(firestore, CollectionNames.ANALYTICS_MATERIAL),
+      analyticalMaterialToAdd
+    );
 
-
-    setTitle('');
+    setTitle("");
     setDate(new Date());
-    setSource('');
-    setLead('');
-    setText('');
+    setSource("");
+    setLead("");
+    setText("");
 
     setFile(null);
-    setFileName('');
-  }
-
+    setFileName("");
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -105,7 +107,7 @@ const AnalyticalMaterialModal = (props: Props) => {
         <Box sx={style}>
           <Box sx={{ p: 5, overflow: "scroll" }}>
             <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Add new Analytical Material post
+              Add new Ukraine and Global Agenda post
             </Typography>
             <Box
               sx={{
@@ -154,7 +156,7 @@ const AnalyticalMaterialModal = (props: Props) => {
                   maxRows={2}
                   variant="outlined"
                   value={fileName}
-              />
+                />
                 <label htmlFor="contained-button-file">
                   <Input
                     accept="image/*"

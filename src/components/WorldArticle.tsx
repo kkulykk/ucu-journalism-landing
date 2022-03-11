@@ -22,7 +22,7 @@ const WorldArticle = (props: Props) => {
       <Card
         sx={{
           maxWidth: "60vw",
-          height: "100%",
+          height: "auto",
           boxShadow: 3,
           borderRadius: 3,
           transition: "all ease-in-out 0.1s",
@@ -49,6 +49,7 @@ const WorldArticle = (props: Props) => {
               flexDirection: "column",
               justifyContent: "space-around",
               textAlign: "left",
+              width: "65%",
               height: "auto",
             }}
           >
@@ -60,8 +61,8 @@ const WorldArticle = (props: Props) => {
                 sx={{
                   overflow: "hidden",
                   textOverflow: "ellipsis",
-                  width: "11rem",
                   display: "flex",
+                  width: "100%",
                   gap: 2,
                   color: "#607d8b",
                 }}

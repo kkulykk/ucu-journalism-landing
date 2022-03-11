@@ -23,13 +23,13 @@ interface Props {
   setModalIsOpen(isOpen: boolean): void;
 
   recordValuesObj: {
-    id: string,
-    title: string,
-    date: Date,
-    source: string,
-    imageUrl: string,
-    lead: string,
-    text: string
+    id: string;
+    title: string;
+    date: Date;
+    source: string;
+    imageUrl: string;
+    lead: string;
+    text: string;
   };
 
   getRecordsFunction(): void;
@@ -54,9 +54,13 @@ const style = {
 
 const AnalyticalMaterialEditModal = (props: Props) => {
   const [title, setTitle] = useState<string>(props.recordValuesObj.title);
-  const [dateSelected, setDateSelected] = useState<Date | null>(props.recordValuesObj.date);
+  const [dateSelected, setDateSelected] = useState<Date | null>(
+    props.recordValuesObj.date
+  );
   const [source, setSource] = useState<string>(props.recordValuesObj.source);
-  const [imageUrl, setImageUrl] = useState<string>(props.recordValuesObj.imageUrl);
+  const [imageUrl, setImageUrl] = useState<string>(
+    props.recordValuesObj.imageUrl
+  );
   const [lead, setLead] = useState<string>(props.recordValuesObj.lead);
   const [text, setText] = useState<string>(props.recordValuesObj.text);
 
@@ -67,14 +71,19 @@ const AnalyticalMaterialEditModal = (props: Props) => {
     setImageUrl(props.recordValuesObj.imageUrl);
     setLead(props.recordValuesObj.lead);
     setText(props.recordValuesObj.text);
-  }, [props.recordValuesObj])
+  }, [props.recordValuesObj]);
 
   const deleteAnalyticalMaterialRecord = async () => {
-    await deleteDoc(doc(firestore, CollectionNames.ANALYTICS_MATERIAL, props.recordValuesObj.id));
+    await deleteDoc(
+      doc(
+        firestore,
+        CollectionNames.ANALYTICS_MATERIAL,
+        props.recordValuesObj.id
+      )
+    );
     props.setModalIsOpen(false);
     props.getRecordsFunction();
-  }
-
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -87,7 +96,7 @@ const AnalyticalMaterialEditModal = (props: Props) => {
         <Box sx={style}>
           <Box sx={{ p: 5, overflow: "scroll" }}>
             <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Edit Analytical Material post
+              Edit Ukraine and Global Agenda post
             </Typography>
             <Box
               sx={{
@@ -168,7 +177,13 @@ const AnalyticalMaterialEditModal = (props: Props) => {
                 onChange={(event) => setText(event.target.value)}
               />
             </Box>
-            <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between"}}>
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "space-between",
+              }}
+            >
               <Box sx={{ display: "flex", width: "30%" }}>
                 <Button
                   color="primary"
@@ -176,14 +191,14 @@ const AnalyticalMaterialEditModal = (props: Props) => {
                   onClick={() => {
                     props.setModalIsOpen(false);
                   }}
-                  >
+                >
                   Edit post
                 </Button>
                 <Button
                   color="secondary"
                   sx={{ marginLeft: "2%" }}
                   onClick={() => props.setModalIsOpen(false)}
-                  >
+                >
                   Close
                 </Button>
               </Box>
@@ -191,7 +206,7 @@ const AnalyticalMaterialEditModal = (props: Props) => {
                 color="secondary"
                 sx={{ marginLeft: "2%" }}
                 onClick={() => deleteAnalyticalMaterialRecord()}
-                >
+              >
                 Delete
               </Button>
             </Box>

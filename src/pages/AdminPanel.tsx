@@ -43,7 +43,6 @@ import AnalyticalMaterialModal from "../components/modals/AnalyticalMaterialModa
 import WarHistoryLeaderInterviewModal from "../components/modals/WarHistoryLeaderInterviewModal";
 import WorldAboutUkraineModal from "../components/modals/WorldAboutUkraineModal";
 
-
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -121,28 +120,28 @@ const AdminPanel = () => {
 
   const actions = [
     {
-      icon: <MdAddPhotoAlternate />,
+      icon: <MdAddPhotoAlternate size={20} />,
       name: "Add photo of the day",
       onClick: () => setOpenDayPhotoModal(true),
     },
     {
-      icon: <MdAnalytics />,
-      name: "Add analytical material post",
+      icon: <MdAnalytics size={20} />,
+      name: "Add Ukraine and Global Agenda post",
       onClick: () => setOpenAnalyticalMaterialModal(true),
     },
     {
-      icon: <MdOutlineQuestionAnswer />,
-      name: "Add war history post",
+      icon: <MdOutlineQuestionAnswer size={20} />,
+      name: "Add Resilience Story post",
       onClick: () => setOpenWarHistoryModal(true),
     },
     {
-      icon: <MdOutlineLanguage />,
-      name: "Add world about Ukraine post",
+      icon: <MdOutlineLanguage size={20} />,
+      name: "Add Art During War post",
       onClick: () => setOpenWorldAboutUkraineModal(true),
     },
     {
-      icon: <MdVideoCameraFront />,
-      name: "Add leader interview post",
+      icon: <MdVideoCameraFront size={20} />,
+      name: "Add Opinion Leader Interview post",
       onClick: () => setOpenLeaderInterviewModal(true),
     },
   ];
@@ -158,7 +157,6 @@ const AdminPanel = () => {
   const logout = async () => {
     await signOut(auth);
   };
-
 
   const getAdminName = async () => {
     try {
@@ -208,14 +206,14 @@ const AdminPanel = () => {
         setSnackBarIsOpen={setOpenSnackBar}
       />
       <WarHistoryLeaderInterviewModal
-        title="War History"
+        title="Resilience Story"
         modalIsOpen={openWarHistoryModal}
         setModalIsOpen={setOpenWarHistoryModal}
         setSnackBarIsOpen={setOpenSnackBar}
         modalType={CollectionNames.WAR_HISTORY}
       />
       <WarHistoryLeaderInterviewModal
-        title="Leader Interview"
+        title="Opinion Leader Interview"
         modalIsOpen={openLeaderInterviewModal}
         setModalIsOpen={setOpenLeaderInterviewModal}
         setSnackBarIsOpen={setOpenSnackBar}
@@ -230,7 +228,7 @@ const AdminPanel = () => {
         open={openSnackBar}
         autoHideDuration={6000}
         onClose={() => setOpenSnackBar(false)}
-        message="New item added"
+        message="New post added"
       />
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <AppBar position="static">
@@ -286,16 +284,16 @@ const AdminPanel = () => {
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            <Tab label="War history" {...a11yProps(0)} />
-            <Tab label="Leaders interviews" {...a11yProps(1)} />
-            <Tab label="Analytical Materials" {...a11yProps(2)} />
-            <Tab label="World about Ukraine" {...a11yProps(3)} />
+            <Tab label="Resilience Stories" {...a11yProps(0)} />
+            <Tab label="Opinion Leaders Interviews" {...a11yProps(1)} />
+            <Tab label="Ukraine and Global Agenda" {...a11yProps(2)} />
+            <Tab label="Art During War" {...a11yProps(3)} />
             <Tab label="Photos of day" {...a11yProps(4)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
           <Typography variant="h4" sx={{ marginBottom: 1 }}>
-            War history
+            Resilience Stories posts
           </Typography>
           <Box>
             {/* TABLE */}
@@ -304,7 +302,7 @@ const AdminPanel = () => {
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Typography variant="h4" sx={{ marginBottom: 1 }}>
-            Leaders interviews
+            Opinion Leaders Interviews posts
           </Typography>
           <Box>
             {/* TABLE */}
@@ -313,7 +311,7 @@ const AdminPanel = () => {
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Typography variant="h4" sx={{ marginBottom: 1 }}>
-            Analytical Materials
+            Ukraine and Global Agenda posts
           </Typography>
           <Box>
             {/* TABLE */}
@@ -322,7 +320,7 @@ const AdminPanel = () => {
         </TabPanel>
         <TabPanel value={value} index={3}>
           <Typography variant="h4" sx={{ marginBottom: 1 }}>
-            World about Ukraine
+            Art During War posts
           </Typography>
           <Box>
             {/* TABLE */}
@@ -331,7 +329,7 @@ const AdminPanel = () => {
         </TabPanel>
         <TabPanel value={value} index={4}>
           <Typography variant="h4" sx={{ marginBottom: 1 }}>
-          Photos of day
+            Photos of day
           </Typography>
           <Box>
             {/* TABLE */}

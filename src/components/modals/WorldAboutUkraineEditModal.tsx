@@ -18,23 +18,21 @@ import DatePicker from "@mui/lab/DatePicker";
 
 import theme from "../../utils/theme";
 
-
 interface Props {
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
 
   recordValuesObj: {
-    id: string,
-    title: string,
-    date: Date,
-    source: string,
-    sourceUrl: string
-    imageUrl: string,
-    lead: string,
+    id: string;
+    title: string;
+    date: Date;
+    source: string;
+    sourceUrl: string;
+    imageUrl: string;
+    lead: string;
   };
 
   getRecordsFunction(): void;
-
 }
 
 const Input = styled("input")({
@@ -54,13 +52,18 @@ const style = {
   boxShadow: 24,
 };
 
-
 const WorldAboutUkraineEditModal = (props: Props) => {
   const [title, setTitle] = useState<string>(props.recordValuesObj.title);
-  const [dateSelected, setDateSelected] = useState<Date | null>(props.recordValuesObj.date);
+  const [dateSelected, setDateSelected] = useState<Date | null>(
+    props.recordValuesObj.date
+  );
   const [source, setSource] = useState<string>(props.recordValuesObj.source);
-  const [sourceUrl, setSourceUrl] = useState<string>(props.recordValuesObj.sourceUrl);
-  const [imageUrl, setImageUrl] = useState<string>(props.recordValuesObj.imageUrl);
+  const [sourceUrl, setSourceUrl] = useState<string>(
+    props.recordValuesObj.sourceUrl
+  );
+  const [imageUrl, setImageUrl] = useState<string>(
+    props.recordValuesObj.imageUrl
+  );
   const [lead, setLead] = useState<string>(props.recordValuesObj.lead);
 
   useEffect(() => {
@@ -70,13 +73,19 @@ const WorldAboutUkraineEditModal = (props: Props) => {
     setSourceUrl(props.recordValuesObj.sourceUrl);
     setImageUrl(props.recordValuesObj.imageUrl);
     setLead(props.recordValuesObj.lead);
-  }, [props.recordValuesObj])
+  }, [props.recordValuesObj]);
 
   const deleteWorldAboutUkraineRecord = async () => {
-    await deleteDoc(doc(firestore, CollectionNames.WORLD_ABOUT_UKRAINE, props.recordValuesObj.id));
+    await deleteDoc(
+      doc(
+        firestore,
+        CollectionNames.WORLD_ABOUT_UKRAINE,
+        props.recordValuesObj.id
+      )
+    );
     props.setModalIsOpen(false);
     props.getRecordsFunction();
-  }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -89,7 +98,7 @@ const WorldAboutUkraineEditModal = (props: Props) => {
         <Box sx={style}>
           <Box sx={{ p: 5, overflow: "scroll" }}>
             <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Edit World About Ukraine post
+              Edit Art During War post
             </Typography>
             <Box
               sx={{
@@ -168,7 +177,13 @@ const WorldAboutUkraineEditModal = (props: Props) => {
                 onChange={(event) => setLead(event.target.value)}
               />
             </Box>
-            <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between"}}>
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "space-between",
+              }}
+            >
               <Box sx={{ display: "flex", width: "30%" }}>
                 <Button
                   color="primary"
@@ -176,14 +191,14 @@ const WorldAboutUkraineEditModal = (props: Props) => {
                   onClick={() => {
                     props.setModalIsOpen(false);
                   }}
-                  >
+                >
                   Edit post
                 </Button>
                 <Button
                   color="secondary"
                   sx={{ marginLeft: "2%" }}
                   onClick={() => props.setModalIsOpen(false)}
-                  >
+                >
                   Close
                 </Button>
               </Box>
@@ -191,7 +206,7 @@ const WorldAboutUkraineEditModal = (props: Props) => {
                 color="secondary"
                 sx={{ marginLeft: "2%" }}
                 onClick={() => deleteWorldAboutUkraineRecord()}
-                >
+              >
                 Delete
               </Button>
             </Box>

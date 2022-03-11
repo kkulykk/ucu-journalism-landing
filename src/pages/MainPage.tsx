@@ -206,12 +206,12 @@ const MainPage = () => {
             <SectionButton
               title="UKRAINE AND GLOBAL AGENDA"
               desc="A look at the war from Ukrainian experts and the world media"
-              link="analytics"
+              link="global"
             />
             <SectionButton
               title="ART DURING WAR"
               desc="Art is also a weapon"
-              link="world"
+              link="art"
             />
           </Box>
         </Box>
