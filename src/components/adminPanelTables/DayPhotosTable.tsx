@@ -36,7 +36,11 @@ type EditDayPhotoType = {
   description: string;
 };
 
-const DayPhotosTable = () => {
+interface Props {
+  lastTimeNewAdded: Date;
+}
+
+const DayPhotosTable = (props: Props) => {
   const [dayPhotoAdminPanelObjects, setDayPhotoAdminPanelObjects] = useState<DayPhotosObj[]>([]);
   const [isTableLoading, setIsTableLoading] = useState<boolean>(false);
   const [tableRecordsNumber, setTableRecordsNumber] = useState<number>(TABLE_RECORDS_NUMBER);
@@ -79,7 +83,7 @@ const DayPhotosTable = () => {
   
   useEffect(() => {
     getDayPhotoFirestoreRecords();
-  }, [tableRecordsNumber]);
+  }, [tableRecordsNumber, props.lastTimeNewAdded]);
 
   const openEditModal = (id: string, imageUrl: string, date: Date, source: string, description: string,): void => {
     setEditModalValuesObj({id: id, imageUrl: imageUrl, date: date, source: source, description: description})

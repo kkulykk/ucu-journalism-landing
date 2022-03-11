@@ -23,6 +23,7 @@ interface Props {
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
   setSnackBarIsOpen(isOpen: boolean): void;
+  triggerTableReloadAfterAdd(time: Date): void;
 }
 
 const Input = styled("input")({
@@ -94,6 +95,8 @@ const AnalyticalMaterialModal = (props: Props) => {
 
     setFile(null);
     setFileName("");
+
+    props.triggerTableReloadAfterAdd(new Date());
   };
 
   return (

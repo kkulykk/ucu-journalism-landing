@@ -21,6 +21,7 @@ interface Props {
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
   setSnackBarIsOpen(isOpen: boolean): void;
+  triggerTableReloadAfterAdd(time: Date): void;
   modalType?: CollectionNames;
 }
 
@@ -61,6 +62,8 @@ const WarHistoryLeaderInterviewModal = (props: Props) => {
     setTitle('');
     setDate(new Date());
     setVideoUrl('');
+
+    props.triggerTableReloadAfterAdd(new Date());
   }
 
 

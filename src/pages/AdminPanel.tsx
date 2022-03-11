@@ -118,6 +118,7 @@ const AdminPanel = () => {
     setAnchorEl(null);
   };
 
+  const [newAddedTime, setNewAddedTime] = useState<Date>(new Date())
   const actions = [
     {
       icon: <MdAddPhotoAlternate size={20} />,
@@ -199,11 +200,13 @@ const AdminPanel = () => {
         modalIsOpen={openDayPhotoModal}
         setModalIsOpen={setOpenDayPhotoModal}
         setSnackBarIsOpen={setOpenSnackBar}
+        triggerTableReloadAfterAdd={setNewAddedTime}
       />
       <AnalyticalMaterialModal
         modalIsOpen={openAnalyticalMaterialModal}
         setModalIsOpen={setOpenAnalyticalMaterialModal}
         setSnackBarIsOpen={setOpenSnackBar}
+        triggerTableReloadAfterAdd={setNewAddedTime}
       />
       <WarHistoryLeaderInterviewModal
         title="Resilience Story"
@@ -211,6 +214,7 @@ const AdminPanel = () => {
         setModalIsOpen={setOpenWarHistoryModal}
         setSnackBarIsOpen={setOpenSnackBar}
         modalType={CollectionNames.WAR_HISTORY}
+        triggerTableReloadAfterAdd={setNewAddedTime}
       />
       <WarHistoryLeaderInterviewModal
         title="Opinion Leader Interview"
@@ -218,11 +222,13 @@ const AdminPanel = () => {
         setModalIsOpen={setOpenLeaderInterviewModal}
         setSnackBarIsOpen={setOpenSnackBar}
         modalType={CollectionNames.LEADER_INTERVIEWS}
+        triggerTableReloadAfterAdd={setNewAddedTime}
       />
       <WorldAboutUkraineModal
         modalIsOpen={openWorldAboutUkraineModal}
         setModalIsOpen={setOpenWorldAboutUkraineModal}
         setSnackBarIsOpen={setOpenSnackBar}
+        triggerTableReloadAfterAdd={setNewAddedTime}
       />
       <Snackbar
         open={openSnackBar}
@@ -297,7 +303,7 @@ const AdminPanel = () => {
           </Typography>
           <Box>
             {/* TABLE */}
-            <WarHistoryTable />
+            <WarHistoryTable lastTimeNewAdded={newAddedTime} />
           </Box>
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -306,7 +312,7 @@ const AdminPanel = () => {
           </Typography>
           <Box>
             {/* TABLE */}
-            <LeaderInterviewsTable />
+            <LeaderInterviewsTable lastTimeNewAdded={newAddedTime} />
           </Box>
         </TabPanel>
         <TabPanel value={value} index={2}>
@@ -315,7 +321,7 @@ const AdminPanel = () => {
           </Typography>
           <Box>
             {/* TABLE */}
-            <AnalyticalMaterialsTable />
+            <AnalyticalMaterialsTable lastTimeNewAdded={newAddedTime} />
           </Box>
         </TabPanel>
         <TabPanel value={value} index={3}>
@@ -324,7 +330,7 @@ const AdminPanel = () => {
           </Typography>
           <Box>
             {/* TABLE */}
-            <WorldAboutUkraineTable />
+            <WorldAboutUkraineTable lastTimeNewAdded={newAddedTime} />
           </Box>
         </TabPanel>
         <TabPanel value={value} index={4}>
@@ -333,7 +339,7 @@ const AdminPanel = () => {
           </Typography>
           <Box>
             {/* TABLE */}
-            <DayPhotosTable />
+            <DayPhotosTable lastTimeNewAdded={newAddedTime} />
           </Box>
         </TabPanel>
       </Box>

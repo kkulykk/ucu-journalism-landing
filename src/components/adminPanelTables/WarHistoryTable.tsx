@@ -34,7 +34,11 @@ type EditWarHistoryModalType = {
   videoUrl: string,
 }
 
-const WarHistoryTable = () => {
+interface Props {
+  lastTimeNewAdded: Date;
+}
+
+const WarHistoryTable = (props: Props) => {
   const [warHistoryAdminPanelObjects, setWarHistoryAdminPanelObjects] = useState<WarHistoryObj[]>([])
   const [isTableLoading, setIsTableLoading] = useState<boolean>(false);
   const [tableRecordsNumber, setTableRecordsNumber] = useState<number>(TABLE_RECORDS_NUMBER)
@@ -75,7 +79,7 @@ const WarHistoryTable = () => {
 
   useEffect(() => {
     getWarHistoryFirestoreRecords();
-  }, [tableRecordsNumber]);
+  }, [tableRecordsNumber, props.lastTimeNewAdded]);
 
   const openEditModal = (id: string, title: string, videoUrl: string, date: Date): void => {
     setEditModalValuesObj({id: id, title: title, videoUrl: videoUrl, date: date})

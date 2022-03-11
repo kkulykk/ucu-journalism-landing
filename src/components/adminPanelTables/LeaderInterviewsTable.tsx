@@ -33,7 +33,11 @@ type EditLeaderInterviewModalType = {
   videoUrl: string,
 }
 
-const LeaderInterviewsTable = () => {
+interface Props {
+  lastTimeNewAdded: Date;
+}
+
+const LeaderInterviewsTable = (props: Props) => {
   const [leaderInterviewAdminPanelObjects, setLeaderInterviewAdminPanelObjects] = useState<LeaderInterviewsObj[]>([])
   const [isTableLoading, setIsTableLoading] = useState<boolean>(false);
   const [tableRecordsNumber, setTableRecordsNumber] = useState<number>(TABLE_RECORDS_NUMBER)
@@ -74,7 +78,7 @@ const LeaderInterviewsTable = () => {
 
   useEffect(() => {
     getLeaderInterviewFirestoreRecords();
-  }, [tableRecordsNumber]);
+  }, [tableRecordsNumber, props.lastTimeNewAdded]);
 
     
   const openEditModal = (id: string, title: string, videoUrl: string, date: Date): void => {

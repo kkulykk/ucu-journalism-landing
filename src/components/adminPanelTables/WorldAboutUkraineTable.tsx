@@ -39,7 +39,11 @@ type EditWorldAboutUkraineModalType = {
   lead: string;
 };
 
-const WorldAboutUkraineTable = () => {
+interface Props {
+  lastTimeNewAdded: Date;
+}
+
+const WorldAboutUkraineTable = (props: Props) => {
   const [worldAboutUkraineAdminPanelObjects, setWorldAboutUkraineAdminPanelObjects] = useState<WorldAboutUkraineObj[]>([]);
   const [isTableLoading, setIsTableLoading] = useState<boolean>(false);
   const [tableRecordsNumber, setTableRecordsNumber] = useState<number>(TABLE_RECORDS_NUMBER)
@@ -85,7 +89,7 @@ const WorldAboutUkraineTable = () => {
 
   useEffect(() => {
     getWorldAboutUkraineFirebaseRecords();
-  }, [tableRecordsNumber]);
+  }, [tableRecordsNumber, props.lastTimeNewAdded]);
 
   const openEditModal = (id: string, title: string, date: Date, source: string, sourceUrl: string, imageUrl: string, lead: string) => {
     setEditModalValuesObj({

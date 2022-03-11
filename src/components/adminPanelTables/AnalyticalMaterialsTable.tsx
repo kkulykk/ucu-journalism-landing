@@ -39,7 +39,11 @@ type EditAnalyticalMaterialModalType = {
   text: string,
 }
 
-const AnalyticalMaterialsTable = () => {
+interface Props {
+  lastTimeNewAdded: Date;
+}
+
+const AnalyticalMaterialsTable = (props: Props) => {
   const [analyticalMaterialAdminPanelObjects, setAnalyticalMaterialAdminPanelObjects] = useState<AnalyticalMaterialsObj[]>([])
   const [isTableLoading, setIsTableLoading] = useState<boolean>(false);
   const [tableRecordsNumber, setTableRecordsNumber] = useState<number>(TABLE_RECORDS_NUMBER)
@@ -86,7 +90,7 @@ const AnalyticalMaterialsTable = () => {
 
   useEffect(() => {
     getAnalyticalMaterialFirestoreRecords();
-  }, [tableRecordsNumber]);
+  }, [tableRecordsNumber, props.lastTimeNewAdded]);
 
   const openEditModal = (id: string, title: string, date: Date, source: string, imageUrl: string, lead: string, text: string) => {
     setEditModalValuesObj({

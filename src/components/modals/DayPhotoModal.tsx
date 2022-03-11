@@ -26,6 +26,7 @@ interface Props {
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
   setSnackBarIsOpen(isOpen: boolean): void;
+  triggerTableReloadAfterAdd(time: Date): void;
 }
 
 const DayPhotoModal = (props: Props) => {
@@ -63,6 +64,8 @@ const DayPhotoModal = (props: Props) => {
 
     setFile(null);
     setFileName('');
+
+    props.triggerTableReloadAfterAdd(new Date());
   }
 
   const style = {
@@ -139,7 +142,6 @@ const DayPhotoModal = (props: Props) => {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  m: "5% 0",
                   gap: 2,
                 }}
               >
