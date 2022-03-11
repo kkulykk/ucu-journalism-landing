@@ -187,6 +187,9 @@ const Footer = () => {
           </a>
         </Typography>
         <Typography color="white">
+          Developed by <b>Bohdan Mykhailiv</b> and <b>Roman Kulyk</b>
+        </Typography>
+        <Typography color="white">
           All rights reserved © 2022 Ukrainian Catholic University
         </Typography>
       </Box>

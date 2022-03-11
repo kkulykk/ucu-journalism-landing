@@ -30,7 +30,7 @@ import { MdLink } from "react-icons/md";
 import { styled } from "@mui/material/styles";
 import theme from "../utils/theme";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import { CollectionNames } from "../services/firebase/firestore";
 
@@ -121,7 +121,7 @@ const AdminPanel = () => {
     setAnchorEl(null);
   };
 
-  const [newAddedTime, setNewAddedTime] = useState<Date>(new Date())
+  const [newAddedTime, setNewAddedTime] = useState<Date>(new Date());
   const actions = [
     {
       icon: <MdAddPhotoAlternate size={20} />,
@@ -301,40 +301,85 @@ const AdminPanel = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <Typography variant="h4" sx={{ marginBottom: 1 }}>
-            Resilience Stories posts
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Typography variant="h4" sx={{ marginBottom: 1 }}>
+              Resilience Stories posts
+            </Typography>
 
-          {/* Should we add it? */}
-          <Link target={"_blank"} to="/stories"><MdLink size={20} /></Link>
-          
+            <Link color="primary" target={"_blank"} to="/stories">
+              <MdLink size={25} color="#7f1716" />
+            </Link>
+          </Box>
           <Box>
             {/* TABLE */}
             <WarHistoryTable lastTimeNewAdded={newAddedTime} />
           </Box>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Typography variant="h4" sx={{ marginBottom: 1 }}>
-            Opinion Leaders Interviews posts
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Typography variant="h4" sx={{ marginBottom: 1 }}>
+              Opinion Leaders Interviews posts
+            </Typography>
+            <Link target={"_blank"} to="/leaders">
+              <MdLink size={25} color="#7f1716" />
+            </Link>
+          </Box>
           <Box>
             {/* TABLE */}
             <LeaderInterviewsTable lastTimeNewAdded={newAddedTime} />
           </Box>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <Typography variant="h4" sx={{ marginBottom: 1 }}>
-            Ukraine and Global Agenda posts
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Typography variant="h4" sx={{ marginBottom: 1 }}>
+              Ukraine and Global Agenda posts
+            </Typography>
+            <Link target={"_blank"} to="/global">
+              <MdLink size={25} color="#7f1716" />
+            </Link>
+          </Box>
           <Box>
             {/* TABLE */}
             <AnalyticalMaterialsTable lastTimeNewAdded={newAddedTime} />
           </Box>
         </TabPanel>
         <TabPanel value={value} index={3}>
-          <Typography variant="h4" sx={{ marginBottom: 1 }}>
-            Art During War posts
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Typography variant="h4" sx={{ marginBottom: 1 }}>
+              Art During War posts
+            </Typography>
+            <Link target={"_blank"} to="/art">
+              <MdLink size={25} color="#7f1716" />
+            </Link>
+          </Box>
           <Box>
             {/* TABLE */}
             <WorldAboutUkraineTable lastTimeNewAdded={newAddedTime} />

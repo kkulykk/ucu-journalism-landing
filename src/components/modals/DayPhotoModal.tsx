@@ -30,43 +30,51 @@ interface Props {
 }
 
 const DayPhotoModal = (props: Props) => {
-  const [title, setTitle] = useState<string>('');
+  const [title, setTitle] = useState<string>("");
   const [date, setDate] = useState<Date | any>(new Date());
-  const [source, setSource] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  
+  const [source, setSource] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+
   const [file, setFile] = useState<File | any>(null);
-  const [fileName, setFileName] = useState<string>('');
+  const [fileName, setFileName] = useState<string>("");
 
   const handleFileAdd = (event: any) => {
     setFile(event.target.files[0]);
     setFileName(event.target.files[0].name);
-  }
+  };
 
   const addDayPhoto = async () => {
     const storageRef = ref(storage, `/dayPhotos/${Date.now()}${fileName}`);
     await uploadBytes(storageRef, file);
     const downloadUrl = await getDownloadURL(storageRef);
 
-    const dayPhotoToAdd: {imageUrl: string, date: Timestamp, source: string, description: string} = {
+    const dayPhotoToAdd: {
+      imageUrl: string;
+      date: Timestamp;
+      source: string;
+      description: string;
+    } = {
       imageUrl: downloadUrl,
       date: Timestamp.fromDate(date),
       source: source,
-      description: description
-    }
+      description: description,
+    };
 
-    const docRef = await addDoc(collection(firestore, CollectionNames.DAY_PHOTOS), dayPhotoToAdd);
+    const docRef = await addDoc(
+      collection(firestore, CollectionNames.DAY_PHOTOS),
+      dayPhotoToAdd
+    );
 
-    setTitle('');
+    setTitle("");
     setDate(new Date());
-    setSource('');
-    setDescription('');
+    setSource("");
+    setDescription("");
 
     setFile(null);
-    setFileName('');
+    setFileName("");
 
     props.triggerTableReloadAfterAdd(new Date());
-  }
+  };
 
   const style = {
     position: "absolute" as "absolute",
@@ -145,26 +153,32 @@ const DayPhotoModal = (props: Props) => {
                   gap: 2,
                 }}
               >
-
-              <TextField
-                label="File Name"
-                multiline
-                maxRows={2}
-                variant="outlined"
-                value={fileName}
-              />
-              <label htmlFor="contained-button-file">
-                <Input
-                  accept="image/*"
-                  id="contained-button-file"
-                  multiple
-                  type="file"
-                  onChange={(e) => handleFileAdd(e)}
-                />
-                <Button variant="outlined" component="span">
-                  Upload image
-                </Button>
-              </label>
+                <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+                  <TextField
+                    sx={{ width: "100%" }}
+                    label="File Name"
+                    multiline
+                    maxRows={2}
+                    variant="outlined"
+                    value={fileName}
+                  />
+                  <label htmlFor="contained-button-file">
+                    <Input
+                      accept="image/*"
+                      id="contained-button-file"
+                      multiple
+                      type="file"
+                      onChange={(e) => handleFileAdd(e)}
+                    />
+                    <Button
+                      sx={{ width: 130 }}
+                      variant="outlined"
+                      component="span"
+                    >
+                      Upload image
+                    </Button>
+                  </label>
+                </Box>
               </Box>
             </Box>
             <Button
