@@ -112,7 +112,7 @@ const AnalyticalMaterialEditModal = (props: Props) => {
           source: source,
           imageUrl: imageUrl,
           lead: lead,
-          text: text,
+          text: text
         };
       } else {
         const storageRef = ref(
@@ -128,7 +128,7 @@ const AnalyticalMaterialEditModal = (props: Props) => {
           source: source,
           imageUrl: downloadUrl,
           lead: lead,
-          text: text,
+          text: text
         };
         
       }
