@@ -110,7 +110,7 @@ const WorldAboutUkraineTable = () => {
                 const value = (rowObject as any)[column.id]; // Yeah, that pretty interesting fix from StackOverflow
                 return (
                   <TableCell key={column.id}>
-                    {value}
+                    {column.id === "imageUrl" ? <img src={value} style={{ height: "120px"}}/> : value}
                   </TableCell>
                 )
               })

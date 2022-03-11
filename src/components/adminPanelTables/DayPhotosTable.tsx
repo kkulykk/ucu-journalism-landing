@@ -16,6 +16,7 @@ import TableRow from "@mui/material/TableRow";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
+
 // Constants
 const TABLE_RECORDS_NUMBER = 10;
 
@@ -23,7 +24,7 @@ const columns: { id: string; label: string; minWidth: number }[] = [
   { id: "description", label: "Description", minWidth: 200 },
   { id: "date", label: "Date", minWidth: 100 },
   { id: "source", label: "Source", minWidth: 200 },
-  { id: "imageUrl", label: "Image URL", minWidth: 200 },
+  { id: "imageUrl", label: "Image Preview", minWidth: 200 },
 ];
 
 // Custom types
@@ -49,6 +50,7 @@ const DayPhotosTable = () => {
       source: "Initial string",
       description: "Initial string",
     });
+
 
   const getDayPhotoFirestoreRecords = async () => {
     const recordObjectsArray: DayPhotosObj[] = [];
@@ -93,7 +95,7 @@ const DayPhotosTable = () => {
                 const value = (rowObject as any)[column.id]; // Yeah, that pretty interesting fix from StackOverflow
                 return (
                   <TableCell key={column.id}>
-                    {value}
+                    {column.id === "imageUrl" ? <img src={value} style={{ height: "120px"}}/> : value}
                   </TableCell>
                 )
               })

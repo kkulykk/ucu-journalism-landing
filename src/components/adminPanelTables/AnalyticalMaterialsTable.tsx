@@ -111,7 +111,7 @@ const AnalyticalMaterialsTable = () => {
               const value = (rowObject as any)[column.id];
               return (
                 <TableCell key={column.id}>
-                  {value}
+                  {column.id === "imageUrl" ? <img src={value} style={{ height: "120px"}}/> : value}
                 </TableCell>
               )
             })
