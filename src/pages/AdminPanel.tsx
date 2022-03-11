@@ -26,8 +26,11 @@ import { MdVideoCameraFront } from "react-icons/md";
 import { MdOutlineLanguage } from "react-icons/md";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { MdAnalytics } from "react-icons/md";
+import { MdLink } from "react-icons/md";
 import { styled } from "@mui/material/styles";
 import theme from "../utils/theme";
+
+import { Link } from 'react-router-dom';
 
 import { CollectionNames } from "../services/firebase/firestore";
 
@@ -301,6 +304,10 @@ const AdminPanel = () => {
           <Typography variant="h4" sx={{ marginBottom: 1 }}>
             Resilience Stories posts
           </Typography>
+
+          {/* Should we add it? */}
+          <Link target={"_blank"} to="/stories"><MdLink size={20} /></Link>
+          
           <Box>
             {/* TABLE */}
             <WarHistoryTable lastTimeNewAdded={newAddedTime} />
