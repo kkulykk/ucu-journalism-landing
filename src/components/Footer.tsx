@@ -188,7 +188,34 @@ const Footer = () => {
           </a>
         </Typography>
         <Typography color="white">
-          Developed by <b>Bohdan Mykhailiv</b> and <b>Roman Kulyk</b>
+          Developed by{" "}
+          <a
+            href="https://www.linkedin.com/in/bmykhaylivvv"
+            target="_blank"
+            style={{
+              color: "white",
+              fontWeight: "400",
+              textDecoration: "none",
+            }}
+          >
+            Bohdan Mykhailiv
+          </a>{" "}
+          and{" "}
+          <a
+            href="https://www.linkedin.com/in/kkulykk"
+            target="_blank"
+            style={{
+              color: "white",
+              fontWeight: "400",
+              textDecoration: "none",
+            }}
+          >
+            Roman Kulyk
+          </a>
+          <br />
+          <span style={{ fontStyle: "italic", fontSize: "14px" }}>
+            students of the Faculty of Applied Sciences of UCU
+          </span>
         </Typography>
         <Typography color="white">
           All rights reserved © 2022 Ukrainian Catholic University
