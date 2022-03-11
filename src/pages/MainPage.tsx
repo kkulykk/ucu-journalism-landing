@@ -9,7 +9,6 @@ import { ThemeProvider } from "@mui/material";
 import Header from "../components/Header";
 import theme from "../utils/theme";
 import Box from "@mui/material/Box";
-import ArticleBox from "../components/ArticleBox";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import "./MainPage.css";
@@ -19,11 +18,10 @@ import { autoPlay } from "react-swipeable-views-utils";
 import PartnerButton from "../components/PartnerButton";
 import Footer from "../components/Footer";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
-import VideoPost from "../components/VideoPost";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const MAX_PHOTOS = 3;
+const MAX_PHOTOS = 10;
 
 const MainPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

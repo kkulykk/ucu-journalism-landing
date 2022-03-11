@@ -3,7 +3,6 @@ import {
   getFirestoreRecordsLimit,
   CollectionNames,
 } from "../services/firebase/firestore";
-import CircularProgress from "@mui/material/CircularProgress";
 import { WorldAboutUkraineObj } from "../services/models/firestoreDocuments";
 import Header from "../components/Header";
 import Footer from "../components/Footer";

@@ -1,14 +1,15 @@
 import Box from "@mui/material/Box";
-import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material";
 import ucuLogo from "../assets/ucu_logo.svg";
 import fsnLogo from "../assets/logo_png.png";
 import theme from "../utils/theme";
-import { AiOutlineInstagram } from "react-icons/ai";
-import { AiOutlineFacebook } from "react-icons/ai";
-import { AiOutlineTwitter } from "react-icons/ai";
-import { AiOutlineLinkedin } from "react-icons/ai";
+import {
+  AiOutlineInstagram,
+  AiOutlineFacebook,
+  AiOutlineTwitter,
+  AiOutlineLinkedin,
+} from "react-icons/ai";
 
 const Footer = () => {
   return (

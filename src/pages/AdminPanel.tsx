@@ -1,14 +1,13 @@
-import { useState, useEffect, SetStateAction, SyntheticEvent } from "react";
+import { useState, useEffect, SyntheticEvent } from "react";
 import { ThemeProvider } from "@mui/material";
 import { fetchAdminName } from "../services/firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import Modal from "@mui/material/Modal";
 import { auth } from "../utils/firebaseConfig";
-import { onAuthStateChanged, signOut } from "@firebase/auth";
+import { signOut } from "@firebase/auth";
+import { Link } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Snackbar from "@mui/material/Snackbar";
-import TextField from "@mui/material/TextField";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -21,16 +20,15 @@ import Tab from "@mui/material/Tab";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
-import { MdAddPhotoAlternate } from "react-icons/md";
-import { MdVideoCameraFront } from "react-icons/md";
-import { MdOutlineLanguage } from "react-icons/md";
-import { MdOutlineQuestionAnswer } from "react-icons/md";
-import { MdAnalytics } from "react-icons/md";
-import { MdLink } from "react-icons/md";
-import { styled } from "@mui/material/styles";
+import {
+  MdAddPhotoAlternate,
+  MdVideoCameraFront,
+  MdOutlineLanguage,
+  MdOutlineQuestionAnswer,
+  MdAnalytics,
+  MdLink,
+} from "react-icons/md";
 import theme from "../utils/theme";
-
-import { Link } from "react-router-dom";
 
 import { CollectionNames } from "../services/firebase/firestore";
 
