@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "@types/react-swipeable-views": "^0.13.1",
-    "@types/react-swipeable-views-utils": "^0.13.3"
+    "@types/react-swipeable-views-utils": "^0.13.3",
+    "dotenv": "^16.0.0"
   }
 }

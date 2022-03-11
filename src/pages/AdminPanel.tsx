@@ -1,14 +1,13 @@
-import { useState, useEffect, SetStateAction, SyntheticEvent } from "react";
+import { useState, useEffect, SyntheticEvent } from "react";
 import { ThemeProvider } from "@mui/material";
 import { fetchAdminName } from "../services/firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import Modal from "@mui/material/Modal";
 import { auth } from "../utils/firebaseConfig";
-import { onAuthStateChanged, signOut } from "@firebase/auth";
+import { signOut } from "@firebase/auth";
+import { Link } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Snackbar from "@mui/material/Snackbar";
-import TextField from "@mui/material/TextField";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -21,12 +20,14 @@ import Tab from "@mui/material/Tab";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
-import { MdAddPhotoAlternate } from "react-icons/md";
-import { MdVideoCameraFront } from "react-icons/md";
-import { MdOutlineLanguage } from "react-icons/md";
-import { MdOutlineQuestionAnswer } from "react-icons/md";
-import { MdAnalytics } from "react-icons/md";
-import { styled } from "@mui/material/styles";
+import {
+  MdAddPhotoAlternate,
+  MdVideoCameraFront,
+  MdOutlineLanguage,
+  MdOutlineQuestionAnswer,
+  MdAnalytics,
+  MdLink,
+} from "react-icons/md";
 import theme from "../utils/theme";
 
 import { CollectionNames } from "../services/firebase/firestore";
@@ -42,7 +43,6 @@ import DayPhotoModal from "../components/modals/DayPhotoModal";
 import AnalyticalMaterialModal from "../components/modals/AnalyticalMaterialModal";
 import WarHistoryLeaderInterviewModal from "../components/modals/WarHistoryLeaderInterviewModal";
 import WorldAboutUkraineModal from "../components/modals/WorldAboutUkraineModal";
-
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -119,30 +119,31 @@ const AdminPanel = () => {
     setAnchorEl(null);
   };
 
+  const [newAddedTime, setNewAddedTime] = useState<Date>(new Date());
   const actions = [
     {
-      icon: <MdAddPhotoAlternate />,
+      icon: <MdAddPhotoAlternate size={20} />,
       name: "Add photo of the day",
       onClick: () => setOpenDayPhotoModal(true),
     },
     {
-      icon: <MdAnalytics />,
-      name: "Add analytical material post",
+      icon: <MdAnalytics size={20} />,
+      name: "Add Ukraine and Global Agenda post",
       onClick: () => setOpenAnalyticalMaterialModal(true),
     },
     {
-      icon: <MdOutlineQuestionAnswer />,
-      name: "Add war history post",
+      icon: <MdOutlineQuestionAnswer size={20} />,
+      name: "Add Resilience Story post",
       onClick: () => setOpenWarHistoryModal(true),
     },
     {
-      icon: <MdOutlineLanguage />,
-      name: "Add world about Ukraine post",
+      icon: <MdOutlineLanguage size={20} />,
+      name: "Add Art During War post",
       onClick: () => setOpenWorldAboutUkraineModal(true),
     },
     {
-      icon: <MdVideoCameraFront />,
-      name: "Add leader interview post",
+      icon: <MdVideoCameraFront size={20} />,
+      name: "Add Opinion Leader Interview post",
       onClick: () => setOpenLeaderInterviewModal(true),
     },
   ];
@@ -158,7 +159,6 @@ const AdminPanel = () => {
   const logout = async () => {
     await signOut(auth);
   };
-
 
   const getAdminName = async () => {
     try {
@@ -201,36 +201,41 @@ const AdminPanel = () => {
         modalIsOpen={openDayPhotoModal}
         setModalIsOpen={setOpenDayPhotoModal}
         setSnackBarIsOpen={setOpenSnackBar}
+        triggerTableReloadAfterAdd={setNewAddedTime}
       />
       <AnalyticalMaterialModal
         modalIsOpen={openAnalyticalMaterialModal}
         setModalIsOpen={setOpenAnalyticalMaterialModal}
         setSnackBarIsOpen={setOpenSnackBar}
+        triggerTableReloadAfterAdd={setNewAddedTime}
       />
       <WarHistoryLeaderInterviewModal
-        title="War History"
+        title="Resilience Story"
         modalIsOpen={openWarHistoryModal}
         setModalIsOpen={setOpenWarHistoryModal}
         setSnackBarIsOpen={setOpenSnackBar}
         modalType={CollectionNames.WAR_HISTORY}
+        triggerTableReloadAfterAdd={setNewAddedTime}
       />
       <WarHistoryLeaderInterviewModal
-        title="Leader Interview"
+        title="Opinion Leader Interview"
         modalIsOpen={openLeaderInterviewModal}
         setModalIsOpen={setOpenLeaderInterviewModal}
         setSnackBarIsOpen={setOpenSnackBar}
         modalType={CollectionNames.LEADER_INTERVIEWS}
+        triggerTableReloadAfterAdd={setNewAddedTime}
       />
       <WorldAboutUkraineModal
         modalIsOpen={openWorldAboutUkraineModal}
         setModalIsOpen={setOpenWorldAboutUkraineModal}
         setSnackBarIsOpen={setOpenSnackBar}
+        triggerTableReloadAfterAdd={setNewAddedTime}
       />
       <Snackbar
         open={openSnackBar}
         autoHideDuration={6000}
         onClose={() => setOpenSnackBar(false)}
-        message="New item added"
+        message="New post added"
       />
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <AppBar position="static">
@@ -286,56 +291,105 @@ const AdminPanel = () => {
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            <Tab label="War history" {...a11yProps(0)} />
-            <Tab label="Leaders interviews" {...a11yProps(1)} />
-            <Tab label="Analytical Materials" {...a11yProps(2)} />
-            <Tab label="World about Ukraine" {...a11yProps(3)} />
+            <Tab label="Resilience Stories" {...a11yProps(0)} />
+            <Tab label="Opinion Leaders Interviews" {...a11yProps(1)} />
+            <Tab label="Ukraine and Global Agenda" {...a11yProps(2)} />
+            <Tab label="Art During War" {...a11yProps(3)} />
             <Tab label="Photos of day" {...a11yProps(4)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <Typography variant="h4" sx={{ marginBottom: 1 }}>
-            War history
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Typography variant="h4" sx={{ marginBottom: 1 }}>
+              Resilience Stories posts
+            </Typography>
+
+            <Link color="primary" target={"_blank"} to="/stories">
+              <MdLink size={25} color="#7f1716" />
+            </Link>
+          </Box>
           <Box>
             {/* TABLE */}
-            <WarHistoryTable />
+            <WarHistoryTable lastTimeNewAdded={newAddedTime} />
           </Box>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Typography variant="h4" sx={{ marginBottom: 1 }}>
-            Leaders interviews
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Typography variant="h4" sx={{ marginBottom: 1 }}>
+              Opinion Leaders Interviews posts
+            </Typography>
+            <Link target={"_blank"} to="/leaders">
+              <MdLink size={25} color="#7f1716" />
+            </Link>
+          </Box>
           <Box>
             {/* TABLE */}
-            <LeaderInterviewsTable />
+            <LeaderInterviewsTable lastTimeNewAdded={newAddedTime} />
           </Box>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <Typography variant="h4" sx={{ marginBottom: 1 }}>
-            Analytical Materials
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Typography variant="h4" sx={{ marginBottom: 1 }}>
+              Ukraine and Global Agenda posts
+            </Typography>
+            <Link target={"_blank"} to="/global">
+              <MdLink size={25} color="#7f1716" />
+            </Link>
+          </Box>
           <Box>
             {/* TABLE */}
-            <AnalyticalMaterialsTable />
+            <AnalyticalMaterialsTable lastTimeNewAdded={newAddedTime} />
           </Box>
         </TabPanel>
         <TabPanel value={value} index={3}>
-          <Typography variant="h4" sx={{ marginBottom: 1 }}>
-            World about Ukraine
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Typography variant="h4" sx={{ marginBottom: 1 }}>
+              Art During War posts
+            </Typography>
+            <Link target={"_blank"} to="/art">
+              <MdLink size={25} color="#7f1716" />
+            </Link>
+          </Box>
           <Box>
             {/* TABLE */}
-            <WorldAboutUkraineTable />
+            <WorldAboutUkraineTable lastTimeNewAdded={newAddedTime} />
           </Box>
         </TabPanel>
         <TabPanel value={value} index={4}>
           <Typography variant="h4" sx={{ marginBottom: 1 }}>
-          Photos of day
+            Photos of day
           </Typography>
           <Box>
             {/* TABLE */}
-            <DayPhotosTable />
+            <DayPhotosTable lastTimeNewAdded={newAddedTime} />
           </Box>
         </TabPanel>
       </Box>

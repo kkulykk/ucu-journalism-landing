@@ -1,4 +1,4 @@
-import { useState, useEffect, SetStateAction } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { auth } from "../utils/firebaseConfig";
@@ -52,6 +52,22 @@ const AdminAuth = () => {
     }
     if (user) navigate("/adminPanel");
   }, [user, loading]);
+
+  if (loading)
+    return (
+      <ThemeProvider theme={theme}>
+        <Box
+          sx={{
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      </ThemeProvider>
+    );
 
   return (
     <ThemeProvider theme={theme}>

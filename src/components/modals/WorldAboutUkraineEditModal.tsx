@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 
-import { firestore } from "../../utils/firebaseConfig";
-import { doc, deleteDoc } from "firebase/firestore";
+import { firestore, storage } from "../../utils/firebaseConfig";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { doc, deleteDoc, updateDoc, Timestamp } from "firebase/firestore";
 
 import { CollectionNames } from "../../services/firebase/firestore";
 
@@ -18,23 +19,21 @@ import DatePicker from "@mui/lab/DatePicker";
 
 import theme from "../../utils/theme";
 
-
 interface Props {
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
 
   recordValuesObj: {
-    id: string,
-    title: string,
-    date: Date,
-    source: string,
-    sourceUrl: string
-    imageUrl: string,
-    lead: string,
+    id: string;
+    title: string;
+    date: Date;
+    source: string;
+    sourceUrl: string;
+    imageUrl: string;
+    lead: string;
   };
 
   getRecordsFunction(): void;
-
 }
 
 const Input = styled("input")({
@@ -54,13 +53,18 @@ const style = {
   boxShadow: 24,
 };
 
-
 const WorldAboutUkraineEditModal = (props: Props) => {
   const [title, setTitle] = useState<string>(props.recordValuesObj.title);
-  const [dateSelected, setDateSelected] = useState<Date | null>(props.recordValuesObj.date);
+  const [dateSelected, setDateSelected] = useState<Date | any>(
+    props.recordValuesObj.date
+  );
   const [source, setSource] = useState<string>(props.recordValuesObj.source);
-  const [sourceUrl, setSourceUrl] = useState<string>(props.recordValuesObj.sourceUrl);
-  const [imageUrl, setImageUrl] = useState<string>(props.recordValuesObj.imageUrl);
+  const [sourceUrl, setSourceUrl] = useState<string>(
+    props.recordValuesObj.sourceUrl
+  );
+  const [imageUrl, setImageUrl] = useState<string>(
+    props.recordValuesObj.imageUrl
+  );
   const [lead, setLead] = useState<string>(props.recordValuesObj.lead);
 
   useEffect(() => {
@@ -70,26 +74,96 @@ const WorldAboutUkraineEditModal = (props: Props) => {
     setSourceUrl(props.recordValuesObj.sourceUrl);
     setImageUrl(props.recordValuesObj.imageUrl);
     setLead(props.recordValuesObj.lead);
-  }, [props.recordValuesObj])
+  }, [props.recordValuesObj]);
+
+  const [file, setFile] = useState<File | any>(null);
+  const [fileName, setFileName] = useState<string>("");
+
+  const handleFileAdd = (event: any) => {
+    setFile(event.target.files[0]);
+    setFileName(event.target.files[0].name);
+  };
 
   const deleteWorldAboutUkraineRecord = async () => {
-    await deleteDoc(doc(firestore, CollectionNames.WORLD_ABOUT_UKRAINE, props.recordValuesObj.id));
+    await deleteDoc(
+      doc(
+        firestore,
+        CollectionNames.WORLD_ABOUT_UKRAINE,
+        props.recordValuesObj.id
+      )
+    );
     props.setModalIsOpen(false);
     props.getRecordsFunction();
+  };
+
+  const editWorldAboutUkraineRecord = async () => {
+    try {
+      let worldAboutUkraineToEdit: {
+        title: string;
+        date: Timestamp;
+        source: string;
+        sourceUrl: string;
+        imageUrl: string;
+        lead: string;
+      };
+
+      if (!file) {
+        worldAboutUkraineToEdit = {
+          title: title,
+          date: Timestamp.fromDate(dateSelected),
+          source: source,
+          sourceUrl: sourceUrl,
+          imageUrl: imageUrl,
+          lead: lead
+        };
+      } else {
+        const storageRef = ref(
+          storage,
+          `/worldAboutUkraine/${Date.now()}${fileName}`
+        );
+        await uploadBytes(storageRef, file);
+        const downloadUrl = await getDownloadURL(storageRef);
+
+        worldAboutUkraineToEdit = {
+          title: title,
+          date: Timestamp.fromDate(dateSelected),
+          source: source,
+          sourceUrl: sourceUrl,
+          imageUrl: downloadUrl,
+          lead: lead
+        };
+        
+      }
+
+      const worldAboutUkraineEditRef = doc(firestore, CollectionNames.WORLD_ABOUT_UKRAINE, props.recordValuesObj.id);
+      await updateDoc(worldAboutUkraineEditRef, worldAboutUkraineToEdit);
+
+      setFile(null);
+      setFileName("");
+      props.setModalIsOpen(false);
+      props.getRecordsFunction();
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return (
     <ThemeProvider theme={theme}>
       <Modal
         open={props.modalIsOpen}
-        onClose={() => props.setModalIsOpen(false)}
+        onClose={() => {
+          setFile(null);
+          setFileName("");
+          props.setModalIsOpen(false);
+          }
+        }
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <Box sx={{ p: 5, overflow: "scroll" }}>
             <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Edit World About Ukraine post
+              Edit Art During War post
             </Typography>
             <Box
               sx={{
@@ -107,29 +181,7 @@ const WorldAboutUkraineEditModal = (props: Props) => {
                   value={title}
                   onChange={(event) => setTitle(event.target.value)}
                 />
-                <TextField
-                  sx={{ width: 300 }}
-                  label="Source"
-                  variant="outlined"
-                  value={source}
-                  onChange={(event) => setSource(event.target.value)}
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 2,
-                  alignItems: "center",
-                }}
-              >
-                <TextField
-                  sx={{ width: "100%" }}
-                  label="Source URL"
-                  variant="outlined"
-                  value={sourceUrl}
-                  onChange={(event) => setSourceUrl(event.target.value)}
-                />
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
                     label="Date"
                     value={dateSelected}
@@ -139,15 +191,35 @@ const WorldAboutUkraineEditModal = (props: Props) => {
                     renderInput={(params) => <TextField {...params} />}
                   />
                 </LocalizationProvider>
-                <Typography variant="h3" sx={{ marginBottom: 1 }}>
-                  ADD IMAGE URL STRING AND THINK ABOUT EDITING IMAGE
-                </Typography>
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  alignItems: "center",
+                }}
+              >
+                <TextField
+                  sx={{ width: "100%" }}
+                  label="Source"
+                  variant="outlined"
+                  value={source}
+                  onChange={(event) => setSource(event.target.value)}
+                />
+                <TextField
+                  sx={{ width: 300 }}
+                  label="File Name"
+                  variant="outlined"
+                  value={fileName}
+                />
                 <label htmlFor="contained-button-file">
                   <Input
                     accept="image/*"
                     id="contained-button-file"
                     multiple
                     type="file"
+                    onChange={(e) => handleFileAdd(e)}
                   />
                   <Button
                     sx={{ width: 130 }}
@@ -159,6 +231,13 @@ const WorldAboutUkraineEditModal = (props: Props) => {
                 </label>
               </Box>
               <TextField
+                  sx={{ width: "100%" }}
+                  label="Source URL"
+                  variant="outlined"
+                  value={sourceUrl}
+                  onChange={(event) => setSourceUrl(event.target.value)}
+                />
+              <TextField
                 sx={{ width: "100%" }}
                 multiline
                 maxRows={3}
@@ -168,22 +247,34 @@ const WorldAboutUkraineEditModal = (props: Props) => {
                 onChange={(event) => setLead(event.target.value)}
               />
             </Box>
-            <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between"}}>
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "space-between",
+              }}
+            >
               <Box sx={{ display: "flex", width: "30%" }}>
                 <Button
                   color="primary"
                   variant="contained"
                   onClick={() => {
+                    editWorldAboutUkraineRecord();
                     props.setModalIsOpen(false);
                   }}
-                  >
+                >
                   Edit post
                 </Button>
                 <Button
                   color="secondary"
                   sx={{ marginLeft: "2%" }}
-                  onClick={() => props.setModalIsOpen(false)}
-                  >
+                  onClick={() => {
+                    setFile(null);
+                    setFileName("");
+                    props.setModalIsOpen(false);
+                    }
+                  }
+                >
                   Close
                 </Button>
               </Box>
@@ -191,7 +282,7 @@ const WorldAboutUkraineEditModal = (props: Props) => {
                 color="secondary"
                 sx={{ marginLeft: "2%" }}
                 onClick={() => deleteWorldAboutUkraineRecord()}
-                >
+              >
                 Delete
               </Button>
             </Box>

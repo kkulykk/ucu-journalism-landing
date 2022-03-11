@@ -6,7 +6,6 @@ import theme from "../utils/theme";
 
 export interface Props {
   title: string;
-  desc: string;
   link: string;
 }
 
@@ -15,21 +14,22 @@ const SectionButton = (props: Props) => {
     <ThemeProvider theme={theme}>
       <Button
         color="primary"
-        variant="contained"
+        variant="outlined"
         sx={{
           display: "flex",
           flexWrap: "nowrap",
           flexDirection: "column",
-          height: 200,
-          width: 300,
+          height: 80,
+          width: "auto",
+          "@media (max-width: 600px)": {
+            width: 280,
+          },
           m: 1.5,
         }}
         href={props.link}
+        target="_blank"
       >
         <Typography variant="h3">{props.title}</Typography>
-        <Typography variant="body2" sx={{ textTransform: "none" }}>
-          {props.desc}
-        </Typography>
       </Button>
     </ThemeProvider>
   );

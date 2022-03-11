@@ -19,11 +19,11 @@ import DatePicker from "@mui/lab/DatePicker";
 
 import theme from "../../utils/theme";
 
-
 interface Props {
   modalIsOpen: boolean;
   setModalIsOpen(isOpen: boolean): void;
   setSnackBarIsOpen(isOpen: boolean): void;
+  triggerTableReloadAfterAdd(time: Date): void;
 }
 
 const Input = styled("input")({
@@ -44,54 +44,60 @@ const style = {
 };
 
 const WorldAboutUkraineModal = (props: Props) => {
-  const [title, setTitle] = useState<string>('')
+  const [title, setTitle] = useState<string>("");
   const [date, setDate] = useState<Date | any>(new Date());
-  const [source, setSource] = useState<string>('');
-  const [sourceUrl, setSourceUrl] = useState<string>('');
-  const [lead, setLead] = useState<string>('');
+  const [source, setSource] = useState<string>("");
+  const [sourceUrl, setSourceUrl] = useState<string>("");
+  const [lead, setLead] = useState<string>("");
 
   const [file, setFile] = useState<File | any>(null);
-  const [fileName, setFileName] = useState<string>('');
+  const [fileName, setFileName] = useState<string>("");
 
   const handleFileAdd = (event: any) => {
     setFile(event.target.files[0]);
     setFileName(event.target.files[0].name);
-  }
-  
+  };
+
   const addWorldAboutUkraine = async () => {
-    const storageRef = ref(storage, `/worldAboutUkraine/${Date.now()}${fileName}`);
+    const storageRef = ref(
+      storage,
+      `/worldAboutUkraine/${Date.now()}${fileName}`
+    );
     await uploadBytes(storageRef, file);
     const downloadUrl = await getDownloadURL(storageRef);
 
     const worldAboutUkraineToAdd: {
-      title: string,
-      date: Timestamp,
-      source: string,
-      sourceUrl: string,
-      imageUrl: string,
-      lead: string,
+      title: string;
+      date: Timestamp;
+      source: string;
+      sourceUrl: string;
+      imageUrl: string;
+      lead: string;
     } = {
       title: title,
       date: Timestamp.fromDate(date),
       source: source,
       sourceUrl: sourceUrl,
       imageUrl: downloadUrl,
-      lead: lead
-    }
+      lead: lead,
+    };
 
-    const docRef = await addDoc(collection(firestore, CollectionNames.WORLD_ABOUT_UKRAINE), worldAboutUkraineToAdd);
+    const docRef = await addDoc(
+      collection(firestore, CollectionNames.WORLD_ABOUT_UKRAINE),
+      worldAboutUkraineToAdd
+    );
 
-    setTitle('');
+    setTitle("");
     setDate(new Date());
-    setSource('');
-    setSourceUrl('');
-    setLead('');
+    setSource("");
+    setSourceUrl("");
+    setLead("");
 
     setFile(null);
-    setFileName('');
-  }
+    setFileName("");
 
-
+    props.triggerTableReloadAfterAdd(new Date());
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -104,7 +110,7 @@ const WorldAboutUkraineModal = (props: Props) => {
         <Box sx={style}>
           <Box sx={{ p: 5, overflow: "scroll" }}>
             <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Add new World About Ukraine post
+              Add new Art During War post
             </Typography>
             <Box
               sx={{
@@ -171,13 +177,12 @@ const WorldAboutUkraineModal = (props: Props) => {
                 </label>
               </Box>
               <TextField
-                  sx={{ width: "100%" }}
-                  label="Source URL"
-                  variant="outlined"
-                  value={sourceUrl}
-                  onChange={(e) => setSourceUrl(e.target.value)}
-
-                />
+                sx={{ width: "100%" }}
+                label="Source URL"
+                variant="outlined"
+                value={sourceUrl}
+                onChange={(e) => setSourceUrl(e.target.value)}
+              />
               <TextField
                 sx={{ width: "100%" }}
                 multiline

@@ -13,9 +13,9 @@ const VideoPost = (props: Props) => {
   return (
     <Card
       sx={{
-        aspectRatio: "16/9",
-        width: 550,
-        minWidth: 300,
+        width: "100%",
+        minWidth: 250,
+        maxWidth: 550,
         m: 3,
         display: "flex",
         flexDirection: "column",
@@ -25,7 +25,7 @@ const VideoPost = (props: Props) => {
     >
       <CardMedia
         component="iframe"
-        height="70%"
+        sx={{ aspectRatio: "16 /9" }}
         allowFullScreen
         frameBorder="0"
         image={props.videoUrl}
@@ -43,7 +43,7 @@ const VideoPost = (props: Props) => {
         <Typography
           variant="caption"
           color="secondary.main"
-          sx={{ marginBottom: 1 }}
+          sx={{ marginBottom: 0.5 }}
         >
           {props.date}
         </Typography>

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 
-import { firestore } from "../../utils/firebaseConfig";
-import { doc, deleteDoc } from "firebase/firestore";
+import { firestore, storage } from "../../utils/firebaseConfig";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { doc, deleteDoc, updateDoc, Timestamp } from "firebase/firestore";
 
 import { CollectionNames } from "../../services/firebase/firestore";
 
@@ -23,13 +24,13 @@ interface Props {
   setModalIsOpen(isOpen: boolean): void;
 
   recordValuesObj: {
-    id: string,
-    title: string,
-    date: Date,
-    source: string,
-    imageUrl: string,
-    lead: string,
-    text: string
+    id: string;
+    title: string;
+    date: Date;
+    source: string;
+    imageUrl: string;
+    lead: string;
+    text: string;
   };
 
   getRecordsFunction(): void;
@@ -54,9 +55,13 @@ const style = {
 
 const AnalyticalMaterialEditModal = (props: Props) => {
   const [title, setTitle] = useState<string>(props.recordValuesObj.title);
-  const [dateSelected, setDateSelected] = useState<Date | null>(props.recordValuesObj.date);
+  const [dateSelected, setDateSelected] = useState<Date | any>(
+    props.recordValuesObj.date
+  );
   const [source, setSource] = useState<string>(props.recordValuesObj.source);
-  const [imageUrl, setImageUrl] = useState<string>(props.recordValuesObj.imageUrl);
+  const [imageUrl, setImageUrl] = useState<string>(
+    props.recordValuesObj.imageUrl
+  );
   const [lead, setLead] = useState<string>(props.recordValuesObj.lead);
   const [text, setText] = useState<string>(props.recordValuesObj.text);
 
@@ -67,27 +72,96 @@ const AnalyticalMaterialEditModal = (props: Props) => {
     setImageUrl(props.recordValuesObj.imageUrl);
     setLead(props.recordValuesObj.lead);
     setText(props.recordValuesObj.text);
-  }, [props.recordValuesObj])
+  }, [props.recordValuesObj]);
+
+  const [file, setFile] = useState<File | any>(null);
+  const [fileName, setFileName] = useState<string>("");
+
+  const handleFileAdd = (event: any) => {
+    setFile(event.target.files[0]);
+    setFileName(event.target.files[0].name);
+  };
+
 
   const deleteAnalyticalMaterialRecord = async () => {
-    await deleteDoc(doc(firestore, CollectionNames.ANALYTICS_MATERIAL, props.recordValuesObj.id));
+    await deleteDoc(
+      doc(
+        firestore,
+        CollectionNames.ANALYTICS_MATERIAL,
+        props.recordValuesObj.id
+      )
+    );
     props.setModalIsOpen(false);
     props.getRecordsFunction();
-  }
+  };
 
+  const editAnalyticalMaterialRecord = async () => {
+    try {
+      let analyticalMaterialToEdit: {
+        title: string;
+        date: Timestamp;
+        source: string;
+        imageUrl: string;
+        lead: string;
+        text: string;
+      };
+      if (!file) {
+        analyticalMaterialToEdit = {
+          title: title,
+          date: Timestamp.fromDate(dateSelected),
+          source: source,
+          imageUrl: imageUrl,
+          lead: lead,
+          text: text
+        };
+      } else {
+        const storageRef = ref(
+          storage,
+          `/analyticalMaterial/${Date.now()}${fileName}`
+        );
+        await uploadBytes(storageRef, file);
+        const downloadUrl = await getDownloadURL(storageRef);
+
+        analyticalMaterialToEdit = {
+          title: title,
+          date: Timestamp.fromDate(dateSelected),
+          source: source,
+          imageUrl: downloadUrl,
+          lead: lead,
+          text: text
+        };
+        
+      }
+
+        const analyticalMaterialEditRef = doc(firestore, CollectionNames.ANALYTICS_MATERIAL, props.recordValuesObj.id);
+        await updateDoc(analyticalMaterialEditRef, analyticalMaterialToEdit);
+
+      setFile(null);
+      setFileName("");
+      props.setModalIsOpen(false);
+      props.getRecordsFunction();
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
       <Modal
         open={props.modalIsOpen}
-        onClose={() => props.setModalIsOpen(false)}
+        onClose={() => {
+          setFile(null);
+          setFileName("");
+          props.setModalIsOpen(false);
+          }
+        }
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <Box sx={{ p: 5, overflow: "scroll" }}>
             <Typography variant="h3" sx={{ marginBottom: 1 }}>
-              Edit Analytical Material post
+              Edit Ukraine and Global Agenda post
             </Typography>
             <Box
               sx={{
@@ -105,6 +179,16 @@ const AnalyticalMaterialEditModal = (props: Props) => {
                   value={title}
                   onChange={(event) => setTitle(event.target.value)}
                 />
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    label="Date"
+                    value={dateSelected}
+                    onChange={(newDate) => {
+                      setDateSelected(newDate);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
               </Box>
               <Box
                 sx={{
@@ -120,25 +204,20 @@ const AnalyticalMaterialEditModal = (props: Props) => {
                   value={source}
                   onChange={(event) => setSource(event.target.value)}
                 />
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker
-                    label="Date"
-                    value={dateSelected}
-                    onChange={(newDate) => {
-                      setDateSelected(newDate);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
-                <Typography variant="h3" sx={{ marginBottom: 1 }}>
-                  ADD IMAGE URL STRING AND THINK ABOUT EDITING IMAGE
-                </Typography>
+                <TextField
+                  label="File Name"
+                  multiline
+                  maxRows={2}
+                  variant="outlined"
+                  value={fileName}
+                />
                 <label htmlFor="contained-button-file">
                   <Input
                     accept="image/*"
                     id="contained-button-file"
                     multiple
                     type="file"
+                    onChange={(e) => handleFileAdd(e)}
                   />
                   <Button
                     sx={{ width: 130 }}
@@ -168,22 +247,34 @@ const AnalyticalMaterialEditModal = (props: Props) => {
                 onChange={(event) => setText(event.target.value)}
               />
             </Box>
-            <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between"}}>
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "space-between",
+              }}
+            >
               <Box sx={{ display: "flex", width: "30%" }}>
                 <Button
                   color="primary"
                   variant="contained"
                   onClick={() => {
+                    editAnalyticalMaterialRecord();
                     props.setModalIsOpen(false);
                   }}
-                  >
+                >
                   Edit post
                 </Button>
                 <Button
                   color="secondary"
                   sx={{ marginLeft: "2%" }}
-                  onClick={() => props.setModalIsOpen(false)}
-                  >
+                  onClick={() => {
+                    setFile(null);
+                    setFileName("");
+                    props.setModalIsOpen(false);
+                    }
+                  }
+                >
                   Close
                 </Button>
               </Box>
@@ -191,7 +282,7 @@ const AnalyticalMaterialEditModal = (props: Props) => {
                 color="secondary"
                 sx={{ marginLeft: "2%" }}
                 onClick={() => deleteAnalyticalMaterialRecord()}
-                >
+              >
                 Delete
               </Button>
             </Box>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { firestore } from "../../utils/firebaseConfig";
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc, Timestamp } from "firebase/firestore";
 
 import { CollectionNames } from "../../services/firebase/firestore";
 
@@ -14,6 +14,8 @@ import Button from "@mui/material/Button";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
+import Snackbar from "@mui/material/Snackbar";
+
 import theme from "../../utils/theme";
 import { setDate } from "date-fns/esm";
 
@@ -44,7 +46,8 @@ const style = {
 const WarHistoryLeaderInterviewEditModal = (props: Props) => {
   const [title, setTitle] = useState<string>(props.recordValuesObj.title)
   const [videoUrl, setVideoUrl] = useState<string>(props.recordValuesObj.videoUrl)
-  const [dateSelected, setDateSelected] = useState<Date | null>(props.recordValuesObj.date);
+  const [dateSelected, setDateSelected] = useState<Date | any>(props.recordValuesObj.date);
+
 
   useEffect(() => {
     setTitle(props.recordValuesObj.title)
@@ -53,17 +56,45 @@ const WarHistoryLeaderInterviewEditModal = (props: Props) => {
   }, [props.recordValuesObj])
 
   const deleteWarHistoryLeaderInterviewRecord = async () => {
-    // rewrite it without if, just by passing props.modalType in doc(firestore, %THERE%, id)
-    if (props.modalType === CollectionNames.LEADER_INTERVIEWS) {
-      await deleteDoc(doc(firestore, CollectionNames.LEADER_INTERVIEWS, props.recordValuesObj.id));
-    }
+    try {
+      if (props.modalType === CollectionNames.LEADER_INTERVIEWS) {
+        await deleteDoc(doc(firestore, CollectionNames.LEADER_INTERVIEWS, props.recordValuesObj.id));
+      }
 
-    if (props.modalType === CollectionNames.WAR_HISTORY) {
-      await deleteDoc(doc(firestore, CollectionNames.WAR_HISTORY, props.recordValuesObj.id));
-    }
+      if (props.modalType === CollectionNames.WAR_HISTORY) {
+        await deleteDoc(doc(firestore, CollectionNames.WAR_HISTORY, props.recordValuesObj.id));
+      }
 
-    props.setModalIsOpen(false);
-    props.getRecordsFunction();
+      props.setModalIsOpen(false);
+      props.getRecordsFunction();
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const editWarHistoryLeaderInterviewRecord = async () => {
+    try {
+      const warHistoryLeaderInterviewToEdit: {title: string, date: Timestamp, videoUrl: string} = {
+        title: title,
+        date: Timestamp.fromDate(dateSelected),
+        videoUrl: videoUrl
+      }
+
+      if (props.modalType === CollectionNames.LEADER_INTERVIEWS) {
+        const warHistoryLeaderInterviewEditRef = doc(firestore, CollectionNames.LEADER_INTERVIEWS, props.recordValuesObj.id);
+        await updateDoc(warHistoryLeaderInterviewEditRef, warHistoryLeaderInterviewToEdit);
+      }
+
+      if (props.modalType === CollectionNames.WAR_HISTORY) {
+        const warHistoryLeaderInterviewEditRef = doc(firestore, CollectionNames.WAR_HISTORY, props.recordValuesObj.id);
+        await updateDoc(warHistoryLeaderInterviewEditRef, warHistoryLeaderInterviewToEdit);
+      }
+
+      props.setModalIsOpen(false);
+      props.getRecordsFunction();
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   
@@ -117,6 +148,7 @@ const WarHistoryLeaderInterviewEditModal = (props: Props) => {
                   color="primary"
                   variant="contained"
                   onClick={() => {
+                    editWarHistoryLeaderInterviewRecord();
                     props.setModalIsOpen(false);
                   }}
                   >
@@ -125,7 +157,7 @@ const WarHistoryLeaderInterviewEditModal = (props: Props) => {
                 <Button
                   color="secondary"
                   sx={{ marginLeft: "2%" }}
-                  onClick={() => props.setModalIsOpen(false)}
+                  onClick={() =>  props.setModalIsOpen(false)}
                   >
                   Close
                 </Button>

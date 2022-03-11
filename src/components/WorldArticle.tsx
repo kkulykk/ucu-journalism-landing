@@ -22,8 +22,13 @@ const WorldArticle = (props: Props) => {
       <Card
         sx={{
           maxWidth: "60vw",
+          height: "auto",
           boxShadow: 3,
           borderRadius: 3,
+          transition: "all ease-in-out 0.1s",
+          "@media (max-width: 800px)": {
+            maxWidth: "90vw",
+          },
           m: 2,
         }}
       >
@@ -32,7 +37,7 @@ const WorldArticle = (props: Props) => {
           sx={{ display: "flex" }}
         >
           <CardMedia
-            sx={{ height: 200, width: "35%" }}
+            sx={{ height: 250, width: "35%", objectFit: "cover" }}
             component="img"
             alt="green iguana"
             image={props.imageUrl}
@@ -44,7 +49,8 @@ const WorldArticle = (props: Props) => {
               flexDirection: "column",
               justifyContent: "space-around",
               textAlign: "left",
-              height: 150,
+              width: "65%",
+              height: "auto",
             }}
           >
             <div>
@@ -55,8 +61,8 @@ const WorldArticle = (props: Props) => {
                 sx={{
                   overflow: "hidden",
                   textOverflow: "ellipsis",
-                  width: "11rem",
                   display: "flex",
+                  width: "100%",
                   gap: 2,
                   color: "#607d8b",
                 }}

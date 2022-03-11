@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import "./App.css";
@@ -15,10 +14,10 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/analytics" element={<AnalyticalMaterials />} />
+          <Route path="/global" element={<AnalyticalMaterials />} />
           <Route path="/leaders" element={<LeaderInterviews />} />
           <Route path="/stories" element={<WarHistory />} />
-          <Route path="/world" element={<WorldAboutUkraine />} />
+          <Route path="/art" element={<WorldAboutUkraine />} />
           <Route path="/admin" element={<AdminAuth />} />
           <Route path="/adminPanel" element={<AdminPanel />} />
         </Routes>

@@ -15,7 +15,7 @@ import VideoPost from "../components/VideoPost";
 import SkeletonVideo from "../components/SkeletonVideo";
 
 // Constants
-const VIDEOS_NUMBER = 2;
+const VIDEOS_NUMBER = 5;
 
 const WarHistory = () => {
   const [warHistoryObjects, setWarHistoryObjects] = useState<WarHistoryObj[]>(
@@ -73,12 +73,18 @@ const WarHistory = () => {
       <Header />
 
       <SectionDescription
-        title="War History"
-        desc="Here we describe the objectivs of the project and tell readers what we
-        mainly post here. There is also small description of all the authors and
-        so on"
+        title="RESILIENCE STORIES"
+        desc="About those who are witnesses and participants in the war with Russia, who suffered from the shelling, who are helping military and civilians by 'quiet and tireless work'"
       />
-      <Box sx={{ display: "flex", flexWrap: "wrap", p: "0 8%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          width: "100%",
+          m: 0,
+          justifyContent: "center",
+        }}
+      >
         {isLoading ? <SkeletonVideo /> : mappedHistoryVideoPosts()}
       </Box>
       <Button

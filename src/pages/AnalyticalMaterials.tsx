@@ -15,12 +15,14 @@ import SectionDescription from "../components/SectionDescription";
 import SkeletonNews from "../components/SkeletonNews";
 
 // Constants
-const POSTS_NUMBER = 1
+const POSTS_NUMBER = 5;
 
 const AnalyticalMaterials = () => {
-  const [analyticalMaterialObjects, setAnalyticalMaterialObjects] = useState<AnalyticalMaterialsObj[]>([]);
+  const [analyticalMaterialObjects, setAnalyticalMaterialObjects] = useState<
+    AnalyticalMaterialsObj[]
+  >([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [postsNumber, setPostsNumber] = useState<number>(POSTS_NUMBER)
+  const [postsNumber, setPostsNumber] = useState<number>(POSTS_NUMBER);
 
   const getAnalyticalMaterialPosts = async () => {
     const postObjectsArray: AnalyticalMaterialsObj[] = [];
@@ -79,10 +81,8 @@ const AnalyticalMaterials = () => {
         <Header />
 
         <SectionDescription
-          title="Analytical Materials"
-          desc="Here we describe the objectivs of the project and tell readers what we
-        mainly post here. There is also small description of all the authors and
-        so on"
+          title="UKRAINE AND GLOBAL AGENDA"
+          desc="A look at the war from Ukrainian experts and the world media"
         />
         <Box
           sx={{
@@ -95,7 +95,12 @@ const AnalyticalMaterials = () => {
           {isLoading ? SkeletonNews() : mappedArticleBoxes()}
         </Box>
       </div>
-      <Button disabled={isLoading} variant="outlined" sx={{ marginTop: 5 }} onClick={() => setPostsNumber(postsNumber + POSTS_NUMBER)}>
+      <Button
+        disabled={isLoading}
+        variant="outlined"
+        sx={{ marginTop: 5 }}
+        onClick={() => setPostsNumber(postsNumber + POSTS_NUMBER)}
+      >
         Load more
       </Button>
       <Footer />
