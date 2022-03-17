@@ -41,6 +41,7 @@ const AnalyticalMaterials = () => {
             docData.title,
             docData.date,
             docData.source,
+            docData.sourceUrl,
             docData.imageUrl,
             docData.lead,
             docData.text

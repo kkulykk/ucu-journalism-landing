@@ -47,6 +47,7 @@ const AnalyticalMaterialModal = (props: Props) => {
   const [title, setTitle] = useState<string>("");
   const [date, setDate] = useState<Date | any>(new Date());
   const [source, setSource] = useState<string>("");
+  const [sourceUrl, setSourceUrl] = useState<string>("");
   const [lead, setLead] = useState<string>("");
   const [text, setText] = useState<string>("");
 
@@ -70,6 +71,7 @@ const AnalyticalMaterialModal = (props: Props) => {
       title: string;
       date: Timestamp;
       source: string;
+      sourceUrl: string;
       imageUrl: string;
       lead: string;
       text: string;
@@ -77,6 +79,7 @@ const AnalyticalMaterialModal = (props: Props) => {
       title: title,
       date: Timestamp.fromDate(date),
       source: source,
+      sourceUrl: sourceUrl,
       imageUrl: downloadUrl,
       lead: lead,
       text: text,
@@ -90,6 +93,7 @@ const AnalyticalMaterialModal = (props: Props) => {
     setTitle("");
     setDate(new Date());
     setSource("");
+    setSourceUrl("");
     setLead("");
     setText("");
 
@@ -177,6 +181,13 @@ const AnalyticalMaterialModal = (props: Props) => {
                   </Button>
                 </label>
               </Box>
+              <TextField
+                  sx={{ width: "100%" }}
+                  label="Source URL"
+                  variant="outlined"
+                  value={sourceUrl}
+                  onChange={(e) => setSourceUrl(e.target.value)}
+              />
               <TextField
                 sx={{ width: "100%" }}
                 multiline

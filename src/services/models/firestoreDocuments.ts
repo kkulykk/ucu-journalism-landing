@@ -7,6 +7,7 @@ class AnalyticalMaterialsObj {
   imageUrl: string;
   lead: string;
   text: string;
+  sourceUrl: string;
   
 
   constructor(
@@ -16,7 +17,8 @@ class AnalyticalMaterialsObj {
     source: string,
     imageUrl: string,
     lead: string,
-    text: string
+    text: string,
+    sourceUrl: string
   ) {
     this.id = id;
     this.title = title;
@@ -26,6 +28,7 @@ class AnalyticalMaterialsObj {
     this.imageUrl = imageUrl;
     this.lead = lead;
     this.text = text;
+    this.sourceUrl = sourceUrl;
   }
 
   disp(): void {

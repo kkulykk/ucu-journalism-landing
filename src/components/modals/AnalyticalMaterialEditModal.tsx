@@ -28,6 +28,7 @@ interface Props {
     title: string;
     date: Date;
     source: string;
+    sourceUrl: string;
     imageUrl: string;
     lead: string;
     text: string;
@@ -59,6 +60,7 @@ const AnalyticalMaterialEditModal = (props: Props) => {
     props.recordValuesObj.date
   );
   const [source, setSource] = useState<string>(props.recordValuesObj.source);
+  const [sourceUrl, setSourceUrl] = useState<string>(props.recordValuesObj.sourceUrl);
   const [imageUrl, setImageUrl] = useState<string>(
     props.recordValuesObj.imageUrl
   );
@@ -69,6 +71,7 @@ const AnalyticalMaterialEditModal = (props: Props) => {
     setTitle(props.recordValuesObj.title);
     setDateSelected(props.recordValuesObj.date);
     setSource(props.recordValuesObj.source);
+    setSourceUrl(props.recordValuesObj.sourceUrl);
     setImageUrl(props.recordValuesObj.imageUrl);
     setLead(props.recordValuesObj.lead);
     setText(props.recordValuesObj.text);
@@ -101,6 +104,7 @@ const AnalyticalMaterialEditModal = (props: Props) => {
         title: string;
         date: Timestamp;
         source: string;
+        sourceUrl: string;
         imageUrl: string;
         lead: string;
         text: string;
@@ -110,6 +114,7 @@ const AnalyticalMaterialEditModal = (props: Props) => {
           title: title,
           date: Timestamp.fromDate(dateSelected),
           source: source,
+          sourceUrl: sourceUrl,
           imageUrl: imageUrl,
           lead: lead,
           text: text
@@ -126,6 +131,7 @@ const AnalyticalMaterialEditModal = (props: Props) => {
           title: title,
           date: Timestamp.fromDate(dateSelected),
           source: source,
+          sourceUrl: sourceUrl,
           imageUrl: downloadUrl,
           lead: lead,
           text: text
@@ -228,6 +234,13 @@ const AnalyticalMaterialEditModal = (props: Props) => {
                   </Button>
                 </label>
               </Box>
+              <TextField
+                  sx={{ width: "100%" }}
+                  label="Source URL"
+                  variant="outlined"
+                  value={sourceUrl}
+                  onChange={(e) => setSourceUrl(e.target.value)}
+              />
               <TextField
                 sx={{ width: "100%" }}
                 multiline

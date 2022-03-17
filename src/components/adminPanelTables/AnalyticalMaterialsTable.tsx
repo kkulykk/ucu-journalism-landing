@@ -27,6 +27,7 @@ const columns: { id: string; label: string; minWidth: number }[] = [
   { id: "imageUrl", label: "Image URL", minWidth: 100 },
   { id: "lead", label: "Lead", minWidth: 200 },
   { id: "text", label: "Text", minWidth: 300 },
+  { id: "sourceUrl", label: "Sourcle URL", minWidth: 100 },
 ];
 
 // Custom types
@@ -35,6 +36,7 @@ type EditAnalyticalMaterialModalType = {
   title: string;
   date: Date;
   source: string;
+  sourceUrl: string;
   imageUrl: string;
   lead: string;
   text: string;
@@ -61,6 +63,7 @@ const AnalyticalMaterialsTable = (props: Props) => {
       title: "Initial string",
       date: new Date(),
       source: "Initial string",
+      sourceUrl: "Initial string",
       imageUrl: "Initial string",
       lead: "Initial string",
       text: "Initial string",
@@ -85,7 +88,8 @@ const AnalyticalMaterialsTable = (props: Props) => {
             docData.source,
             docData.imageUrl,
             docData.lead,
-            docData.text
+            docData.text,
+            docData.sourceUrl
           );
 
         recordObjectsArray.push(singleAnalyticalMaterialAdminPanelObject);
@@ -107,6 +111,7 @@ const AnalyticalMaterialsTable = (props: Props) => {
     title: string,
     date: Date,
     source: string,
+    sourceUrl: string,
     imageUrl: string,
     lead: string,
     text: string
@@ -116,6 +121,7 @@ const AnalyticalMaterialsTable = (props: Props) => {
       title: title,
       date: date,
       source: source,
+      sourceUrl: sourceUrl,
       imageUrl: imageUrl,
       lead: lead,
       text: text,
@@ -138,6 +144,7 @@ const AnalyticalMaterialsTable = (props: Props) => {
               rowObject.title,
               rowObject.dateObj,
               rowObject.source,
+              rowObject.sourceUrl,
               rowObject.imageUrl,
               rowObject.lead,
               rowObject.text
