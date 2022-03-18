@@ -17,6 +17,7 @@ export interface Props {
   lead: string;
   text: string;
   imageUrl: string;
+  sourceUrl: string;
 }
 
 const ArticleBox = (props: Props) => {
@@ -110,7 +111,14 @@ const ArticleBox = (props: Props) => {
           m: 2,
         }}
       >
-        <CardActionArea onClick={handleOpen} sx={{ display: "flex" }}>
+        <CardActionArea
+          onClick={
+            props.sourceUrl
+              ? () => window.open(props.sourceUrl, "_blank")
+              : handleOpen
+          }
+          sx={{ display: "flex" }}
+        >
           <CardMedia
             sx={{ height: 250, width: "35%", objectFit: "cover" }}
             component="img"

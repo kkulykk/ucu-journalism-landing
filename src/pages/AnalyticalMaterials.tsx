@@ -64,6 +64,7 @@ const AnalyticalMaterials = () => {
           title={post.title}
           date={post.date}
           source={post.source}
+          sourceUrl={post.sourceUrl}
           imageUrl={post.imageUrl}
           lead={post.lead}
           text={post.text}
