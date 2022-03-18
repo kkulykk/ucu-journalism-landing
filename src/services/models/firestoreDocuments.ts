@@ -15,10 +15,10 @@ class AnalyticalMaterialsObj {
     title: string,
     date: any,
     source: string,
+    sourceUrl: string,
     imageUrl: string,
     lead: string,
-    text: string,
-    sourceUrl: string
+    text: string
   ) {
     this.id = id;
     this.title = title;
