@@ -27,7 +27,7 @@ const columns: { id: string; label: string; minWidth: number }[] = [
   { id: "imageUrl", label: "Image URL", minWidth: 100 },
   { id: "lead", label: "Lead", minWidth: 200 },
   { id: "text", label: "Text", minWidth: 300 },
-  { id: "sourceUrl", label: "Sourcle URL", minWidth: 100 },
+  { id: "sourceUrl", label: "Source URL", minWidth: 100 },
 ];
 
 // Custom types
@@ -89,7 +89,7 @@ const AnalyticalMaterialsTable = (props: Props) => {
             docData.sourceUrl,
             docData.imageUrl,
             docData.lead,
-            docData.text,
+            docData.text
           );
 
         recordObjectsArray.push(singleAnalyticalMaterialAdminPanelObject);
