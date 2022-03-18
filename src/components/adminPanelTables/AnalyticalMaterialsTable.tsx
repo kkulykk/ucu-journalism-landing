@@ -86,10 +86,10 @@ const AnalyticalMaterialsTable = (props: Props) => {
             docData.title,
             docData.date,
             docData.source,
+            docData.sourceUrl,
             docData.imageUrl,
             docData.lead,
             docData.text,
-            docData.sourceUrl
           );
 
         recordObjectsArray.push(singleAnalyticalMaterialAdminPanelObject);
