@@ -164,7 +164,7 @@ const AnalyticalMaterialsTable = (props: Props) => {
                 {column.id === "imageUrl" ? (
                   <img src={value} style={{ height: "120px" }} />
                 ) : (
-                  value.substring(0, 250)
+                  value?.substring(0, 250)
                 )}
               </TableCell>
             );
