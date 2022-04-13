@@ -1,0 +1,32 @@
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import "./App.css";
+import AnalyticalMaterials from "./pages/AnalyticalMaterials";
+import LeaderInterviews from "./pages/LeaderInterviews";
+import WarHistory from "./pages/WarHistory";
+import WorldAboutUkraine from "./pages/WorldAboutUkraine";
+import AdminAuth from "./pages/AdminAuth";
+import AdminPanel from "./pages/AdminPanel";
+import WorldSupport from "./pages/WorldSupport";
+
+function App() {
+  return (
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/global" element={<AnalyticalMaterials />} />
+          <Route path="/leaders" element={<LeaderInterviews />} />
+          <Route path="/stories" element={<WarHistory />} />
+          <Route path="/art" element={<WorldAboutUkraine />} />
+          <Route path="/admin" element={<AdminAuth />} />
+          <Route path="/adminPanel" element={<AdminPanel />} />
+          <Route path="/world_support" element={<WorldSupport />} />
+
+        </Routes>
+      </Router>
+    </div>
+  );
+}
+
+export default App;
